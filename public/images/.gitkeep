@@ -1,0 +1,32 @@
+# Images Directory
+
+This directory contains all images used on the website.
+
+## Usage
+
+Images in the `public` folder are served at the root path. For example:
+- `public/images/logo.png` → `/images/logo.png` in your code
+- `public/images/hero-bg.jpg` → `/images/hero-bg.jpg` in your code
+
+## Recommended Structure
+
+```
+public/
+├── images/
+│   ├── logo.png
+│   ├── favicon.ico
+│   ├── hero/
+│   │   └── hero-image.jpg
+│   ├── about/
+│   │   └── team-photo.jpg
+│   └── resources/
+│       └── resource-icon.svg
+```
+
+## Image Optimization Tips
+
+- Use WebP format for better compression
+- Optimize images before adding them
+- Use appropriate sizes for different screen resolutions
+- Consider using responsive images with `srcset`
+
