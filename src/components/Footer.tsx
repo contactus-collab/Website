@@ -1,6 +1,34 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { supabase } from '../lib/supabase'
+import type { User } from '@supabase/supabase-js'
 
 export default function Footer() {
+  const [user, setUser] = useState<User | null>(null)
+
+  useEffect(() => {
+    // Check current session
+    checkUser()
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null)
+    })
+
+    return () => {
+      subscription.unsubscribe()
+    }
+  }, [])
+
+  const checkUser = async () => {
+    try {
+      const { data: { session } } = await supabase.auth.getSession()
+      setUser(session?.user ?? null)
+    } catch (error) {
+      console.error('Error checking user:', error)
+    }
+  }
+
   return (
     <footer className="bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -81,7 +109,7 @@ export default function Footer() {
           
           <div>
             <h4 className="text-lg font-semibold mb-4">Contact Info</h4>
-            <p className="text-gray-400">
+            <p className="text-gray-400 mb-4">
               <a
                 href="mailto:contactus@ballfour.org"
                 className="hover:text-white transition-colors"
@@ -89,6 +117,21 @@ export default function Footer() {
                 contactus@ballfour.org
               </a>
             </p>
+            {user ? (
+              <Link
+                to="/admin"
+                className="inline-block bg-primary-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary-700 transition-colors"
+              >
+                Admin Dashboard
+              </Link>
+            ) : (
+              <Link
+                to="/login"
+                className="inline-block bg-primary-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary-700 transition-colors"
+              >
+                Admin Login
+              </Link>
+            )}
           </div>
         </div>
         

@@ -19,7 +19,7 @@ export default function Navbar() {
           </div>
           
           {/* Desktop Menu */}
-          <div className="hidden md:flex space-x-8">
+          <div className="hidden md:flex items-center space-x-8">
             <Link
               to="/purpose"
               className="text-gray-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors"
