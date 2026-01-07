@@ -7,22 +7,64 @@ export default function ResetPassword() {
   const [confirmPassword, setConfirmPassword] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<string>('')
+  const [hasValidSession, setHasValidSession] = useState<boolean>(false)
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
 
   useEffect(() => {
-    // Supabase password reset uses hash fragments, not query params
-    // Check if we have the hash in the URL
-    const hash = window.location.hash
-    if (!hash || !hash.includes('access_token')) {
-      // Also check query params as fallback
-      const accessToken = searchParams.get('access_token')
-      const refreshToken = searchParams.get('refresh_token')
-      
-      if (!accessToken || !refreshToken) {
+    // Check for tokens and set session on mount
+    const checkAndSetSession = async () => {
+      try {
+        const hash = window.location.hash
+        let accessToken: string | null = null
+        let refreshToken: string | null = null
+
+        if (hash && hash.includes('access_token')) {
+          // Parse hash fragments
+          const hashParams = new URLSearchParams(hash.substring(1))
+          accessToken = hashParams.get('access_token')
+          refreshToken = hashParams.get('refresh_token')
+          
+          // Clear the hash from URL after extracting
+          window.history.replaceState(null, '', window.location.pathname + window.location.search)
+        } else {
+          // Fallback to query params
+          accessToken = searchParams.get('access_token')
+          refreshToken = searchParams.get('refresh_token')
+        }
+
+        if (accessToken && refreshToken) {
+          // Set the session immediately when tokens are found
+          const { data, error: sessionError } = await supabase.auth.setSession({
+            access_token: accessToken,
+            refresh_token: refreshToken,
+          })
+
+          if (sessionError) {
+            console.error('Session error:', sessionError)
+            setError('Invalid or expired reset link. Please request a new password reset.')
+            return
+          }
+
+          if (data.session) {
+            setHasValidSession(true)
+          }
+        } else {
+          // Check if user already has a valid session (in case they already set it)
+          const { data: { session } } = await supabase.auth.getSession()
+          if (session) {
+            setHasValidSession(true)
+          } else {
+            setError('Invalid or expired reset link. Please request a new password reset.')
+          }
+        }
+      } catch (err: any) {
+        console.error('Error setting session:', err)
         setError('Invalid or expired reset link. Please request a new password reset.')
       }
     }
+
+    checkAndSetSession()
   }, [searchParams])
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -44,40 +86,23 @@ export default function ResetPassword() {
     }
 
     try {
-      // Supabase password reset uses hash fragments
-      const hash = window.location.hash
-      let accessToken: string | null = null
-      let refreshToken: string | null = null
-
-      if (hash) {
-        // Parse hash fragments
-        const hashParams = new URLSearchParams(hash.substring(1))
-        accessToken = hashParams.get('access_token')
-        refreshToken = hashParams.get('refresh_token')
-      } else {
-        // Fallback to query params
-        accessToken = searchParams.get('access_token')
-        refreshToken = searchParams.get('refresh_token')
+      // Check if we have a valid session
+      if (!hasValidSession) {
+        const { data: { session } } = await supabase.auth.getSession()
+        if (!session) {
+          throw new Error('Invalid or expired reset link. Please request a new password reset.')
+        }
       }
-
-      if (!accessToken || !refreshToken) {
-        throw new Error('Invalid or expired reset link')
-      }
-
-      // Set the session with the tokens from the URL
-      const { error: sessionError } = await supabase.auth.setSession({
-        access_token: accessToken,
-        refresh_token: refreshToken,
-      })
-
-      if (sessionError) throw sessionError
 
       // Update the password
       const { error: updateError } = await supabase.auth.updateUser({
         password: password,
       })
 
-      if (updateError) throw updateError
+      if (updateError) {
+        console.error('Update password error:', updateError)
+        throw updateError
+      }
 
       // Sign out and redirect to login
       await supabase.auth.signOut()
@@ -159,7 +184,7 @@ export default function ResetPassword() {
           <div>
             <button
               type="submit"
-              disabled={loading}
+              disabled={loading || !hasValidSession}
               className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               {loading ? (

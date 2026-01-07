@@ -7,14 +7,32 @@ export default function ForgotPassword() {
   const [loading, setLoading] = useState<boolean>(false)
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
 
+  const getBaseSiteUrl = (): string => {
+    const raw = (import.meta.env.VITE_SITE_URL || '').trim()
+    if (!raw) return window.location.origin
+
+    // If someone accidentally sets `VITE_SITE_URL=https://www.ballfour.org/#`,
+    // strip the hash so redirects don't land on the home page hash route.
+    try {
+      const url = new URL(raw)
+      url.hash = ''
+      const base = `${url.origin}${url.pathname}`.replace(/\/$/, '')
+      return base || window.location.origin
+    } catch {
+      return raw.replace(/#.*$/, '').replace(/\/$/, '') || window.location.origin
+    }
+  }
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setLoading(true)
     setMessage(null)
 
     try {
+      // Use production URL from environment variable, fallback to current origin for development
+      const siteUrl = getBaseSiteUrl()
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/reset-password`,
+        redirectTo: `${siteUrl}/reset-password`,
       })
 
       if (error) throw error

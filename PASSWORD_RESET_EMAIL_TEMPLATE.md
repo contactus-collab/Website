@@ -2,6 +2,22 @@
 
 ## Setup Instructions
 
+### 1. Configure Environment Variable
+
+Add your production site URL to your `.env` file:
+
+```env
+VITE_SITE_URL=https://your-production-domain.com
+```
+
+**Important**: 
+- Replace `https://your-production-domain.com` with your actual production domain
+- Do **NOT** include `#` (for example, use `https://www.ballfour.org`, not `https://www.ballfour.org/#`)
+- This ensures password reset links point to your production site, not localhost
+- If not set, it will fallback to `window.location.origin` (useful for development)
+
+### 2. Configure Email Template in Supabase
+
 To configure the password reset email template in Supabase:
 
 1. Go to your Supabase Dashboard
@@ -122,7 +138,8 @@ Reset Your Password - Ball Four Foundation
 3. **Redirect URL**: Make sure your redirect URL is set correctly in Supabase:
    - Go to **Authentication** → **URL Configuration**
    - Set **Site URL** to your production domain (e.g., `https://yourdomain.com`)
-   - Add your domain to **Redirect URLs** if using a custom domain
+   - Add your domain to **Redirect URLs**: `https://yourdomain.com/reset-password`
+   - Also add `http://localhost:5173/reset-password` for local development (if needed)
 
 4. **Testing**: After configuring the template, test the password reset flow:
    - Go to `/forgot-password` page
