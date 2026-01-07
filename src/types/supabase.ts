@@ -16,6 +16,7 @@ export interface Newsletter {
   email: string
   first_name?: string | null
   last_name?: string | null
+  unsubscribed?: boolean
   created_at?: string
 }
 

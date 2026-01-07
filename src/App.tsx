@@ -13,6 +13,7 @@ import ForgotPassword from './pages/ForgotPassword'
 import ResetPassword from './pages/ResetPassword'
 import AdminDashboard from './pages/AdminDashboard'
 import AddUser from './pages/AddUser'
+import Subscribers from './pages/Subscribers'
 
 function AppContent() {
   const location = useLocation()
@@ -45,6 +46,14 @@ function AppContent() {
             element={
               <ProtectedRoute>
                 <AddUser />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/subscribers"
+            element={
+              <ProtectedRoute>
+                <Subscribers />
               </ProtectedRoute>
             }
           />

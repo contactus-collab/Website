@@ -21,7 +21,7 @@ export default function Newsletter() {
       // Check if email already exists
       const { data: existingSubscriber, error: checkError } = await supabase
         .from('newsletter')
-        .select('email')
+        .select('email, unsubscribed')
         .eq('email', email)
         .single()
 
@@ -31,8 +31,29 @@ export default function Newsletter() {
       }
 
       if (existingSubscriber) {
-        setStatus('exists')
-        setStatusMessage('You are already subscribed to our newsletter!')
+        // Check if they are unsubscribed
+        if (existingSubscriber.unsubscribed) {
+          // Re-subscribe them
+          const { error: updateError } = await supabase
+            .from('newsletter')
+            .update({
+              unsubscribed: false,
+              first_name: firstName,
+              last_name: lastName,
+            })
+            .eq('email', email)
+
+          if (updateError) throw updateError
+
+          setStatus('success')
+          setStatusMessage('Welcome back! You\'ve been re-subscribed to our newsletter.')
+        } else {
+          // Already subscribed
+          setStatus('exists')
+          setStatusMessage('You are already subscribed to our newsletter!')
+        }
+        setFirstName('')
+        setLastName('')
         setEmail('')
         return
       }
@@ -45,6 +66,7 @@ export default function Newsletter() {
             email,
             first_name: firstName,
             last_name: lastName,
+            unsubscribed: false,
             created_at: new Date().toISOString(),
           },
         ])
