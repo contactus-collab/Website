@@ -31,8 +31,13 @@ export default function ForgotPassword() {
     try {
       // Use production URL from environment variable, fallback to current origin for development
       const siteUrl = getBaseSiteUrl()
+      const redirectUrl = `${siteUrl}/reset-password`
+      
+      // Log for debugging (remove in production if needed)
+      console.log('Password reset redirect URL:', redirectUrl)
+      
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${siteUrl}/reset-password`,
+        redirectTo: redirectUrl,
       })
 
       if (error) throw error

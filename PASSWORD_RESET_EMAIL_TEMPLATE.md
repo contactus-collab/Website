@@ -135,11 +135,14 @@ Reset Your Password - Ball Four Foundation
 
 2. **Link Expiration**: Password reset links expire after 1 hour by default in Supabase. You can adjust this in Authentication → Settings.
 
-3. **Redirect URL**: Make sure your redirect URL is set correctly in Supabase:
+3. **Redirect URL - CRITICAL**: Make sure your redirect URL is set correctly in Supabase:
    - Go to **Authentication** → **URL Configuration**
-   - Set **Site URL** to your production domain (e.g., `https://yourdomain.com`)
-   - Add your domain to **Redirect URLs**: `https://yourdomain.com/reset-password`
-   - Also add `http://localhost:5173/reset-password` for local development (if needed)
+   - Set **Site URL** to: `https://www.ballfour.org` (NO trailing slash, NO hash `#`)
+   - Add to **Redirect URLs**:
+     - `https://www.ballfour.org/reset-password` (NO trailing slash, NO hash)
+     - `http://localhost:5173/reset-password` (for local development)
+   - **IMPORTANT**: If your Site URL has a `#` or trailing `/`, Supabase will redirect to the wrong page
+   - The Site URL must be exactly `https://www.ballfour.org` without any `#` or trailing `/`
 
 4. **Testing**: After configuring the template, test the password reset flow:
    - Go to `/forgot-password` page
