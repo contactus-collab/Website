@@ -15,6 +15,7 @@ import AdminDashboard from './pages/AdminDashboard'
 import AddUser from './pages/AddUser'
 import Subscribers from './pages/Subscribers'
 import WebsiteAnalytics from './pages/WebsiteAnalytics'
+import LinkedInAnalytics from './pages/LinkedInAnalytics'
 
 function AppContent() {
   const location = useLocation()
@@ -63,6 +64,14 @@ function AppContent() {
             element={
               <ProtectedRoute>
                 <WebsiteAnalytics />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/marketing/linkedin"
+            element={
+              <ProtectedRoute>
+                <LinkedInAnalytics />
               </ProtectedRoute>
             }
           />

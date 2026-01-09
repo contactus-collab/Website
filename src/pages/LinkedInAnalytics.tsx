@@ -5,6 +5,11 @@ import type { User } from '@supabase/supabase-js'
 import {
   LineChart,
   Line,
+  BarChart,
+  Bar,
+  PieChart,
+  Pie,
+  Cell,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -13,34 +18,29 @@ import {
   ResponsiveContainer,
 } from 'recharts'
 
-interface AnalyticsData {
-  users: number
-  newUsers: number
-  sessions: number
-  pageViews: number
-  eventCount: number
-  bounceRate: number
-  avgSessionDuration: number
-  previousUsers: number
-  totalVisitors: number
-  averageDaily: number
-  peakVisitors: number
-  currentVisitors: number
-  percentageChange: number
-  pageViewsList: Array<{ page: string; title: string; views: number; users: number }>
+interface LinkedInData {
+  followersData: Array<{ date: string; value: number }>
+  distributionData: Array<{ key: string; value: number }>
+  industryDistributionData?: Array<{ key: string; value: number }>
+  metrics: {
+    totalFollowers: number
+    currentFollowers: number
+    previousFollowers: number
+    changePercentage: number
+    peakFollowers: number
+    averageFollowers: number
+  }
   dateRange: { start: string; end: string }
-  previousDateRange: { start: string; end: string }
-  dailyComparisonData?: Array<{ date: string; last7days: number; previous7days: number }>
 }
 
 type DateRangeType = '7days' | '30days' | '60days' | '90days' | 'custom'
 
-export default function WebsiteAnalytics() {
+export default function LinkedInAnalytics() {
   const [currentUser, setCurrentUser] = useState<User | null>(null)
   const [loading, setLoading] = useState<boolean>(true)
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false)
-  const [analyticsData, setAnalyticsData] = useState<AnalyticsData | null>(null)
-  const [loadingAnalytics, setLoadingAnalytics] = useState<boolean>(false)
+  const [linkedInData, setLinkedInData] = useState<LinkedInData | null>(null)
+  const [loadingData, setLoadingData] = useState<boolean>(false)
   const [error, setError] = useState<string | null>(null)
   const [dateRange, setDateRange] = useState<DateRangeType>('7days')
   const [customStartDate, setCustomStartDate] = useState<string>('')
@@ -71,7 +71,7 @@ export default function WebsiteAnalytics() {
       // Only auto-fetch if not using custom date range
       // For custom range, fetch only when Apply button is clicked
       if (dateRange !== 'custom' || (customStartDate && customEndDate)) {
-        fetchAnalyticsData()
+        fetchLinkedInData()
       }
     }
   }, [currentUser, dateRange])
@@ -112,13 +112,13 @@ export default function WebsiteAnalytics() {
     }
   }
 
-  const fetchAnalyticsData = async () => {
-    setLoadingAnalytics(true)
+  const fetchLinkedInData = async () => {
+    setLoadingData(true)
     setError(null)
 
     try {
       const { data: { session } } = await supabase.auth.getSession()
-      if (!session) {
+      if (!session?.user) {
         throw new Error('Not authenticated')
       }
 
@@ -131,7 +131,7 @@ export default function WebsiteAnalytics() {
       }
 
       const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
-      const response = await fetch(`${supabaseUrl}/functions/v1/get-analytics?${params.toString()}`, {
+      const response = await fetch(`${supabaseUrl}/functions/v1/get-linkedin-analytics?${params.toString()}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -143,23 +143,20 @@ export default function WebsiteAnalytics() {
       const result = await response.json()
 
       if (!response.ok || !result.success) {
-        // Don't set analytics data if there's an error
-        throw new Error(result.error || 'Failed to fetch analytics data')
+        throw new Error(result.error || 'Failed to fetch LinkedIn analytics data')
       }
 
-      // Only set data if we have valid analytics data
       if (result.data) {
-        console.log('Analytics data received:', result.data)
-        console.log('Daily comparison data:', result.data.dailyComparisonData)
-        setAnalyticsData(result.data)
+        console.log('LinkedIn data received:', result.data)
+        setLinkedInData(result.data)
       } else {
-        throw new Error('No analytics data available')
+        throw new Error('No LinkedIn analytics data available')
       }
     } catch (err: any) {
-      console.error('Error fetching analytics:', err)
-      setError(err.message || 'Failed to load analytics data. Please try again.')
+      console.error('Error fetching LinkedIn analytics:', err)
+      setError(err.message || 'Failed to load LinkedIn analytics data. Please try again.')
     } finally {
-      setLoadingAnalytics(false)
+      setLoadingData(false)
     }
   }
 
@@ -265,7 +262,7 @@ export default function WebsiteAnalytics() {
                 <span className="text-sm font-medium">Subscribers</span>
               </div>
             </Link>
-            
+
             {/* Marketing Module */}
             <div className="pt-4 border-t border-gray-200">
               <p className="px-4 text-xs text-gray-500 uppercase tracking-wider mb-2">Marketing Module</p>
@@ -296,7 +293,7 @@ export default function WebsiteAnalytics() {
               >
                 <div className="flex items-center gap-3">
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                   </svg>
                   <span className="text-sm font-medium">LinkedIn</span>
                 </div>
@@ -338,35 +335,23 @@ export default function WebsiteAnalytics() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Header */}
-          <div className="bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-xl shadow-lg p-8 mb-8">
+          <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className="bg-white bg-opacity-20 p-3 rounded-full">
-                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              <div>
+                <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-3">
+                  <svg className="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                   </svg>
-                </div>
-                <div>
-                  <h1 className="text-3xl font-bold">Website Analytics</h1>
-                  <p className="text-primary-100 mt-1">Google Analytics data for your website</p>
-                </div>
+                  LinkedIn Analytics
+                </h1>
+                <p className="text-gray-600 mt-1">Track your LinkedIn follower growth and engagement</p>
               </div>
-              <button
-                onClick={fetchAnalyticsData}
-                disabled={loadingAnalytics}
-                className="bg-white text-primary-700 px-4 py-2 rounded-lg font-semibold hover:bg-primary-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-              >
-                <svg className={`w-5 h-5 ${loadingAnalytics ? 'animate-spin' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                </svg>
-                Refresh
-              </button>
             </div>
           </div>
 
           {/* Error Message */}
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-800 px-6 py-4 rounded-lg mb-8">
+            <div className="bg-red-50 border border-red-200 rounded-xl shadow-lg p-4 mb-6">
               <div className="flex items-center gap-3">
                 <svg className="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -379,52 +364,52 @@ export default function WebsiteAnalytics() {
             </div>
           )}
 
-          {/* Analytics Content */}
-          {loadingAnalytics ? (
+          {/* Loading State */}
+          {loadingData ? (
             <div className="bg-white rounded-xl shadow-lg p-12 text-center">
               <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mb-4"></div>
-              <p className="text-gray-600">Loading analytics data...</p>
+              <p className="text-gray-600">Loading LinkedIn analytics data...</p>
             </div>
-          ) : analyticsData && analyticsData.users !== undefined ? (
+          ) : linkedInData ? (
             <div className="space-y-6">
-              {/* Key Metrics - Dashboard Cards */}
+              {/* Key Metrics Cards */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {/* Total Visitors */}
-                <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-green-500 relative overflow-hidden">
-                  <h3 className="text-sm font-semibold text-gray-700 mb-2">Total Visitors</h3>
-                  <p className="text-4xl font-bold text-green-600 mb-1">
-                    {(analyticsData.totalVisitors ?? 0).toLocaleString()}
-                  </p>
-                  <p className="text-sm text-gray-600">Period total</p>
-                </div>
-
-                {/* Average Daily */}
-                <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-blue-500 relative overflow-hidden">
-                  <h3 className="text-sm font-semibold text-gray-700 mb-2">Average Daily</h3>
+                {/* Total Followers */}
+                <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-blue-600 relative overflow-hidden">
+                  <h3 className="text-sm font-semibold text-gray-700 mb-2">Total Followers</h3>
                   <p className="text-4xl font-bold text-blue-600 mb-1">
-                    {(analyticsData.averageDaily ?? 0).toFixed(1)}
+                    {linkedInData.metrics.totalFollowers.toLocaleString()}
                   </p>
-                  <p className="text-sm text-gray-600">Visitors per day</p>
+                  <p className="text-sm text-gray-600">Current followers</p>
                 </div>
 
-                {/* Peak Visitors */}
-                <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-purple-500 relative overflow-hidden">
-                  <h3 className="text-sm font-semibold text-gray-700 mb-2">Peak Visitors</h3>
-                  <p className="text-4xl font-bold text-purple-600 mb-1">
-                    {(analyticsData.peakVisitors ?? 0).toLocaleString()}
+                {/* Average Followers */}
+                <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-blue-500 relative overflow-hidden">
+                  <h3 className="text-sm font-semibold text-gray-700 mb-2">Average</h3>
+                  <p className="text-4xl font-bold text-blue-500 mb-1">
+                    {linkedInData.metrics.averageFollowers.toFixed(1)}
                   </p>
-                  <p className="text-sm text-gray-600">Highest single day</p>
+                  <p className="text-sm text-gray-600">Average followers</p>
                 </div>
 
-                {/* Current */}
+                {/* Peak Followers */}
+                <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-blue-400 relative overflow-hidden">
+                  <h3 className="text-sm font-semibold text-gray-700 mb-2">Peak Followers</h3>
+                  <p className="text-4xl font-bold text-blue-400 mb-1">
+                    {linkedInData.metrics.peakFollowers.toLocaleString()}
+                  </p>
+                  <p className="text-sm text-gray-600">Highest count</p>
+                </div>
+
+                {/* Growth */}
                 <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-green-500 relative overflow-hidden">
-                  <h3 className="text-sm font-semibold text-gray-700 mb-2">Current</h3>
+                  <h3 className="text-sm font-semibold text-gray-700 mb-2">Growth</h3>
                   <p className="text-4xl font-bold text-green-600 mb-1">
-                    {(analyticsData.currentVisitors ?? 0).toLocaleString()}
+                    {linkedInData.metrics.currentFollowers.toLocaleString()}
                   </p>
                   <div className="flex items-center gap-1 mt-1">
                     <svg 
-                      className={`w-3 h-3 ${(analyticsData.percentageChange ?? 0) >= 0 ? 'text-green-500' : 'text-red-500'}`}
+                      className={`w-3 h-3 ${linkedInData.metrics.changePercentage >= 0 ? 'text-green-500' : 'text-red-500'}`}
                       fill="none" 
                       stroke="currentColor" 
                       viewBox="0 0 24 24"
@@ -433,20 +418,21 @@ export default function WebsiteAnalytics() {
                         strokeLinecap="round" 
                         strokeLinejoin="round" 
                         strokeWidth={2} 
-                        d={(analyticsData.percentageChange ?? 0) >= 0 ? "M5 15l7-7 7 7" : "M19 9l-7 7-7-7"} 
+                        d={linkedInData.metrics.changePercentage >= 0 ? "M5 15l7-7 7 7" : "M19 9l-7 7-7-7"} 
                       />
                     </svg>
-                    <span className={`text-sm font-medium ${(analyticsData.percentageChange ?? 0) >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                      {(analyticsData.percentageChange ?? 0) >= 0 ? '+' : ''}{(analyticsData.percentageChange ?? 0).toFixed(1)}%
+                    <span className={`text-sm font-medium ${linkedInData.metrics.changePercentage >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                      {linkedInData.metrics.changePercentage >= 0 ? '+' : ''}{linkedInData.metrics.changePercentage.toFixed(1)}%
                     </span>
                   </div>
+                  <p className="text-xs text-gray-500 mt-1">vs period start</p>
                 </div>
               </div>
 
-              {/* Comparison Graph - Last 7 days vs Previous period (Like Google Analytics Dashboard) */}
+              {/* Followers Growth Chart */}
               <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
-                  <h3 className="text-lg font-semibold text-gray-900">Active Users</h3>
+                  <h3 className="text-lg font-semibold text-gray-900">Followers Over Time</h3>
                   <div className="flex flex-col sm:flex-row gap-3">
                     {dateRange === 'custom' && (
                       <div className="flex gap-2 items-center">
@@ -466,7 +452,7 @@ export default function WebsiteAnalytics() {
                         <button
                           onClick={() => {
                             if (customStartDate && customEndDate) {
-                              fetchAnalyticsData()
+                              fetchLinkedInData()
                             }
                           }}
                           className="px-4 py-2 bg-primary-600 text-white rounded-lg text-sm hover:bg-primary-700 transition-colors"
@@ -495,11 +481,11 @@ export default function WebsiteAnalytics() {
                     </select>
                   </div>
                 </div>
-                {analyticsData.dailyComparisonData && analyticsData.dailyComparisonData.length > 0 ? (
+                {linkedInData.followersData && linkedInData.followersData.length > 0 ? (
                   <div style={{ width: '100%', height: '400px', minHeight: '400px' }}>
                     <ResponsiveContainer width="100%" height="100%">
                       <LineChart 
-                        data={analyticsData.dailyComparisonData} 
+                        data={linkedInData.followersData} 
                         margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
                       >
                         <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
@@ -511,11 +497,12 @@ export default function WebsiteAnalytics() {
                         <YAxis 
                           tick={{ fontSize: 12, fill: '#6b7280' }}
                           stroke="#9ca3af"
-                          domain={[0, (dataMax: number) => Math.max(dataMax + 2, 5)]}
+                          domain={['dataMin - 1', 'dataMax + 1']}
                         />
                         <Tooltip 
                           contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb', borderRadius: '8px' }}
                           formatter={(value: number | undefined) => value !== undefined ? value.toLocaleString() : '0'}
+                          labelStyle={{ fontWeight: 600 }}
                         />
                         <Legend 
                           wrapperStyle={{ paddingTop: '20px' }}
@@ -523,25 +510,11 @@ export default function WebsiteAnalytics() {
                         />
                         <Line 
                           type="monotone" 
-                          dataKey="last7days" 
-                          stroke="#4285f4" 
+                          dataKey="value" 
+                          stroke="#0077b5" 
                           strokeWidth={3}
-                          name={
-                            dateRange === 'custom' 
-                              ? 'Selected period' 
-                              : `Last ${dateRange.replace('days', '')} days`
-                          }
-                          dot={{ r: 4, fill: '#4285f4' }}
-                          activeDot={{ r: 6 }}
-                        />
-                        <Line 
-                          type="monotone" 
-                          dataKey="previous7days" 
-                          stroke="#4285f4" 
-                          strokeWidth={2}
-                          strokeDasharray="5 5"
-                          name="Previous period"
-                          dot={{ r: 4, fill: '#4285f4' }}
+                          name="Followers"
+                          dot={{ r: 4, fill: '#0077b5' }}
                           activeDot={{ r: 6 }}
                         />
                       </LineChart>
@@ -549,57 +522,189 @@ export default function WebsiteAnalytics() {
                   </div>
                 ) : (
                   <div className="h-[400px] flex flex-col items-center justify-center text-gray-500">
-                    <p className="mb-2">No comparison data available</p>
-                    {analyticsData && (
-                      <p className="text-xs text-gray-400">
-                        dailyComparisonData: {analyticsData.dailyComparisonData ? `exists (length: ${analyticsData.dailyComparisonData.length})` : 'missing'}
-                      </p>
-                    )}
+                    <p className="mb-2">No followers data available</p>
                   </div>
                 )}
               </div>
 
-              {/* Page Views List */}
-              {analyticsData.pageViewsList && analyticsData.pageViewsList.length > 0 && (
+              {/* Follower Distribution by Function */}
+              {linkedInData.distributionData && linkedInData.distributionData.length > 0 && (
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  {/* Pie Chart */}
+                  <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-6">Followers by Function</h3>
+                    <div style={{ width: '100%', height: '400px', minHeight: '400px' }}>
+                      <ResponsiveContainer width="100%" height="100%">
+                        <PieChart>
+                          <Pie
+                            data={linkedInData.distributionData.slice(0, 10)}
+                            cx="50%"
+                            cy="45%"
+                            labelLine={false}
+                            label={({ key, percent }) => {
+                              if (percent < 0.05) return '' // Don't show labels for slices less than 5%
+                              const displayKey = key.length > 15 ? `${key.substring(0, 15)}...` : key
+                              return `${displayKey}: ${(percent * 100).toFixed(1)}%`
+                            }}
+                            outerRadius={110}
+                            fill="#8884d8"
+                            dataKey="value"
+                          >
+                            {linkedInData.distributionData.slice(0, 10).map((entry, index) => {
+                              const colors = [
+                                '#0077b5', '#00a0dc', '#008cc9', '#006699', '#004d73',
+                                '#5f9ea0', '#4682b4', '#6b8e23', '#b8860b', '#cd853f'
+                              ]
+                              return <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
+                            })}
+                          </Pie>
+                          <Tooltip 
+                            formatter={(value: number, name: string, props: any) => [
+                              `${value.toFixed(2)}%`,
+                              props.payload.key
+                            ]}
+                            contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb', borderRadius: '8px' }}
+                          />
+                          <Legend 
+                            wrapperStyle={{ paddingTop: '20px', fontSize: '12px' }}
+                            formatter={(value) => {
+                              const displayValue = value.length > 20 ? `${value.substring(0, 20)}...` : value
+                              return displayValue
+                            }}
+                          />
+                        </PieChart>
+                      </ResponsiveContainer>
+                    </div>
+                  </div>
+
+                  {/* Bar Chart */}
+                  <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-6">Top Functions Distribution</h3>
+                    <div style={{ width: '100%', height: '400px', minHeight: '400px' }}>
+                      <ResponsiveContainer width="100%" height="100%">
+                        <BarChart 
+                          data={linkedInData.distributionData.slice(0, 15)}
+                          margin={{ top: 5, right: 30, left: 20, bottom: 80 }}
+                        >
+                          <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                          <XAxis 
+                            dataKey="key" 
+                            tick={{ fontSize: 11, fill: '#6b7280' }}
+                            angle={-45}
+                            textAnchor="end"
+                            height={100}
+                            stroke="#9ca3af"
+                          />
+                          <YAxis 
+                            tick={{ fontSize: 12, fill: '#6b7280' }}
+                            stroke="#9ca3af"
+                            label={{ value: 'Percentage (%)', angle: -90, position: 'insideLeft' }}
+                          />
+                          <Tooltip 
+                            contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb', borderRadius: '8px' }}
+                            formatter={(value: number) => `${value.toFixed(2)}%`}
+                            labelStyle={{ fontWeight: 600 }}
+                          />
+                          <Legend />
+                          <Bar 
+                            dataKey="value" 
+                            fill="#0077b5" 
+                            radius={[8, 8, 0, 0]}
+                            name="Percentage"
+                          />
+                        </BarChart>
+                      </ResponsiveContainer>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Industry Distribution Bar Chart */}
+              {linkedInData.industryDistributionData && linkedInData.industryDistributionData.length > 0 && (
                 <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-6">Page Views by Page</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-6">Follower Distribution by Industry</h3>
+                  <div style={{ width: '100%', height: '500px', minHeight: '500px' }}>
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart 
+                        data={linkedInData.industryDistributionData}
+                        layout="vertical"
+                        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                      >
+                        <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#e5e7eb" />
+                        <XAxis 
+                          type="number" 
+                          tick={{ fontSize: 12, fill: '#6b7280' }} 
+                          stroke="#9ca3af"
+                          label={{ value: 'Percentage (%)', position: 'insideBottom', offset: -5 }}
+                        />
+                        <YAxis 
+                          type="category" 
+                          dataKey="key" 
+                          tick={{ fontSize: 11, fill: '#6b7280' }} 
+                          stroke="#9ca3af" 
+                          width={200}
+                          interval={0}
+                        />
+                        <Tooltip 
+                          contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb', borderRadius: '8px' }}
+                          formatter={(value: number) => `${value.toFixed(2)}%`}
+                          labelStyle={{ fontWeight: 600 }}
+                        />
+                        <Legend />
+                        <Bar 
+                          dataKey="value" 
+                          fill="#0077b5" 
+                          radius={[0, 8, 8, 0]}
+                          name="Percentage (%)"
+                        />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+                </div>
+              )}
+
+              {/* All Functions List */}
+              {linkedInData.distributionData && linkedInData.distributionData.length > 0 && (
+                <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-6">Complete Function Distribution</h3>
                   <div className="overflow-x-auto">
                     <table className="min-w-full divide-y divide-gray-200">
                       <thead className="bg-gray-50">
                         <tr>
                           <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                            Page
+                            Function
                           </th>
                           <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                            Page Title
+                            Percentage
                           </th>
                           <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                            Views
-                          </th>
-                          <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                            Users
+                            Visual
                           </th>
                         </tr>
                       </thead>
                       <tbody className="bg-white divide-y divide-gray-200">
-                        {analyticsData.pageViewsList.map((page, index) => (
+                        {linkedInData.distributionData.map((item, index) => (
                           <tr key={index} className="hover:bg-gray-50 transition-colors">
                             <td className="px-6 py-4 whitespace-nowrap">
                               <div className="flex items-center gap-3">
-                                <div className="bg-primary-100 text-primary-700 w-8 h-8 rounded-full flex items-center justify-center font-semibold text-sm">
+                                <div className="bg-blue-100 text-blue-700 w-8 h-8 rounded-full flex items-center justify-center font-semibold text-sm">
                                   {index + 1}
                                 </div>
-                                <span className="text-sm font-medium text-gray-900">{page.page}</span>
+                                <span className="text-sm font-medium text-gray-900">{item.key}</span>
                               </div>
                             </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <span className="text-sm font-semibold text-gray-900">{item.value.toFixed(2)}%</span>
+                            </td>
                             <td className="px-6 py-4">
-                              <span className="text-sm text-gray-600">{page.title}</span>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className="text-sm font-semibold text-gray-900">{page.views.toLocaleString()}</span>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className="text-sm text-gray-600">{page.users.toLocaleString()}</span>
+                              <div className="flex items-center gap-2">
+                                <div className="w-full bg-gray-200 rounded-full h-2.5 max-w-xs">
+                                  <div
+                                    className="bg-blue-600 h-2.5 rounded-full"
+                                    style={{ width: `${item.value}%` }}
+                                  ></div>
+                                </div>
+                              </div>
                             </td>
                           </tr>
                         ))}
@@ -611,22 +716,15 @@ export default function WebsiteAnalytics() {
             </div>
           ) : (
             <div className="bg-white rounded-xl shadow-lg p-12 text-center">
-              <svg className="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              <svg className="w-16 h-16 text-gray-400 mx-auto mb-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
               </svg>
-              <p className="text-gray-600 mb-2 font-semibold">No Analytics Data Available</p>
+              <p className="text-gray-600 mb-2 font-semibold">No LinkedIn Analytics Data Available</p>
               <p className="text-sm text-gray-500 mb-4">
                 {error 
-                  ? 'Google Analytics API integration is required. Please complete the setup following the guide.'
-                  : 'Please complete the Google Analytics API integration to view data.'}
+                  ? 'Metricool API integration is required. Please complete the setup.'
+                  : 'Please complete the Metricool API integration to view data.'}
               </p>
-              {error && (
-                <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg text-left max-w-md mx-auto">
-                  <p className="text-sm text-blue-800">
-                    <strong>Setup Required:</strong> See <code className="bg-blue-100 px-2 py-1 rounded">GOOGLE_ANALYTICS_SETUP.md</code> for instructions on configuring the Google Analytics API.
-                  </p>
-                </div>
-              )}
             </div>
           )}
         </div>
