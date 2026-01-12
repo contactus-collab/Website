@@ -45,6 +45,8 @@ export default function WebsiteAnalytics() {
   const [dateRange, setDateRange] = useState<DateRangeType>('7days')
   const [customStartDate, setCustomStartDate] = useState<string>('')
   const [customEndDate, setCustomEndDate] = useState<string>('')
+  const [currentPage, setCurrentPage] = useState<number>(1)
+  const [itemsPerPage] = useState<number>(10)
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -152,6 +154,7 @@ export default function WebsiteAnalytics() {
         console.log('Analytics data received:', result.data)
         console.log('Daily comparison data:', result.data.dailyComparisonData)
         setAnalyticsData(result.data)
+        setCurrentPage(1) // Reset to first page when new data is loaded
       } else {
         throw new Error('No analytics data available')
       }
@@ -560,54 +563,133 @@ export default function WebsiteAnalytics() {
               </div>
 
               {/* Page Views List */}
-              {analyticsData.pageViewsList && analyticsData.pageViewsList.length > 0 && (
-                <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-6">Page Views by Page</h3>
-                  <div className="overflow-x-auto">
-                    <table className="min-w-full divide-y divide-gray-200">
-                      <thead className="bg-gray-50">
-                        <tr>
-                          <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                            Page
-                          </th>
-                          <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                            Page Title
-                          </th>
-                          <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                            Views
-                          </th>
-                          <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                            Users
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody className="bg-white divide-y divide-gray-200">
-                        {analyticsData.pageViewsList.map((page, index) => (
-                          <tr key={index} className="hover:bg-gray-50 transition-colors">
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="flex items-center gap-3">
-                                <div className="bg-primary-100 text-primary-700 w-8 h-8 rounded-full flex items-center justify-center font-semibold text-sm">
-                                  {index + 1}
-                                </div>
-                                <span className="text-sm font-medium text-gray-900">{page.page}</span>
-                              </div>
-                            </td>
-                            <td className="px-6 py-4">
-                              <span className="text-sm text-gray-600">{page.title}</span>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className="text-sm font-semibold text-gray-900">{page.views.toLocaleString()}</span>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className="text-sm text-gray-600">{page.users.toLocaleString()}</span>
-                            </td>
+              {analyticsData.pageViewsList && analyticsData.pageViewsList.length > 0 && (() => {
+                const totalPages = Math.ceil(analyticsData.pageViewsList.length / itemsPerPage)
+                const startIndex = (currentPage - 1) * itemsPerPage
+                const endIndex = startIndex + itemsPerPage
+                const paginatedData = analyticsData.pageViewsList.slice(startIndex, endIndex)
+                
+                return (
+                  <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+                    <div className="flex items-center justify-between mb-6">
+                      <h3 className="text-lg font-semibold text-gray-900">Page Views by Page</h3>
+                      <span className="text-sm text-gray-600">
+                        Showing {startIndex + 1}-{Math.min(endIndex, analyticsData.pageViewsList.length)} of {analyticsData.pageViewsList.length}
+                      </span>
+                    </div>
+                    <div className="overflow-x-auto">
+                      <table className="min-w-full divide-y divide-gray-200">
+                        <thead className="bg-gray-50">
+                          <tr>
+                            <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                              Page
+                            </th>
+                            <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                              Page Title
+                            </th>
+                            <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                              Views
+                            </th>
+                            <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                              Users
+                            </th>
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                        </thead>
+                        <tbody className="bg-white divide-y divide-gray-200">
+                          {paginatedData.map((page, index) => (
+                            <tr key={startIndex + index} className="hover:bg-gray-50 transition-colors">
+                              <td className="px-6 py-4 whitespace-nowrap">
+                                <div className="flex items-center gap-3">
+                                  <div className="bg-primary-100 text-primary-700 w-8 h-8 rounded-full flex items-center justify-center font-semibold text-sm">
+                                    {startIndex + index + 1}
+                                  </div>
+                                  <span className="text-sm font-medium text-gray-900">{page.page}</span>
+                                </div>
+                              </td>
+                              <td className="px-6 py-4">
+                                <span className="text-sm text-gray-600">{page.title}</span>
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap">
+                                <span className="text-sm font-semibold text-gray-900">{page.views.toLocaleString()}</span>
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap">
+                                <span className="text-sm text-gray-600">{page.users.toLocaleString()}</span>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                    
+                    {/* Pagination Controls */}
+                    {totalPages > 1 && (
+                      <div className="mt-6 flex items-center justify-between border-t border-gray-200 pt-4">
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                            disabled={currentPage === 1}
+                            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                              currentPage === 1
+                                ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                                : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
+                            }`}
+                          >
+                            Previous
+                          </button>
+                          <div className="flex items-center gap-1">
+                            {Array.from({ length: totalPages }, (_, i) => i + 1)
+                              .filter(page => {
+                                // Show first page, last page, current page, and pages around current
+                                return (
+                                  page === 1 ||
+                                  page === totalPages ||
+                                  (page >= currentPage - 1 && page <= currentPage + 1)
+                                )
+                              })
+                              .map((page, index, array) => {
+                                // Add ellipsis if there's a gap
+                                const prevPage = array[index - 1]
+                                const showEllipsis = prevPage && page - prevPage > 1
+                                
+                                return (
+                                  <div key={page} className="flex items-center gap-1">
+                                    {showEllipsis && (
+                                      <span className="px-2 text-gray-500">...</span>
+                                    )}
+                                    <button
+                                      onClick={() => setCurrentPage(page)}
+                                      className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                                        currentPage === page
+                                          ? 'bg-primary-600 text-white'
+                                          : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
+                                      }`}
+                                    >
+                                      {page}
+                                    </button>
+                                  </div>
+                                )
+                              })}
+                          </div>
+                          <button
+                            onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                            disabled={currentPage === totalPages}
+                            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                              currentPage === totalPages
+                                ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                                : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
+                            }`}
+                          >
+                            Next
+                          </button>
+                        </div>
+                        <div className="text-sm text-gray-600">
+                          Page {currentPage} of {totalPages}
+                        </div>
+                      </div>
+                    )}
                   </div>
-                </div>
-              )}
+                )
+              })()}
             </div>
           ) : (
             <div className="bg-white rounded-xl shadow-lg p-12 text-center">

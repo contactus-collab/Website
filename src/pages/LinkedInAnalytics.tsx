@@ -45,6 +45,8 @@ export default function LinkedInAnalytics() {
   const [dateRange, setDateRange] = useState<DateRangeType>('7days')
   const [customStartDate, setCustomStartDate] = useState<string>('')
   const [customEndDate, setCustomEndDate] = useState<string>('')
+  const [currentPage, setCurrentPage] = useState<number>(1)
+  const [itemsPerPage] = useState<number>(10)
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -149,6 +151,7 @@ export default function LinkedInAnalytics() {
       if (result.data) {
         console.log('LinkedIn data received:', result.data)
         setLinkedInData(result.data)
+        setCurrentPage(1) // Reset to first page when new data is loaded
       } else {
         throw new Error('No LinkedIn analytics data available')
       }
@@ -577,142 +580,181 @@ export default function LinkedInAnalytics() {
                     </div>
                   </div>
 
-                  {/* Bar Chart */}
-                  <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-6">Top Functions Distribution</h3>
-                    <div style={{ width: '100%', height: '400px', minHeight: '400px' }}>
-                      <ResponsiveContainer width="100%" height="100%">
-                        <BarChart 
-                          data={linkedInData.distributionData.slice(0, 15)}
-                          margin={{ top: 5, right: 30, left: 20, bottom: 80 }}
-                        >
-                          <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                          <XAxis 
-                            dataKey="key" 
-                            tick={{ fontSize: 11, fill: '#6b7280' }}
-                            angle={-45}
-                            textAnchor="end"
-                            height={100}
-                            stroke="#9ca3af"
-                          />
-                          <YAxis 
-                            tick={{ fontSize: 12, fill: '#6b7280' }}
-                            stroke="#9ca3af"
-                            label={{ value: 'Percentage (%)', angle: -90, position: 'insideLeft' }}
-                          />
-                          <Tooltip 
-                            contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb', borderRadius: '8px' }}
-                            formatter={(value: number) => `${value.toFixed(2)}%`}
-                            labelStyle={{ fontWeight: 600 }}
-                          />
-                          <Legend />
-                          <Bar 
-                            dataKey="value" 
-                            fill="#0077b5" 
-                            radius={[8, 8, 0, 0]}
-                            name="Percentage"
-                          />
-                        </BarChart>
-                      </ResponsiveContainer>
+                  {/* Industry Distribution Bar Chart */}
+                  {linkedInData.industryDistributionData && linkedInData.industryDistributionData.length > 0 && (
+                    <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-6">Follower Distribution by Industry</h3>
+                      <div style={{ width: '100%', height: '400px', minHeight: '400px' }}>
+                        <ResponsiveContainer width="100%" height="100%">
+                          <BarChart 
+                            data={linkedInData.industryDistributionData}
+                            layout="vertical"
+                            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                          >
+                            <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#e5e7eb" />
+                            <XAxis 
+                              type="number" 
+                              tick={{ fontSize: 12, fill: '#6b7280' }} 
+                              stroke="#9ca3af"
+                              label={{ value: 'Percentage (%)', position: 'insideBottom', offset: -5 }}
+                            />
+                            <YAxis 
+                              type="category" 
+                              dataKey="key" 
+                              tick={{ fontSize: 11, fill: '#6b7280' }} 
+                              stroke="#9ca3af" 
+                              width={200}
+                              interval={0}
+                            />
+                            <Tooltip 
+                              contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb', borderRadius: '8px' }}
+                              formatter={(value: number) => `${value.toFixed(2)}%`}
+                              labelStyle={{ fontWeight: 600 }}
+                            />
+                            <Legend />
+                            <Bar 
+                              dataKey="value" 
+                              fill="#0077b5" 
+                              radius={[0, 8, 8, 0]}
+                              name="Percentage (%)"
+                            />
+                          </BarChart>
+                        </ResponsiveContainer>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Industry Distribution Bar Chart */}
-              {linkedInData.industryDistributionData && linkedInData.industryDistributionData.length > 0 && (
-                <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-6">Follower Distribution by Industry</h3>
-                  <div style={{ width: '100%', height: '500px', minHeight: '500px' }}>
-                    <ResponsiveContainer width="100%" height="100%">
-                      <BarChart 
-                        data={linkedInData.industryDistributionData}
-                        layout="vertical"
-                        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-                      >
-                        <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#e5e7eb" />
-                        <XAxis 
-                          type="number" 
-                          tick={{ fontSize: 12, fill: '#6b7280' }} 
-                          stroke="#9ca3af"
-                          label={{ value: 'Percentage (%)', position: 'insideBottom', offset: -5 }}
-                        />
-                        <YAxis 
-                          type="category" 
-                          dataKey="key" 
-                          tick={{ fontSize: 11, fill: '#6b7280' }} 
-                          stroke="#9ca3af" 
-                          width={200}
-                          interval={0}
-                        />
-                        <Tooltip 
-                          contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb', borderRadius: '8px' }}
-                          formatter={(value: number) => `${value.toFixed(2)}%`}
-                          labelStyle={{ fontWeight: 600 }}
-                        />
-                        <Legend />
-                        <Bar 
-                          dataKey="value" 
-                          fill="#0077b5" 
-                          radius={[0, 8, 8, 0]}
-                          name="Percentage (%)"
-                        />
-                      </BarChart>
-                    </ResponsiveContainer>
-                  </div>
+                  )}
                 </div>
               )}
 
               {/* All Functions List */}
-              {linkedInData.distributionData && linkedInData.distributionData.length > 0 && (
-                <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-6">Complete Function Distribution</h3>
-                  <div className="overflow-x-auto">
-                    <table className="min-w-full divide-y divide-gray-200">
-                      <thead className="bg-gray-50">
-                        <tr>
-                          <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                            Function
-                          </th>
-                          <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                            Percentage
-                          </th>
-                          <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                            Visual
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody className="bg-white divide-y divide-gray-200">
-                        {linkedInData.distributionData.map((item, index) => (
-                          <tr key={index} className="hover:bg-gray-50 transition-colors">
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="flex items-center gap-3">
-                                <div className="bg-blue-100 text-blue-700 w-8 h-8 rounded-full flex items-center justify-center font-semibold text-sm">
-                                  {index + 1}
-                                </div>
-                                <span className="text-sm font-medium text-gray-900">{item.key}</span>
-                              </div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className="text-sm font-semibold text-gray-900">{item.value.toFixed(2)}%</span>
-                            </td>
-                            <td className="px-6 py-4">
-                              <div className="flex items-center gap-2">
-                                <div className="w-full bg-gray-200 rounded-full h-2.5 max-w-xs">
-                                  <div
-                                    className="bg-blue-600 h-2.5 rounded-full"
-                                    style={{ width: `${item.value}%` }}
-                                  ></div>
-                                </div>
-                              </div>
-                            </td>
+              {linkedInData.distributionData && linkedInData.distributionData.length > 0 && (() => {
+                const totalPages = Math.ceil(linkedInData.distributionData.length / itemsPerPage)
+                const startIndex = (currentPage - 1) * itemsPerPage
+                const endIndex = startIndex + itemsPerPage
+                const paginatedData = linkedInData.distributionData.slice(startIndex, endIndex)
+                
+                return (
+                  <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+                    <div className="flex items-center justify-between mb-6">
+                      <h3 className="text-lg font-semibold text-gray-900">Complete Function Distribution</h3>
+                      <span className="text-sm text-gray-600">
+                        Showing {startIndex + 1}-{Math.min(endIndex, linkedInData.distributionData.length)} of {linkedInData.distributionData.length}
+                      </span>
+                    </div>
+                    <div className="overflow-x-auto">
+                      <table className="min-w-full divide-y divide-gray-200">
+                        <thead className="bg-gray-50">
+                          <tr>
+                            <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                              Function
+                            </th>
+                            <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                              Percentage
+                            </th>
+                            <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                              Visual
+                            </th>
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                        </thead>
+                        <tbody className="bg-white divide-y divide-gray-200">
+                          {paginatedData.map((item, index) => (
+                            <tr key={startIndex + index} className="hover:bg-gray-50 transition-colors">
+                              <td className="px-6 py-4 whitespace-nowrap">
+                                <div className="flex items-center gap-3">
+                                  <div className="bg-blue-100 text-blue-700 w-8 h-8 rounded-full flex items-center justify-center font-semibold text-sm">
+                                    {startIndex + index + 1}
+                                  </div>
+                                  <span className="text-sm font-medium text-gray-900">{item.key}</span>
+                                </div>
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap">
+                                <span className="text-sm font-semibold text-gray-900">{item.value.toFixed(2)}%</span>
+                              </td>
+                              <td className="px-6 py-4">
+                                <div className="flex items-center gap-2">
+                                  <div className="w-full bg-gray-200 rounded-full h-2.5 max-w-xs">
+                                    <div
+                                      className="bg-blue-600 h-2.5 rounded-full"
+                                      style={{ width: `${item.value}%` }}
+                                    ></div>
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                    
+                    {/* Pagination Controls */}
+                    {totalPages > 1 && (
+                      <div className="mt-6 flex items-center justify-between border-t border-gray-200 pt-4">
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                            disabled={currentPage === 1}
+                            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                              currentPage === 1
+                                ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                                : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
+                            }`}
+                          >
+                            Previous
+                          </button>
+                          <div className="flex items-center gap-1">
+                            {Array.from({ length: totalPages }, (_, i) => i + 1)
+                              .filter(page => {
+                                // Show first page, last page, current page, and pages around current
+                                return (
+                                  page === 1 ||
+                                  page === totalPages ||
+                                  (page >= currentPage - 1 && page <= currentPage + 1)
+                                )
+                              })
+                              .map((page, index, array) => {
+                                // Add ellipsis if there's a gap
+                                const prevPage = array[index - 1]
+                                const showEllipsis = prevPage && page - prevPage > 1
+                                
+                                return (
+                                  <div key={page} className="flex items-center gap-1">
+                                    {showEllipsis && (
+                                      <span className="px-2 text-gray-500">...</span>
+                                    )}
+                                    <button
+                                      onClick={() => setCurrentPage(page)}
+                                      className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                                        currentPage === page
+                                          ? 'bg-blue-600 text-white'
+                                          : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
+                                      }`}
+                                    >
+                                      {page}
+                                    </button>
+                                  </div>
+                                )
+                              })}
+                          </div>
+                          <button
+                            onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                            disabled={currentPage === totalPages}
+                            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                              currentPage === totalPages
+                                ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                                : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
+                            }`}
+                          >
+                            Next
+                          </button>
+                        </div>
+                        <div className="text-sm text-gray-600">
+                          Page {currentPage} of {totalPages}
+                        </div>
+                      </div>
+                    )}
                   </div>
-                </div>
-              )}
+                )
+              })()}
             </div>
           ) : (
             <div className="bg-white rounded-xl shadow-lg p-12 text-center">
