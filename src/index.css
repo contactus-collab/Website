@@ -11,3 +11,144 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* WordPress Content Styling */
+.wordpress-content {
+  line-height: 1.8;
+}
+
+.wordpress-content p {
+  margin-bottom: 1.25rem;
+}
+
+.wordpress-content h1,
+.wordpress-content h2,
+.wordpress-content h3,
+.wordpress-content h4,
+.wordpress-content h5,
+.wordpress-content h6 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.wordpress-content h1 {
+  font-size: 2.25rem;
+}
+
+.wordpress-content h2 {
+  font-size: 1.875rem;
+}
+
+.wordpress-content h3 {
+  font-size: 1.5rem;
+}
+
+.wordpress-content h4 {
+  font-size: 1.25rem;
+}
+
+.wordpress-content ul,
+.wordpress-content ol {
+  margin: 1.5rem 0;
+  padding-left: 2rem;
+}
+
+.wordpress-content li {
+  margin: 0.5rem 0;
+}
+
+.wordpress-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  margin: 2rem 0;
+}
+
+.wordpress-content a {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.wordpress-content a:hover {
+  text-decoration: underline;
+}
+
+.wordpress-content blockquote {
+  border-left: 4px solid #2563eb;
+  padding-left: 1rem;
+  margin: 2rem 0;
+  font-style: italic;
+  color: #374151;
+}
+
+.wordpress-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+}
+
+.wordpress-content table th,
+.wordpress-content table td {
+  border: 1px solid #d1d5db;
+  padding: 0.75rem;
+  text-align: left;
+}
+
+.wordpress-content table th {
+  background-color: #f3f4f6;
+  font-weight: 600;
+  color: #111827;
+}
+
+.wordpress-content code {
+  background-color: #eff6ff;
+  color: #1e40af;
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  font-family: 'Courier New', monospace;
+}
+
+.wordpress-content pre {
+  background-color: #111827;
+  color: #f3f4f6;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+}
+
+.wordpress-content pre code {
+  background-color: transparent;
+  color: inherit;
+  padding: 0;
+}
+
+.wordpress-content hr {
+  border: none;
+  border-top: 1px solid #d1d5db;
+  margin: 2rem 0;
+}
+
+.wordpress-content iframe,
+.wordpress-content video,
+.wordpress-content embed {
+  max-width: 100%;
+  margin: 2rem 0;
+  border-radius: 0.5rem;
+}
+
+.wordpress-content figure {
+  margin: 2rem 0;
+}
+
+.wordpress-content figcaption {
+  text-align: center;
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-top: 0.5rem;
+}
+

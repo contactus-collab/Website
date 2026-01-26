@@ -7,6 +7,8 @@ import Purpose from './pages/Purpose'
 import Resources from './pages/Resources'
 import Notes from './pages/Notes'
 import ArticleDetail from './pages/ArticleDetail'
+import Understand from './pages/Understand'
+import WordPressArticleDetail from './pages/WordPressArticleDetail'
 import NewsletterPage from './pages/NewsletterPage'
 import Login from './pages/Login'
 import ForgotPassword from './pages/ForgotPassword'
@@ -31,6 +33,8 @@ function AppContent() {
           <Route path="/resources" element={<Resources />} />
           <Route path="/notes" element={<Notes />} />
           <Route path="/notes/:id" element={<ArticleDetail />} />
+          <Route path="/understand" element={<Understand />} />
+          <Route path="/understand/:id" element={<WordPressArticleDetail />} />
           <Route path="/newsletter" element={<NewsletterPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />

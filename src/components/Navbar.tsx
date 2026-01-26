@@ -39,6 +39,12 @@ export default function Navbar() {
               Notes
             </Link>
             <Link
+              to="/understand"
+              className="text-gray-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors"
+            >
+              Understand
+            </Link>
+            <Link
               to="/newsletter"
               className="text-gray-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors"
             >
@@ -104,6 +110,13 @@ export default function Navbar() {
               onClick={() => setIsOpen(false)}
             >
               Notes
+            </Link>
+            <Link
+              to="/understand"
+              className="block px-3 py-2 text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-md text-base font-medium"
+              onClick={() => setIsOpen(false)}
+            >
+              Understand
             </Link>
             <Link
               to="/newsletter"
