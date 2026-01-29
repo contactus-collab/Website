@@ -299,6 +299,22 @@ export default function AddUser() {
                 <span className="text-sm font-medium">Subscribers</span>
               </div>
             </Link>
+            <Link
+              to="/admin/email-campaign"
+              className={`block px-4 py-3 rounded-lg transition-colors ${
+                location.pathname === '/admin/email-campaign'
+                  ? 'bg-primary-50 border-l-4 border-primary-600 text-primary-700 font-semibold'
+                  : 'text-gray-700 hover:bg-gray-50'
+              }`}
+              onClick={() => setSidebarOpen(false)}
+            >
+              <div className="flex items-center gap-3">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                <span className="text-sm font-medium">Email Campaign</span>
+              </div>
+            </Link>
             
             {/* Marketing Module */}
             <div className="pt-4 border-t border-gray-200">

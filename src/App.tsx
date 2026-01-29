@@ -18,6 +18,7 @@ import AddUser from './pages/AddUser'
 import Subscribers from './pages/Subscribers'
 import WebsiteAnalytics from './pages/WebsiteAnalytics'
 import LinkedInAnalytics from './pages/LinkedInAnalytics'
+import EmailCampaign from './pages/EmailCampaign'
 
 function AppContent() {
   const location = useLocation()
@@ -60,6 +61,14 @@ function AppContent() {
             element={
               <ProtectedRoute>
                 <Subscribers />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/email-campaign"
+            element={
+              <ProtectedRoute>
+                <EmailCampaign />
               </ProtectedRoute>
             }
           />
