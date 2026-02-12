@@ -7,6 +7,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Plus Jakarta Sans', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+      },
       colors: {
         primary: {
           50: '#f0f9ff',
@@ -20,6 +23,20 @@ const config: Config = {
           800: '#075985',
           900: '#0c4a6e',
         },
+        brand: {
+          blue: '#2D66B4',
+          primaryBlue: '#0F006A',
+          purple: '#5F27CD',
+          'purple-dark': '#0F006A',
+          'purple-light': '#f5f0ff',
+          'purple-deep': '#5236CC',
+          'purple-pill': '#DBD3F5',
+          'mission-bg': '#F6F3FD',
+        },
+      },
+      borderRadius: {
+        squircle: '2rem',
+        'squircle-lg': '2.5rem',
       },
     },
   },

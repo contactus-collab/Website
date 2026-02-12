@@ -7,6 +7,7 @@ export interface Note {
   content?: string | null
   date?: string | null
   featured?: boolean
+  image_url?: string | null
   created_at?: string
   updated_at?: string
 }

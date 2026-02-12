@@ -140,28 +140,6 @@ export default function WordPressArticleDetail() {
     <div className="min-h-screen bg-gray-50">
       <article className="py-16 px-4">
         <div className="max-w-4xl mx-auto">
-          {/* Back Button */}
-          <Link
-            to="/understand"
-            className="inline-flex items-center gap-2 text-primary-600 hover:text-primary-700 font-semibold mb-8 transition-colors"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-            Back to Understand
-          </Link>
-
-          {/* Featured Image */}
-          {featuredImage && (
-            <div className="relative h-64 md:h-96 overflow-hidden rounded-xl mb-8">
-              <img
-                src={featuredImage}
-                alt={post._embedded?.['wp:featuredmedia']?.[0]?.alt_text || decodeHtmlEntities(post.title.rendered)}
-                className="w-full h-full object-cover"
-              />
-            </div>
-          )}
-
           {/* Article Header */}
           <header className="mb-8">
             <div className="flex items-center gap-3 text-gray-500 mb-4">
@@ -170,16 +148,39 @@ export default function WordPressArticleDetail() {
               </svg>
               <time>{formatDate(post.date)}</time>
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+            <h1
+              className="mb-6"
+              style={{
+                color: 'var(--sds-color-text-default-default)',
+                fontFamily: '"Plus Jakarta Sans", sans-serif',
+                fontSize: '62px',
+                fontStyle: 'normal',
+                fontWeight: 500,
+                lineHeight: '78px',
+                letterSpacing: '-0.62px',
+              }}
+            >
               {decodeHtmlEntities(post.title.rendered)}
             </h1>
           </header>
+        </div>
 
+        {/* Featured Image – full width of screen */}
+        {featuredImage && (
+          <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] h-64 sm:h-80 md:h-96 lg:h-[28rem] overflow-hidden mb-8">
+            <img
+              src={featuredImage}
+              alt={post._embedded?.['wp:featuredmedia']?.[0]?.alt_text || decodeHtmlEntities(post.title.rendered)}
+              className="w-full h-full object-cover"
+            />
+          </div>
+        )}
+
+        <div className="max-w-4xl mx-auto px-4">
           {/* Article Content */}
-          <div className="bg-white rounded-xl shadow-lg p-8 md:p-12">
-            <div
-              ref={contentRef}
-              className="wordpress-content prose prose-lg max-w-none 
+          <div
+            ref={contentRef}
+            className="wordpress-content prose prose-lg max-w-none 
                 prose-headings:text-gray-900 prose-headings:font-bold
                 prose-h1:text-4xl prose-h1:mt-8 prose-h1:mb-4
                 prose-h2:text-3xl prose-h2:mt-8 prose-h2:mb-4
@@ -199,9 +200,8 @@ export default function WordPressArticleDetail() {
                 prose-code:text-primary-700 prose-code:bg-primary-50 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:text-sm
                 prose-pre:bg-gray-900 prose-pre:text-gray-100 prose-pre:rounded-lg prose-pre:p-4 prose-pre:overflow-x-auto
                 prose-hr:border-gray-300 prose-hr:my-8"
-              dangerouslySetInnerHTML={{ __html: post.content.rendered }}
-            />
-          </div>
+            dangerouslySetInnerHTML={{ __html: post.content.rendered }}
+          />
 
           {/* Call to Action */}
           <div className="mt-12 bg-gradient-to-br from-primary-600 to-primary-700 rounded-xl p-8 text-white text-center">

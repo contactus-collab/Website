@@ -39,28 +39,8 @@ export default function NewsletterPage() {
         </div>
       </section>
 
-      {/* Newsletter Form Section with Image */}
-      <section className="py-12 px-4 mt-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-            {/* Left Side - Image */}
-            <div className="order-2 lg:order-1">
-              <img
-                src="/images/Newsletter.png"
-                alt="Newsletter"
-                className="w-full h-auto rounded-2xl shadow-xl"
-              />
-            </div>
-            
-            {/* Right Side - Newsletter Form */}
-            <div className="order-1 lg:order-2">
-              <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12">
-                <Newsletter />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Newsletter subscription – dark two-column section */}
+      <Newsletter />
 
       {/* Benefits Section */}
       <section className="py-16 px-4">

@@ -1,5 +1,22 @@
-import LatestNotes from '../components/LatestNotes'
+import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+import JoinUsSection from '../components/JoinUsSection'
 import Newsletter from '../components/Newsletter'
+
+interface WordPressPost {
+  id: number
+  title: { rendered: string }
+  excerpt: { rendered: string }
+  _embedded?: {
+    'wp:featuredmedia'?: Array<{ source_url: string }>
+  }
+}
+
+function stripHtml(html: string): string {
+  const tmp = document.createElement('DIV')
+  tmp.innerHTML = html
+  return tmp.textContent || tmp.innerText || ''
+}
 
 interface Book {
   title: string
@@ -21,6 +38,35 @@ interface Podcast {
 }
 
 export default function Resources() {
+  const [latestNotes, setLatestNotes] = useState<WordPressPost[]>([])
+  const [notesLoading, setNotesLoading] = useState(true)
+
+  useEffect(() => {
+    let cancelled = false
+    async function fetchLatest() {
+      try {
+        setNotesLoading(true)
+        const res = await fetch(
+          'https://blog.ballfour.org/wp-json/wp/v2/posts?_embed&per_page=3&orderby=date'
+        )
+        if (!res.ok) throw new Error('Failed to fetch posts')
+        const data = await res.json()
+        if (!cancelled) setLatestNotes(Array.isArray(data) ? data : [])
+      } catch {
+        if (!cancelled) setLatestNotes([])
+      } finally {
+        if (!cancelled) setNotesLoading(false)
+      }
+    }
+    fetchLatest()
+    return () => { cancelled = true }
+  }, [])
+
+  const getFeaturedImage = (post: WordPressPost): string => {
+    const url = post._embedded?.['wp:featuredmedia']?.[0]?.source_url
+    return url || '/images/Purpose_Image.jpeg'
+  }
+
   const books: Book[] = [
     {
       title: 'Uniquely Human: A Different Way of Seeing Autism',
@@ -95,145 +141,389 @@ export default function Resources() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Hero Section */}
-      <section className="relative py-20 px-4 overflow-hidden">
-        {/* Background Image with Overlay */}
-        <div className="absolute inset-0 z-0">
+      {/* Hero Section – rounded container, blurred background + dark blue overlay, centered text */}
+      <section className="py-12 px-4 sm:py-16">
+        <div className="max-w-7xl mx-auto rounded-[32px] sm:rounded-[40px] overflow-hidden relative min-h-[320px] sm:min-h-[380px] flex items-center justify-center">
+          {/* Blurred background image */}
           <img
-            src="/images/Resources_Hero.jpeg"
-            alt="Thought Leaders"
-            className="w-full h-full object-cover object-[center_60%]"
+            src="/images/resources.png"
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover scale-105 blur-sm"
+            aria-hidden
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-black/50 to-black/40"></div>
-        </div>
-        
-        {/* Content */}
-        <div className="relative z-10 max-w-7xl mx-auto text-center text-white">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 drop-shadow-lg">
-            Thought Leaders
-          </h1>
-          <p className="text-xl md:text-2xl text-white max-w-3xl mx-auto drop-shadow-md">
-            Discover the best books, online resources, podcasts, etc from experts, advocates, and families on Neurodevelopmental Disorders (ND). Ball Four Foundation exists as the trusted support on your journey.
-          </p>
+          {/* Dark blue semi-transparent overlay */}
+          <div
+            className="absolute inset-0 z-0"
+            
+            aria-hidden
+          />
+          {/* Centered content */}
+          <div className="relative z-10 text-center px-6 sm:px-10 py-12 max-w-3xl mx-auto">
+            <h1
+              className="mb-6"
+              style={{
+                color: '#FFF',
+                fontFamily: '"Plus Jakarta Sans", sans-serif',
+                fontSize: '62px',
+                fontStyle: 'normal',
+                fontWeight: 500,
+                lineHeight: '78px',
+                letterSpacing: '-0.62px',
+              }}
+            >
+              Thought Leaders
+            </h1>
+            <p
+              style={{
+                color: '#FFF',
+                fontFamily: '"Plus Jakarta Sans", sans-serif',
+                fontSize: '18px',
+                fontStyle: 'normal',
+                fontWeight: 400,
+                lineHeight: '155%',
+              }}
+            >
+              Discover the best books, online resources, podcasts, etc from experts, advocates, and families on Neurodevelopmental Disorders (ND). Ball Four Foundation exists as the trusted support on your journey.
+            </p>
+          </div>
         </div>
       </section>
 
-      {/* Books Section */}
-      <section className="py-16 px-4 bg-white">
+      {/* Books for Parents & Caregivers – pill, heading, intro, grid of cards */}
+      <section className="py-12 px-4 sm:py-16 bg-white">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              📚 Books for Parents & Caregivers
-            </h2>
-            <p className="text-lg text-gray-700 max-w-3xl mx-auto">
-              Guidance, strategies, and support for understanding and helping children with neurodevelopmental disorders. These books focus on understanding, acceptance, and practical strategies rather than "cure"—emphasizing inclusive support and tailored interventions.
-            </p>
-            <div className="w-24 h-1 bg-primary-600 mx-auto mt-4 rounded-full"></div>
-          </div>
+          <span
+            className="inline-flex h-[32px] items-center justify-center rounded-[50px] px-4 text-sm font-bold mb-4"
+            style={{ backgroundColor: '#ECE6FE', color: '#4E288E' }}
+          >
+            Books
+          </span>
+          <h2
+            className="mb-4"
+            style={{
+              color: '#000',
+              fontFamily: '"Plus Jakarta Sans", sans-serif',
+              fontSize: '44px',
+              fontStyle: 'normal',
+              fontWeight: 500,
+              lineHeight: '65px',
+              letterSpacing: '-0.44px',
+            }}
+          >
+            Books for Parents & Caregivers
+          </h2>
+          <p
+            className="mb-10 max-w-4xl"
+            style={{
+              color: 'var(--sds-color-text-default-default)',
+              fontFamily: '"Plus Jakarta Sans", sans-serif',
+              fontSize: '18px',
+              fontStyle: 'normal',
+              fontWeight: 400,
+              lineHeight: '155%',
+            }}
+          >
+            On our Resources page, we offer an evolving collection of vetted resources that include the best books about neurodevelopmental disorders (ND), podcasts, and live events for families of children with NDs. Get answers to your questions, hear from people who have faced similar challenges, and find ways to get involved in your community.
+          </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {books.map((book, index) => (
               <div
                 key={index}
-                className="bg-gradient-to-br from-gray-50 to-white p-8 rounded-xl border border-gray-200 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                className="rounded-xl flex flex-col self-stretch"
+                style={{
+                  backgroundColor: '#F9F7FE',
+                  padding: '25px',
+                  flex: '1 0 0',
+                  justifyContent: 'space-between',
+                  alignItems: 'flex-start',
+                }}
               >
-                <div className="mb-4">
-                  <div className="w-12 h-1 bg-primary-600 rounded-full mb-4"></div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3 leading-tight">
-                    {book.title}
-                  </h3>
-                  <p className="text-gray-600 font-medium mb-3">By: {book.author}</p>
-                  {book.description && (
-                    <p className="text-gray-700 text-sm leading-relaxed mb-4">
-                      {book.description}
-                    </p>
-                  )}
-                </div>
-                <a
-                  href={book.buyLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block w-full text-center bg-primary-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors shadow-md hover:shadow-lg"
+                <h3
+                  className="mb-3 flex-grow-0"
+                  style={{
+                    color: 'var(--sds-color-text-default-default)',
+                    fontFamily: '"Plus Jakarta Sans", sans-serif',
+                    fontSize: '20px',
+                    fontStyle: 'normal',
+                    fontWeight: 500,
+                    lineHeight: 'normal',
+                  }}
                 >
-                  Buy Now
-                </a>
+                  {book.title}
+                </h3>
+                {book.description && (
+                  <p
+                    className="mb-4 flex-grow"
+                    style={{
+                      color: 'var(--sds-color-text-default-default)',
+                      fontFamily: '"Plus Jakarta Sans", sans-serif',
+                      fontSize: '16px',
+                      fontStyle: 'normal',
+                      fontWeight: 400,
+                      lineHeight: 'normal',
+                    }}
+                  >
+                    {book.description}
+                  </p>
+                )}
+                <div className="flex w-full items-center justify-between gap-4 mt-auto pt-2">
+                  <p
+                    className="text-[#1E1E1E] font-normal"
+                    style={{
+                      fontFamily: '"Plus Jakarta Sans", sans-serif',
+                      fontSize: '15px',
+                    }}
+                  >
+                    {book.author}
+                  </p>
+                  <a
+                    href={book.buyLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex h-[50px] shrink-0 items-center justify-center rounded-full bg-[#0F006A] px-8 font-normal text-white shadow-md transition-opacity hover:opacity-90 hover:shadow-lg text-base"
+                  >
+                    Buy now
+                  </a>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Podcasts Section */}
-      <section className="py-16 px-4 bg-gray-50">
+      {/* Podcasts for Parents & Caregivers – pill, heading, intro, Listen More, colored cards */}
+      <section className="py-12 px-4 sm:py-16 bg-white">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              🎧 Podcasts for Parents & Caregivers
+          <span
+            className="inline-flex h-[32px] items-center justify-center rounded-[50px] px-4 text-sm font-bold mb-4"
+            style={{ backgroundColor: '#ECE6FE', color: '#4E288E' }}
+          >
+            Podcast
+          </span>
+          <div className="mb-10">
+            <h2
+              className="mb-4"
+              style={{
+                color: '#000',
+                fontFamily: '"Plus Jakarta Sans", sans-serif',
+                fontSize: '44px',
+                fontStyle: 'normal',
+                fontWeight: 500,
+                lineHeight: '65px',
+                letterSpacing: '-0.44px',
+              }}
+            >
+              Podcasts for Parents & Caregivers
             </h2>
-            <p className="text-lg text-gray-700 max-w-3xl mx-auto">
+            <p
+              className="max-w-4xl"
+              style={{
+                color: 'var(--sds-color-text-default-default)',
+                fontFamily: '"Plus Jakarta Sans", sans-serif',
+                fontSize: '18px',
+                fontStyle: 'normal',
+                fontWeight: 400,
+                lineHeight: '155%',
+              }}
+            >
               High-quality podcasts offering practical tips, expert insights, and community support for parents and caregivers supporting children with autism, ADHD, and broader neurodiversity.
             </p>
-            <div className="w-24 h-1 bg-primary-600 mx-auto mt-4 rounded-full"></div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {podcasts.map((podcast, index) => (
-              <div
-                key={index}
-                className="bg-gradient-to-br from-gray-50 to-white p-8 rounded-xl border border-gray-200 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
-              >
-                <div className="mb-4">
-                  <div className="w-12 h-1 bg-primary-600 rounded-full mb-4"></div>
-                  <h3 className="text-2xl font-semibold text-gray-900 mb-3">
-                    {podcast.title}
-                  </h3>
-                  <p className="text-gray-700 mb-4 leading-relaxed">
-                    {podcast.description}
-                  </p>
-                  {podcast.host && (
-                    <p className="text-sm text-gray-600 italic mb-4">
-                      {podcast.host}
+          <div id="podcasts-grid" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {podcasts.map((podcast, index) => {
+              const cardColors = [
+                { bg: '#1A0F49' },
+                { bg: '#FBCE3E' },
+                { bg: '#7DD3C0' },
+              ]
+              const card = cardColors[index % 3]
+              const isDark = card.bg === '#1A0F49'
+              const textAndButtonColor = isDark ? '#FFF' : '#0F006A'
+              const firstLink = podcast.links[0]
+              return (
+                <div
+                  key={index}
+                  className="rounded-xl flex flex-col self-stretch"
+                  style={{
+                    backgroundColor: card.bg,
+                    padding: '25px',
+                    flex: '1 0 0',
+                    justifyContent: 'space-between',
+                    alignItems: 'flex-start',
+                  }}
+                >
+                  <div className="flex-grow min-w-0">
+                    <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-[10px] bg-white shadow-sm">
+                      <svg className="h-6 w-6 text-[#1A0F49]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                      </svg>
+                    </div>
+                    <h3
+                      className="mb-3 font-medium"
+                      style={{
+                        color: textAndButtonColor,
+                        fontFamily: '"Plus Jakarta Sans", sans-serif',
+                        fontSize: '20px',
+                        fontStyle: 'normal',
+                        fontWeight: 500,
+                        lineHeight: 'normal',
+                      }}
+                    >
+                      {podcast.title}
+                    </h3>
+                    <p
+                      className="flex-grow"
+                      style={{
+                        color: textAndButtonColor,
+                        fontFamily: '"Plus Jakarta Sans", sans-serif',
+                        fontSize: '16px',
+                        fontStyle: 'normal',
+                        fontWeight: 400,
+                        lineHeight: 'normal',
+                        opacity: isDark ? 0.95 : 1,
+                      }}
+                    >
+                      {podcast.description}
                     </p>
+                  </div>
+                  {firstLink && (
+                    <a
+                      href={firstLink.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-4 flex h-[50px] w-full items-center justify-center rounded-full border-2 bg-transparent font-normal transition-opacity hover:opacity-90 text-base"
+                      style={{
+                        borderColor: textAndButtonColor,
+                        color: textAndButtonColor,
+                        fontFamily: '"Plus Jakarta Sans", sans-serif',
+                      }}
+                    >
+                      Listen here
+                    </a>
                   )}
                 </div>
-                {podcast.links.length > 0 && (
-                  <div className="flex flex-wrap gap-3">
-                    {podcast.links.map((link, linkIndex) => (
-                      <a
-                        key={linkIndex}
-                        href={link.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-block bg-primary-600 text-white px-5 py-2 rounded-lg font-semibold text-sm hover:bg-primary-700 transition-colors shadow-md hover:shadow-lg"
-                      >
-                        {link.label}
-                      </a>
-                    ))}
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Latest Notes – white container on light purple, Articles pill, 3 article cards */}
+      <section className="py-12 px-4 sm:py-16">
+        <div className="max-w-7xl mx-auto overflow-hidden shadow-lg p-8 md:p-10 lg:p-12" style={{ borderRadius: '25px', background: '#F6F3FD' }}>
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-10">
+            <div>
+              <span
+                className="inline-flex h-[32px] items-center justify-center rounded-[50px] px-4 text-sm font-bold mb-4"
+                style={{ backgroundColor: '#ECE6FE', color: '#4E288E' }}
+              >
+                Articles
+              </span>
+              <h2
+                className="mb-3"
+                style={{
+                  color: '#000',
+                  fontFamily: '"Plus Jakarta Sans", sans-serif',
+                  fontSize: '44px',
+                  fontStyle: 'normal',
+                  fontWeight: 500,
+                  lineHeight: '65px',
+                  letterSpacing: '-0.44px',
+                }}
+              >
+                Latest Notes
+              </h2>
+              <p
+                className="max-w-2xl"
+                style={{
+                  color: 'var(--sds-color-text-default-default)',
+                  fontFamily: '"Plus Jakarta Sans", sans-serif',
+                  fontSize: '18px',
+                  fontWeight: 400,
+                  lineHeight: '155%',
+                }}
+              >
+                Discover articles and insights about Neurodevelopmental Disorders (ND) that support your journey and help children thrive.
+              </p>
+            </div>
+            <Link
+              to="/understand"
+              className="flex h-[50px] shrink-0 items-center justify-center rounded-full bg-[#0F006A] px-8 font-normal text-white shadow-md transition-opacity hover:opacity-90 hover:shadow-lg text-base w-fit"
+            >
+              View all Notes
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {notesLoading ? (
+              [1, 2, 3].map((i) => (
+                <div key={i} className="rounded-xl overflow-hidden bg-gray-100 animate-pulse">
+                  <div className="aspect-video bg-gray-200" />
+                  <div className="p-5 space-y-3">
+                    <div className="h-5 bg-gray-200 rounded w-4/5" />
+                    <div className="h-4 bg-gray-100 rounded w-full" />
+                    <div className="h-10 w-28 bg-gray-200 rounded-full mt-4" />
                   </div>
-                )}
-              </div>
-            ))}
+                </div>
+              ))
+            ) : (
+              latestNotes.map((post) => (
+                <div key={post.id} className="rounded-xl overflow-hidden bg-white border border-gray-100 shadow-md flex flex-col">
+                  <img
+                    src={getFeaturedImage(post)}
+                    alt=""
+                    className="w-full aspect-video object-cover"
+                  />
+                  <div className="p-5 flex flex-col flex-grow">
+                    <h3
+                      className="mb-2"
+                      style={{
+                        color: 'var(--sds-color-text-default-default)',
+                        fontFamily: '"Plus Jakarta Sans", sans-serif',
+                        fontSize: '20px',
+                        fontStyle: 'normal',
+                        fontWeight: 500,
+                        lineHeight: 'normal',
+                      }}
+                    >
+                      {stripHtml(post.title.rendered)}
+                    </h3>
+                    <p
+                      className="mb-4 flex-grow"
+                      style={{
+                        color: 'var(--sds-color-text-default-default)',
+                        fontFamily: '"Plus Jakarta Sans", sans-serif',
+                        fontSize: '16px',
+                        fontWeight: 400,
+                        lineHeight: 'normal',
+                      }}
+                    >
+                      {(() => {
+                        const text = stripHtml(post.excerpt.rendered)
+                        return text.length > 100 ? `${text.slice(0, 100).trim()}…` : text
+                      })()}
+                    </p>
+                    <Link
+                      to={`/understand/${post.id}`}
+                      className="inline-flex h-[50px] w-fit items-center justify-center rounded-full bg-[#0F006A] px-6 font-normal text-white transition-opacity hover:opacity-90 text-sm"
+                    >
+                      Read more
+                    </Link>
+                  </div>
+                </div>
+              ))
+            )}
           </div>
         </div>
       </section>
 
-      {/* Latest Notes Section */}
-      <LatestNotes />
+      {/* Join Us in Making a Difference – same as Home */}
+      <JoinUsSection />
 
-      {/* Newsletter Section */}
-      <section className="py-20 px-4 bg-gradient-to-br from-primary-600 to-primary-700 text-white">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-8">
-            <h2 className="text-4xl font-bold mb-4">Newsletter</h2>
-            <p className="text-xl text-primary-100 max-w-2xl mx-auto">
-              The Ball Four Foundation exists to support children with Neurodevelopmental Disorders (ND). Join us in this important conversation, sign up for the Newsletter and follow us on social media.
-            </p>
-          </div>
-          <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-12">
-            <Newsletter />
-          </div>
-        </div>
-      </section>
+      {/* Newsletter – same as Home (dark two-column section) */}
+      <Newsletter />
     </div>
   )
 }
