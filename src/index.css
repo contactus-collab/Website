@@ -16,13 +16,27 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* WordPress Content Styling */
+/* WordPress Content Styling – article page headings (H2) and body text */
 .wordpress-content {
-  line-height: 1.8;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* Hide the first heading below the featured image (often duplicate title) */
+.wordpress-content.prose > h1:first-child,
+.wordpress-content.prose > h2:first-child,
+.wordpress-content.prose > h3:first-child,
+.wordpress-content.prose > h4:first-child,
+.wordpress-content.prose > h5:first-child,
+.wordpress-content.prose > h6:first-child {
+  display: none;
 }
 
 .wordpress-content p {
   margin-bottom: 1.25rem;
+  color: var(--sds-color-text-default-default);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 155%;
 }
 
 .wordpress-content h1,
@@ -33,24 +47,26 @@ body {
 .wordpress-content h6 {
   margin-top: 2rem;
   margin-bottom: 1rem;
-  font-weight: 700;
-  line-height: 1.2;
+  color: #000;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 500;
+  line-height: 65px;
+  letter-spacing: -0.44px;
 }
 
-.wordpress-content h1 {
-  font-size: 2.25rem;
-}
-
+.wordpress-content h1,
 .wordpress-content h2 {
-  font-size: 1.875rem;
+  font-size: 44px;
 }
 
 .wordpress-content h3 {
-  font-size: 1.5rem;
+  font-size: 44px;
 }
 
-.wordpress-content h4 {
-  font-size: 1.25rem;
+.wordpress-content h4,
+.wordpress-content h5,
+.wordpress-content h6 {
+  font-size: 44px;
 }
 
 .wordpress-content ul,

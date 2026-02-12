@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
+import Newsletter from '../components/Newsletter'
 
 interface WordPressPost {
   id: number
@@ -85,6 +86,40 @@ export default function WordPressArticleDetail() {
     return null
   }
 
+  const stripHtml = (html: string): string => {
+    const tmp = document.createElement('DIV')
+    tmp.innerHTML = html
+    return tmp.textContent || tmp.innerText || ''
+  }
+
+  const [latestNotes, setLatestNotes] = useState<WordPressPost[]>([])
+  const [notesLoading, setNotesLoading] = useState(false)
+
+  useEffect(() => {
+    if (!id) return
+    let cancelled = false
+    const currentId = parseInt(id, 10)
+    async function fetchLatest() {
+      try {
+        setNotesLoading(true)
+        const res = await fetch(
+          'https://blog.ballfour.org/wp-json/wp/v2/posts?_embed&per_page=4&orderby=date'
+        )
+        if (!res.ok) throw new Error('Failed to fetch posts')
+        const data = await res.json()
+        const list = Array.isArray(data) ? data : []
+        const otherPosts = list.filter((p: WordPressPost) => p.id !== currentId).slice(0, 3)
+        if (!cancelled) setLatestNotes(otherPosts)
+      } catch {
+        if (!cancelled) setLatestNotes([])
+      } finally {
+        if (!cancelled) setNotesLoading(false)
+      }
+    }
+    fetchLatest()
+    return () => { cancelled = true }
+  }, [id])
+
   // Handle clicks on anchor tags to use React Router
   useEffect(() => {
     if (contentRef.current) {
@@ -138,8 +173,8 @@ export default function WordPressArticleDetail() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <article className="py-16 px-4">
-        <div className="max-w-4xl mx-auto">
+      <article className="py-16 px-3">
+        <div className="max-w-6xl mx-auto">
           {/* Article Header */}
           <header className="mb-8">
             <div className="flex items-center gap-3 text-gray-500 mb-4">
@@ -176,17 +211,18 @@ export default function WordPressArticleDetail() {
           </div>
         )}
 
-        <div className="max-w-4xl mx-auto px-4">
+        <div className="max-w-6xl mx-auto">
           {/* Article Content */}
           <div
             ref={contentRef}
-            className="wordpress-content prose prose-lg max-w-none 
-                prose-headings:text-gray-900 prose-headings:font-bold
-                prose-h1:text-4xl prose-h1:mt-8 prose-h1:mb-4
-                prose-h2:text-3xl prose-h2:mt-8 prose-h2:mb-4
-                prose-h3:text-2xl prose-h3:mt-6 prose-h3:mb-3
-                prose-h4:text-xl prose-h4:mt-4 prose-h4:mb-2
-                prose-p:text-gray-700 prose-p:leading-relaxed prose-p:mb-4
+            className="wordpress-content prose prose-lg max-w-none font-sans
+                prose-headings:font-[500] prose-headings:tracking-[-0.44px]
+                prose-h1:text-[44px] prose-h1:leading-[65px] prose-h1:mt-8 prose-h1:mb-4 prose-h1:text-[#000]
+                prose-h2:text-[44px] prose-h2:leading-[65px] prose-h2:mt-8 prose-h2:mb-4 prose-h2:text-[#000]
+                prose-h3:text-[44px] prose-h3:leading-[65px] prose-h3:mt-6 prose-h3:mb-3 prose-h3:text-[#000]
+                prose-h4:text-[44px] prose-h4:leading-[65px] prose-h4:mt-4 prose-h4:mb-2 prose-h4:text-[#000]
+                prose-p:text-[18px] prose-p:leading-[155%] prose-p:mb-4 prose-p:font-normal
+                prose-p:[color:var(--sds-color-text-default-default)]
                 prose-strong:text-gray-900 prose-strong:font-semibold
                 prose-a:text-primary-600 prose-a:no-underline hover:prose-a:underline prose-a:font-medium
                 prose-ul:text-gray-700 prose-ul:my-4 prose-ul:pl-6
@@ -203,21 +239,165 @@ export default function WordPressArticleDetail() {
             dangerouslySetInnerHTML={{ __html: post.content.rendered }}
           />
 
-          {/* Call to Action */}
-          <div className="mt-12 bg-gradient-to-br from-primary-600 to-primary-700 rounded-xl p-8 text-white text-center">
-            <h2 className="text-3xl font-bold mb-4">Stay Connected</h2>
-            <p className="text-xl text-primary-100 mb-6 max-w-2xl mx-auto">
-              Join our community to receive more articles, resources, and updates about supporting children with Neurodevelopmental Disorders.
-            </p>
-            <Link
-              to="/newsletter"
-              className="inline-block bg-white text-primary-600 px-8 py-4 rounded-lg font-semibold hover:bg-primary-50 transition-colors shadow-lg hover:shadow-xl"
+          {/* Resources and Next Steps */}
+          <section className="mt-12">
+            <h2
+              className="mb-4 text-left"
+              style={{
+                color: '#000',
+                fontFamily: '"Plus Jakarta Sans", sans-serif',
+                fontSize: '44px',
+                fontStyle: 'normal',
+                fontWeight: 500,
+                lineHeight: '65px',
+                letterSpacing: '-0.44px',
+              }}
             >
-              Subscribe to Our Newsletter
-            </Link>
-          </div>
+              Resources and Next Steps
+            </h2>
+            <p
+              className="text-left"
+              style={{
+                color: 'var(--sds-color-text-default-default)',
+                fontFamily: '"Plus Jakarta Sans", sans-serif',
+                fontSize: '18px',
+                fontStyle: 'normal',
+                fontWeight: 400,
+                lineHeight: '155%',
+              }}
+            >
+              If you're looking for more information, support, or resources, we're here to help. Visit our{' '}
+              <Link to="/resources" className="underline hover:opacity-90" style={{ color: 'var(--sds-color-text-default-default)' }}>
+                Resources page
+              </Link>{' '}
+              for books, podcasts, and educational materials. Join our{' '}
+              <Link to="/newsletter" className="underline hover:opacity-90" style={{ color: 'var(--sds-color-text-default-default)' }}>
+                newsletter
+              </Link>{' '}
+              to stay connected with our community and receive updates about events, resources, and stories that inspire.
+            </p>
+          </section>
         </div>
       </article>
+
+      {/* Latest Notes – light rounded container, Articles pill, 3 article cards */}
+      <section className="py-12 px-4 sm:py-16">
+        <div className="max-w-7xl mx-auto overflow-hidden shadow-lg p-8 md:p-10 lg:p-12" style={{ borderRadius: '25px', background: '#F6F3FD' }}>
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-10">
+            <div>
+              <span
+                className="inline-flex h-[32px] items-center justify-center rounded-[50px] px-4 text-sm font-bold mb-4"
+                style={{ backgroundColor: '#ECE6FE', color: '#4E288E' }}
+              >
+                Articles
+              </span>
+              <h2
+                className="mb-3"
+                style={{
+                  color: '#000',
+                  fontFamily: '"Plus Jakarta Sans", sans-serif',
+                  fontSize: '44px',
+                  fontStyle: 'normal',
+                  fontWeight: 500,
+                  lineHeight: '65px',
+                  letterSpacing: '-0.44px',
+                }}
+              >
+                Latest Notes
+              </h2>
+              <p
+                className="max-w-2xl"
+                style={{
+                  color: 'var(--sds-color-text-default-default)',
+                  fontFamily: '"Plus Jakarta Sans", sans-serif',
+                  fontSize: '18px',
+                  fontWeight: 400,
+                  lineHeight: '155%',
+                }}
+              >
+                Discover articles and insights about Neurodevelopmental Disorders (ND) that support your journey and help children thrive.
+              </p>
+            </div>
+            <Link
+              to="/notes"
+              className="flex h-[50px] shrink-0 items-center justify-center rounded-full bg-[#0F006A] px-8 font-normal text-white shadow-md transition-opacity hover:opacity-90 hover:shadow-lg text-base w-fit"
+            >
+              View all Notes
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {notesLoading ? (
+              [1, 2, 3].map((i) => (
+                <div key={i} className="rounded-xl overflow-hidden bg-gray-100 animate-pulse">
+                  <div className="aspect-video bg-gray-200" />
+                  <div className="p-5 space-y-3">
+                    <div className="h-5 bg-gray-200 rounded w-4/5" />
+                    <div className="h-4 bg-gray-100 rounded w-full" />
+                    <div className="h-10 w-28 bg-gray-200 rounded-full mt-4" />
+                  </div>
+                </div>
+              ))
+            ) : (
+              latestNotes.map((post) => (
+                <div key={post.id} className="rounded-xl overflow-hidden bg-white border border-gray-100 shadow-md flex flex-col">
+                  <Link to={`/understand/${post.id}`} className="block aspect-video w-full overflow-hidden">
+                    {getFeaturedImage(post) ? (
+                      <img
+                        src={getFeaturedImage(post)!}
+                        alt=""
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gray-100" />
+                    )}
+                  </Link>
+                  <div className="p-5 flex flex-col flex-grow">
+                    <h3
+                      className="mb-2"
+                      style={{
+                        color: 'var(--sds-color-text-default-default)',
+                        fontFamily: '"Plus Jakarta Sans", sans-serif',
+                        fontSize: '20px',
+                        fontStyle: 'normal',
+                        fontWeight: 500,
+                        lineHeight: 'normal',
+                      }}
+                    >
+                      <Link to={`/understand/${post.id}`} className="hover:opacity-90">
+                        {stripHtml(post.title.rendered)}
+                      </Link>
+                    </h3>
+                    <p
+                      className="mb-4 flex-grow"
+                      style={{
+                        color: 'var(--sds-color-text-default-default)',
+                        fontFamily: '"Plus Jakarta Sans", sans-serif',
+                        fontSize: '16px',
+                        fontWeight: 400,
+                        lineHeight: 'normal',
+                      }}
+                    >
+                      {(() => {
+                        const text = stripHtml(post.excerpt.rendered)
+                        return text.length > 100 ? `${text.slice(0, 100).trim()}…` : text
+                      })()}
+                    </p>
+                    <Link
+                      to={`/understand/${post.id}`}
+                      className="inline-flex h-[50px] w-fit items-center justify-center rounded-full bg-[#0F006A] px-6 font-normal text-white transition-opacity hover:opacity-90 text-sm"
+                    >
+                      Read more
+                    </Link>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+      </section>
+
+      <Newsletter />
     </div>
   )
 }
