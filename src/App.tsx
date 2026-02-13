@@ -11,6 +11,7 @@ import Understand from './pages/Understand'
 import WordPressArticleDetail from './pages/WordPressArticleDetail'
 import NewsletterPage from './pages/NewsletterPage'
 import EventCalendar from './pages/EventCalendar'
+import Apply from './pages/Apply'
 import Login from './pages/Login'
 import ForgotPassword from './pages/ForgotPassword'
 import ResetPassword from './pages/ResetPassword'
@@ -20,6 +21,7 @@ import Subscribers from './pages/Subscribers'
 import WebsiteAnalytics from './pages/WebsiteAnalytics'
 import LinkedInAnalytics from './pages/LinkedInAnalytics'
 import EmailCampaign from './pages/EmailCampaign'
+import Applications from './pages/Applications'
 
 function AppContent() {
   const location = useLocation()
@@ -39,6 +41,7 @@ function AppContent() {
           <Route path="/understand/:id" element={<WordPressArticleDetail />} />
           <Route path="/newsletter" element={<NewsletterPage />} />
           <Route path="/event-calendar" element={<EventCalendar />} />
+          <Route path="/apply" element={<Apply />} />
           <Route path="/login" element={<Login />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
@@ -63,6 +66,14 @@ function AppContent() {
             element={
               <ProtectedRoute>
                 <Subscribers />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/applications"
+            element={
+              <ProtectedRoute>
+                <Applications />
               </ProtectedRoute>
             }
           />

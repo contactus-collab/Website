@@ -45,6 +45,12 @@ export default function Navbar() {
               Event Calendar
             </Link>
             <Link
+              to="/apply"
+              className="text-black hover:text-brand-blue px-3 py-2 text-base font-normal transition-colors"
+            >
+              Apply
+            </Link>
+            <Link
               to="/newsletter"
               className="text-black hover:text-brand-blue px-3 py-2 text-base font-normal transition-colors"
             >
@@ -94,6 +100,7 @@ export default function Navbar() {
             <Link to="/resources" className="block px-3 py-2 text-black hover:text-brand-blue" onClick={() => setIsOpen(false)}>Resources</Link>
             <Link to="/notes" className="block px-3 py-2 text-black hover:text-brand-blue" onClick={() => setIsOpen(false)}>Notes</Link>
             <Link to="/event-calendar" className="block px-3 py-2 text-black hover:text-brand-blue" onClick={() => setIsOpen(false)}>Event Calendar</Link>
+            <Link to="/apply" className="block px-3 py-2 text-black hover:text-brand-blue" onClick={() => setIsOpen(false)}>Apply</Link>
             <Link to="/newsletter" className="block px-3 py-2 text-black hover:text-brand-blue" onClick={() => setIsOpen(false)}>Newsletter</Link>
           </div>
         </div>
