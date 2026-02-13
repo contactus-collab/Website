@@ -10,6 +10,7 @@ import ArticleDetail from './pages/ArticleDetail'
 import Understand from './pages/Understand'
 import WordPressArticleDetail from './pages/WordPressArticleDetail'
 import NewsletterPage from './pages/NewsletterPage'
+import EventCalendar from './pages/EventCalendar'
 import Login from './pages/Login'
 import ForgotPassword from './pages/ForgotPassword'
 import ResetPassword from './pages/ResetPassword'
@@ -37,6 +38,7 @@ function AppContent() {
           <Route path="/understand" element={<Understand />} />
           <Route path="/understand/:id" element={<WordPressArticleDetail />} />
           <Route path="/newsletter" element={<NewsletterPage />} />
+          <Route path="/event-calendar" element={<EventCalendar />} />
           <Route path="/login" element={<Login />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />

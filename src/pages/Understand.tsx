@@ -47,10 +47,23 @@ export default function Understand() {
       }
       
       const data = await response.json()
-      setPosts(data)
+      // Only display posts that are clearly from WordPress (id, title.rendered, date)
+      const fromWordPress = Array.isArray(data)
+        ? data.filter(
+            (p: unknown): p is WordPressPost =>
+              p != null &&
+              typeof p === 'object' &&
+              'id' in p &&
+              typeof (p as WordPressPost).id === 'number' &&
+              (p as WordPressPost).title?.rendered != null &&
+              (p as WordPressPost).date != null
+          )
+        : []
+      setPosts(fromWordPress)
     } catch (err) {
       console.error('Error fetching WordPress posts:', err)
       setError(err instanceof Error ? err.message : 'Failed to load articles')
+      setPosts([])
     } finally {
       setLoading(false)
     }

@@ -18,7 +18,7 @@ export default function Navbar() {
             </Link>
           </div>
           
-          {/* Desktop Menu - match Figma: Purpose, Resources, Notes, Newsletter */}
+          {/* Desktop Menu - Purpose, Resources, Notes, Event Calendar, Newsletter */}
           <div className="hidden md:flex items-center gap-[82px]">
             <Link
               to="/purpose"
@@ -37,6 +37,12 @@ export default function Navbar() {
               className="text-black hover:text-brand-blue px-3 py-2 text-base font-normal transition-colors"
             >
               Notes
+            </Link>
+            <Link
+              to="/event-calendar"
+              className="text-black hover:text-brand-blue px-3 py-2 text-base font-normal transition-colors"
+            >
+              Event Calendar
             </Link>
             <Link
               to="/newsletter"
@@ -87,6 +93,7 @@ export default function Navbar() {
             <Link to="/purpose" className="block px-3 py-2 text-black hover:text-brand-blue" onClick={() => setIsOpen(false)}>Purpose</Link>
             <Link to="/resources" className="block px-3 py-2 text-black hover:text-brand-blue" onClick={() => setIsOpen(false)}>Resources</Link>
             <Link to="/notes" className="block px-3 py-2 text-black hover:text-brand-blue" onClick={() => setIsOpen(false)}>Notes</Link>
+            <Link to="/event-calendar" className="block px-3 py-2 text-black hover:text-brand-blue" onClick={() => setIsOpen(false)}>Event Calendar</Link>
             <Link to="/newsletter" className="block px-3 py-2 text-black hover:text-brand-blue" onClick={() => setIsOpen(false)}>Newsletter</Link>
           </div>
         </div>

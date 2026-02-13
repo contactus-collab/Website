@@ -28,7 +28,19 @@ export default function Notes() {
         )
         if (!res.ok) throw new Error('Failed to fetch posts')
         const data = await res.json()
-        if (!cancelled) setPosts(Array.isArray(data) ? data : [])
+        // Only use posts from WordPress API: must have id, title.rendered, and date
+        const fromWordPress = Array.isArray(data)
+          ? data.filter(
+              (p: unknown): p is WordPressPost =>
+                p != null &&
+                typeof p === 'object' &&
+                'id' in p &&
+                typeof (p as WordPressPost).id === 'number' &&
+                (p as WordPressPost).title?.rendered != null &&
+                (p as WordPressPost).date != null
+            )
+          : []
+        if (!cancelled) setPosts(fromWordPress)
       } catch (e) {
         if (!cancelled) {
           setError(e instanceof Error ? e.message : 'Failed to load notes')
@@ -110,8 +122,8 @@ export default function Notes() {
             <div className="text-center py-8 text-red-600 mb-4">{error}</div>
           )}
           {loading ? (
-            <div className="text-center py-12">
-              <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+            <div className="flex justify-center py-16">
+              <div className="inline-block h-12 w-12 animate-spin rounded-full border-2 border-primary-600 border-t-transparent" />
             </div>
           ) : posts.length === 0 ? (
             <div className="text-center py-12 text-gray-600">No notes yet.</div>
