@@ -25,6 +25,7 @@ export default function Applications() {
   const [selectedApp, setSelectedApp] = useState<GrantApplication | null>(null)
   const [deleteConfirm, setDeleteConfirm] = useState<GrantApplication | null>(null)
   const [actionLoading, setActionLoading] = useState(false)
+  const [emailMessage, setEmailMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -115,8 +116,59 @@ export default function Applications() {
     }
   }
 
-  const updateStatus = async (id: number, status: ApplicationStatus) => {
+  const sendStatusEmail = async (app: GrantApplication, status: 'granted' | 'rejected') => {
+    // Use a fresh session so the access token is not expired (edge function validates the JWT)
+    const { data: { session }, error: sessionError } = await supabase.auth.refreshSession()
+    if (sessionError || !session) throw new Error(sessionError?.message || 'Not authenticated')
+
+    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
+    const isGranted = status === 'granted'
+    const subject = isGranted
+      ? 'Your grant application has been approved – Ball Four Foundation'
+      : 'Update on your grant application – Ball Four Foundation'
+    const content = isGranted
+      ? `<p>Dear ${app.child_name}${app.parent_name ? ` and ${app.parent_name}` : ''},</p>
+<p>We are pleased to inform you that your grant application has been <strong>approved</strong>.</p>
+<p>You will receive further details about next steps shortly.</p>
+<p>Thank you for your interest in Ball Four Foundation.</p>
+<p>Best regards,<br/>Ball Four Foundation</p>`
+      : `<p>Dear ${app.child_name}${app.parent_name ? ` and ${app.parent_name}` : ''},</p>
+<p>Thank you for your interest in Ball Four Foundation and for submitting a grant application.</p>
+<p>After careful review, we are unable to approve your application at this time.</p>
+<p>We encourage you to apply again in the future when your circumstances or our criteria may have changed.</p>
+<p>Best regards,<br/>Ball Four Foundation</p>`
+
+    const response = await fetch(`${supabaseUrl}/functions/v1/send-email`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${session.access_token}`,
+        apikey: import.meta.env.VITE_SUPABASE_ANON_KEY || '',
+      },
+      body: JSON.stringify({
+        subject,
+        recipients: [app.email],
+        contentType: 'html',
+        content,
+      }),
+    })
+
+    let result: { error?: string; success?: boolean } = {}
+    try {
+      result = await response.json()
+    } catch {
+      result = { error: `Server returned ${response.status} (non-JSON). Check Supabase function logs.` }
+    }
+    if (!response.ok) {
+      const msg = result.error || `HTTP ${response.status}. Check that send-email function and Gmail env vars are set in Supabase.`
+      throw new Error(msg)
+    }
+    return result
+  }
+
+  const updateStatus = async (id: number, status: ApplicationStatus, app: GrantApplication) => {
     setActionLoading(true)
+    setEmailMessage(null)
     try {
       const { error } = await supabase
         .from('grant_applications')
@@ -125,6 +177,15 @@ export default function Applications() {
       if (error) throw error
       setApplications((prev) => prev.map((a) => (a.id === id ? { ...a, status } : a)))
       if (selectedApp?.id === id) setSelectedApp((prev) => (prev ? { ...prev, status } : null))
+
+      if (status === 'granted' || status === 'rejected') {
+        try {
+          await sendStatusEmail(app, status)
+          setEmailMessage({ type: 'success', text: `Status updated and ${status === 'granted' ? 'approval' : 'rejection'} email sent to ${app.email}.` })
+        } catch (emailErr: any) {
+          setEmailMessage({ type: 'error', text: `Status updated but email failed: ${emailErr?.message || 'Could not send email'}.` })
+        }
+      }
     } catch (err) {
       console.error('Error updating status:', err)
     } finally {
@@ -426,7 +487,7 @@ export default function Applications() {
         {selectedApp && (
           <div className="fixed inset-0 z-50 overflow-y-auto" aria-modal="true" role="dialog">
             <div className="flex min-h-full items-center justify-center p-4">
-              <div className="fixed inset-0 bg-black/50 transition-opacity" onClick={() => setSelectedApp(null)} />
+              <div className="fixed inset-0 bg-black/50 transition-opacity" onClick={() => { setSelectedApp(null); setEmailMessage(null) }} />
               <div className="relative bg-white rounded-2xl shadow-xl max-w-lg w-full max-h-[90vh] overflow-hidden flex flex-col">
                 <div className="p-6 border-b border-gray-100 flex items-start justify-between gap-4">
                   <div>
@@ -435,7 +496,7 @@ export default function Applications() {
                   </div>
                   <button
                     type="button"
-                    onClick={() => setSelectedApp(null)}
+                    onClick={() => { setSelectedApp(null); setEmailMessage(null) }}
                     className="p-2 text-gray-400 hover:text-gray-600 rounded-lg"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -471,12 +532,25 @@ export default function Applications() {
                     <p className="text-gray-600">{formatDate(selectedApp.created_at)}</p>
                   </div>
                 </div>
+                {emailMessage && (
+                  <div
+                    role="alert"
+                    className={`mx-6 mb-2 px-4 py-3 rounded-lg text-sm ${
+                      emailMessage.type === 'success' ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'
+                    }`}
+                  >
+                    {emailMessage.text}
+                  </div>
+                )}
+                <p className="px-6 text-xs text-gray-500 mb-2">
+                  Grant and Rejected emails are sent to the applicant’s email address above.
+                </p>
                 <div className="p-6 border-t border-gray-100 flex flex-wrap gap-3">
                   {selectedApp.status !== 'granted' && (
                     <button
                       type="button"
                       disabled={actionLoading}
-                      onClick={() => updateStatus(selectedApp.id, 'granted')}
+                      onClick={() => updateStatus(selectedApp.id, 'granted', selectedApp)}
                       className="px-4 py-2 rounded-lg font-medium bg-green-600 text-white hover:bg-green-700 disabled:opacity-70"
                     >
                       Grant
@@ -486,7 +560,7 @@ export default function Applications() {
                     <button
                       type="button"
                       disabled={actionLoading}
-                      onClick={() => updateStatus(selectedApp.id, 'rejected')}
+                      onClick={() => updateStatus(selectedApp.id, 'rejected', selectedApp)}
                       className="px-4 py-2 rounded-lg font-medium bg-red-600 text-white hover:bg-red-700 disabled:opacity-70"
                     >
                       Rejected
@@ -502,7 +576,7 @@ export default function Applications() {
                   </button>
                   <button
                     type="button"
-                    onClick={() => setSelectedApp(null)}
+                    onClick={() => { setSelectedApp(null); setEmailMessage(null) }}
                     className="ml-auto px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-gray-100"
                   >
                     Close
