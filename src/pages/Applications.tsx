@@ -124,12 +124,11 @@ export default function Applications() {
     const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
     const isGranted = status === 'granted'
     const subject = isGranted
-      ? 'Your grant application has been approved – Ball Four Foundation'
-      : 'Update on your grant application – Ball Four Foundation'
+      ? 'Your grant application has been approved - Ball Four Foundation'
+      : 'Update on your grant application - Ball Four Foundation'
     const content = isGranted
       ? `<p>Dear ${app.child_name}${app.parent_name ? ` and ${app.parent_name}` : ''},</p>
 <p>We are pleased to inform you that your grant application has been <strong>approved</strong>.</p>
-<p>You will receive further details about next steps shortly.</p>
 <p>Thank you for your interest in Ball Four Foundation.</p>
 <p>Best regards,<br/>Ball Four Foundation</p>`
       : `<p>Dear ${app.child_name}${app.parent_name ? ` and ${app.parent_name}` : ''},</p>
