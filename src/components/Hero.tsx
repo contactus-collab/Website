@@ -10,11 +10,11 @@ const HERO_IMAGES = [
 export default function Hero() {
   return (
     <section className="bg-white min-h-[85vh] flex flex-col">
-      <div className="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <div className="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-6 py-10 lg:py-14">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-center">
           {/* Left column - Headline, body, CTA */}
           <div className="order-2 lg:order-1">
-            <h1 className="font-sans text-4xl sm:text-5xl lg:text-[62px] lg:leading-[78px] lg:tracking-[-0.62px] font-medium text-[#000] mb-6">
+            <h1 className="font-sans text-4xl sm:text-5xl lg:text-[52px] lg:leading-[62px] lg:tracking-[-0.52px] font-medium text-[#000] mb-6 max-w-xl lg:max-w-[520px]">
               All Kids Deserve the{' '}
               <span className="text-brand-purple-dark">Opportunity</span> to Shine
             </h1>

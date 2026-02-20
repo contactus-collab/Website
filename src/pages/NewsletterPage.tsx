@@ -48,6 +48,23 @@ export default function NewsletterPage() {
         </div>
       </section>
 
+      {/* Intro text – bridges hero and sign-up */}
+      <section className="py-10 px-4 sm:py-14 bg-white">
+        <div className="max-w-3xl mx-auto text-center">
+          <p
+            style={{
+              color: 'var(--sds-color-text-default-default)',
+              fontFamily: '"Plus Jakarta Sans", sans-serif',
+              fontSize: '18px',
+              fontWeight: 400,
+              lineHeight: '155%',
+            }}
+          >
+            Our newsletter brings you the latest from Ball Four Foundation: new resources on neurodevelopmental disorders, upcoming events, stories from families and advocates, and ways to get involved. No spam — just thoughtful updates a few times a year.
+          </p>
+        </div>
+      </section>
+
       {/* Newsletter subscription – dark two-column section */}
       <Newsletter />
     </div>

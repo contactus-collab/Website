@@ -38,12 +38,11 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-8 mb-10">
           <div className="max-w-md">
             <Link to="/" className="inline-block mb-4">
-              <span className="block font-sans text-2xl sm:text-3xl font-bold tracking-tight" style={{ color: TEXT_DARK }}>
-                BALLFOUR
-              </span>
-              <span className="block font-sans text-base font-normal mt-0.5" style={{ color: TEXT_DARK }}>
-                FOUNDATION
-              </span>
+              <img
+                src="/images/ballfour-foundation-logo.png"
+                alt="Ball Four Foundation"
+                className="h-[50px] w-auto"
+              />
             </Link>
             <p
               className="font-sans max-w-md"
@@ -63,7 +62,7 @@ export default function Footer() {
               href="https://www.facebook.com/ballfourfoundation"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center w-10 h-10 rounded-full border-2 transition-colors hover:opacity-80"
+              className="flex items-center justify-center w-10 h-10 rounded-full border transition-colors hover:opacity-80"
               style={{ borderColor: BORDER_TOP }}
               aria-label="Facebook"
             >
@@ -73,7 +72,7 @@ export default function Footer() {
               href="https://www.instagram.com/ballfourfoundation/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center w-10 h-10 rounded-full border-2 transition-colors hover:opacity-80"
+              className="flex items-center justify-center w-10 h-10 rounded-full border transition-colors hover:opacity-80"
               style={{ borderColor: BORDER_TOP }}
               aria-label="Instagram"
             >
@@ -83,7 +82,7 @@ export default function Footer() {
               href="https://x.com/ball4foundation"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center w-10 h-10 rounded-full border-2 transition-colors hover:opacity-80"
+              className="flex items-center justify-center w-10 h-10 rounded-full border transition-colors hover:opacity-80"
               style={{ borderColor: BORDER_TOP, color: BORDER_TOP }}
               aria-label="X (Twitter)"
             >
@@ -138,9 +137,8 @@ export default function Footer() {
         {/* Bottom row: Tagline (left), Contact Info (right) */}
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 pt-4">
           <h2
-            className="max-w-xl"
+            className="max-w-xl text-brand-purple-dark"
             style={{
-              color: 'var(--sds-color-text-default-default)',
               fontFamily: '"Plus Jakarta Sans", sans-serif',
               fontSize: '44px',
               fontStyle: 'normal',

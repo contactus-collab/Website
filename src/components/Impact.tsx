@@ -35,14 +35,7 @@ export default function Impact() {
   return (
     <section className="py-16 px-4 bg-white">
       <div className="max-w-7xl mx-auto">
-        {/* Our Mission pill – centered */}
-        <div className="flex justify-center mb-8">
-          <span className="inline-flex h-[32px] items-center justify-center rounded-[50px] bg-[#DBD3F5] px-4 text-[#0F006A] text-base font-normal">
-            Our Mission
-          </span>
-        </div>
-
-        {/* Two columns: left = 2x2 images, right = heading + intro + 3 features */}
+        {/* Two columns: left = 2x2 images, right = Our Mission pill + heading + intro + 3 features */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start mb-16">
           {/* Left – 2x2 image grid */}
           <div className="grid grid-cols-2 gap-4 order-2 lg:order-1 w-full">

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import JoinUsSection from '../components/JoinUsSection'
 import Newsletter from '../components/Newsletter'
@@ -138,6 +138,15 @@ export default function Resources() {
       ],
     },
   ]
+
+  const podcastColorIndices = useMemo(() => {
+    const indices = Array.from({ length: podcasts.length }, (_, i) => i % 3)
+    for (let i = indices.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[indices[i], indices[j]] = [indices[j], indices[i]]
+    }
+    return indices
+  }, [podcasts.length])
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -338,7 +347,7 @@ export default function Resources() {
                 { bg: '#FBCE3E' },
                 { bg: '#7DD3C0' },
               ]
-              const card = cardColors[index % 3]
+              const card = cardColors[podcastColorIndices[index]]
               const isDark = card.bg === '#1A0F49'
               const textAndButtonColor = isDark ? '#FFF' : '#0F006A'
               const firstLink = podcast.links[0]
@@ -357,7 +366,7 @@ export default function Resources() {
                   <div className="flex-grow min-w-0">
                     <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-[10px] bg-white shadow-sm">
                       <svg className="h-6 w-6 text-[#1A0F49]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z" />
                       </svg>
                     </div>
                     <h3

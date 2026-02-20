@@ -18,41 +18,41 @@ export default function Navbar() {
             </Link>
           </div>
           
-          {/* Desktop Menu - Purpose, Resources, Notes, Event Calendar, Newsletter */}
-          <div className="hidden md:flex items-center gap-[82px]">
+          {/* Desktop Menu - right-aligned, compact */}
+          <div className="hidden md:flex items-center ml-auto gap-5 lg:gap-6">
             <Link
               to="/purpose"
-              className="text-black hover:text-brand-blue px-3 py-2 text-base font-normal transition-colors"
+              className="text-black hover:text-brand-blue px-2 py-2 text-sm font-normal transition-colors"
             >
               Purpose
             </Link>
             <Link
               to="/resources"
-              className="text-black hover:text-brand-blue px-3 py-2 text-base font-normal transition-colors"
+              className="text-black hover:text-brand-blue px-2 py-2 text-sm font-normal transition-colors"
             >
               Resources
             </Link>
             <Link
               to="/notes"
-              className="text-black hover:text-brand-blue px-3 py-2 text-base font-normal transition-colors"
+              className="text-black hover:text-brand-blue px-2 py-2 text-sm font-normal transition-colors"
             >
               Notes
             </Link>
             <Link
               to="/event-calendar"
-              className="text-black hover:text-brand-blue px-3 py-2 text-base font-normal transition-colors"
+              className="text-black hover:text-brand-blue px-2 py-2 text-sm font-normal transition-colors"
             >
               Event Calendar
             </Link>
             <Link
               to="/apply"
-              className="text-black hover:text-brand-blue px-3 py-2 text-base font-normal transition-colors"
+              className="text-black hover:text-brand-blue px-2 py-2 text-sm font-normal transition-colors"
             >
               Apply
             </Link>
             <Link
               to="/newsletter"
-              className="text-black hover:text-brand-blue px-3 py-2 text-base font-normal transition-colors"
+              className="text-black hover:text-brand-blue px-2 py-2 text-sm font-normal transition-colors"
             >
               Newsletter
             </Link>

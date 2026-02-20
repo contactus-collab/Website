@@ -28,7 +28,7 @@ export default function Purpose() {
       try {
         setArticlesLoading(true)
         const res = await fetch(
-          'https://blog.ballfour.org/wp-json/wp/v2/posts?_embed&per_page=2&orderby=date'
+          'https://blog.ballfour.org/wp-json/wp/v2/posts?_embed&per_page=3&orderby=date'
         )
         if (!res.ok) throw new Error('Failed to fetch posts')
         const data = await res.json()
@@ -321,10 +321,10 @@ export default function Purpose() {
             </div>
           </div>
 
-          {/* Bottom: latest 2 articles from Understand (WordPress) – Read more → individual article */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Bottom: latest 3 articles from Understand (WordPress) – Read more → individual article */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {articlesLoading ? (
-              [1, 2].map((i) => (
+              [1, 2, 3].map((i) => (
                 <div key={i} className="rounded-[10px] overflow-hidden bg-[#FFF] shadow-md flex flex-col animate-pulse">
                   <div className="w-full aspect-[16/10] bg-gray-200" />
                   <div className="p-6 flex flex-col flex-grow gap-3">
@@ -345,9 +345,8 @@ export default function Purpose() {
                   />
                   <div className="p-6 flex flex-col flex-grow">
                     <h3
-                      className="mb-3 font-medium"
+                      className="mb-3 font-medium text-brand-purple-dark"
                       style={{
-                        color: 'var(--sds-color-text-default-default)',
                         fontFamily: '"Plus Jakarta Sans", sans-serif',
                         fontSize: '20px',
                         lineHeight: '1.3',
@@ -356,7 +355,7 @@ export default function Purpose() {
                       {stripHtml(post.title.rendered)}
                     </h3>
                     <p
-                      className="mb-4 flex-grow"
+                      className="mb-4 flex-grow line-clamp-3"
                       style={{
                         color: 'var(--sds-color-text-default-default)',
                         fontFamily: '"Plus Jakarta Sans", sans-serif',
