@@ -11,7 +11,7 @@ export default function EmailCampaign() {
   const [recipients, setRecipients] = useState('')
   const [recipientSource, setRecipientSource] = useState<'manual' | 'all' | 'subscribers' | 'unsubscribed'>('manual')
   const [loadingRecipients, setLoadingRecipients] = useState(false)
-  const [contentType, setContentType] = useState<'text' | 'html'>('text')
+  const [contentType, setContentType] = useState<'text' | 'html'>('html')
   const [content, setContent] = useState('')
   const [sending, setSending] = useState(false)
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
@@ -217,7 +217,7 @@ export default function EmailCampaign() {
       setSubject('')
       setRecipients('')
       setContent('')
-      setContentType('text')
+      setContentType('html')
     } catch (error: any) {
       console.error('Error sending emails:', error)
       setMessage({
@@ -498,33 +498,46 @@ export default function EmailCampaign() {
 
             {/* Content Type Toggle */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-3">
                 Email Format <span className="text-red-500">*</span>
               </label>
-              <div className="flex gap-4">
-                <label className="flex items-center cursor-pointer">
-                  <input
-                    type="radio"
-                    name="contentType"
-                    value="text"
-                    checked={contentType === 'text'}
-                    onChange={(e) => setContentType(e.target.value as 'text' | 'html')}
-                    className="mr-2"
-                  />
-                  <span className="text-sm text-gray-700">Plain Text</span>
-                </label>
-                <label className="flex items-center cursor-pointer">
-                  <input
-                    type="radio"
-                    name="contentType"
-                    value="html"
-                    checked={contentType === 'html'}
-                    onChange={(e) => setContentType(e.target.value as 'text' | 'html')}
-                    className="mr-2"
-                  />
-                  <span className="text-sm text-gray-700">HTML</span>
-                </label>
+              <div className="inline-flex p-1 rounded-xl bg-[#F5F3F9] border border-gray-100 shadow-sm">
+                <button
+                  type="button"
+                  role="radio"
+                  aria-checked={contentType === 'text'}
+                  onClick={() => setContentType('text')}
+                  className={`flex items-center gap-2.5 px-5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    contentType === 'text'
+                      ? 'bg-white text-[#0F006A] shadow-md border border-[#0F006A]/20'
+                      : 'text-gray-600 hover:text-gray-900 hover:bg-white/60'
+                  }`}
+                >
+                  <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  </svg>
+                  Plain Text
+                </button>
+                <button
+                  type="button"
+                  role="radio"
+                  aria-checked={contentType === 'html'}
+                  onClick={() => setContentType('html')}
+                  className={`flex items-center gap-2.5 px-5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    contentType === 'html'
+                      ? 'bg-[#ECE6FE] text-[#0F006A] shadow-md border border-[#0F006A]/30'
+                      : 'text-gray-600 hover:text-gray-900 hover:bg-white/60'
+                  }`}
+                >
+                  <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                  </svg>
+                  HTML
+                </button>
               </div>
+              <p className="mt-2 text-xs text-gray-500">
+                {contentType === 'html' ? 'Rich formatting, images, and links supported.' : 'Simple text only, no formatting.'}
+              </p>
             </div>
 
             {/* Content Editor */}
@@ -644,7 +657,7 @@ ${htmlContent}
                   setRecipients('')
                   setRecipientSource('manual')
                   setContent('')
-                  setContentType('text')
+                  setContentType('html')
                   setMessage(null)
                 }}
                 className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-[#F5F3F9] transition-colors"
