@@ -233,14 +233,14 @@ export default function Applications() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+      <div className="min-h-screen bg-[#F8F7FC] flex items-center justify-center font-sans">
+        <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-[#0F006A]"></div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen bg-[#F8F7FC] flex font-sans">
       {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
         <div
@@ -272,16 +272,16 @@ export default function Applications() {
                 </svg>
               </button>
             </div>
-            <h2 className="text-xl font-bold text-gray-900">Admin Panel</h2>
+            <h2 className="text-xl font-bold text-[#0F006A]">Admin Panel</h2>
           </div>
 
           <nav className="space-y-2 mb-8 flex-1">
             <Link
               to="/admin"
-              className={`block px-4 py-3 rounded-lg transition-colors ${
+              className={`block px-4 py-3 rounded-xl transition-colors ${
                 location.pathname === '/admin'
-                  ? 'bg-primary-50 border-l-4 border-primary-600 text-primary-700 font-semibold'
-                  : 'text-gray-700 hover:bg-gray-50'
+                  ? 'bg-[#ECE6FE] border-l-4 border-[#0F006A] text-[#0F006A] font-semibold'
+                  : 'text-gray-700 hover:bg-[#F5F3F9]'
               }`}
               onClick={() => setSidebarOpen(false)}
             >
@@ -294,10 +294,10 @@ export default function Applications() {
             </Link>
             <Link
               to="/admin/add-user"
-              className={`block px-4 py-3 rounded-lg transition-colors ${
+              className={`block px-4 py-3 rounded-xl transition-colors ${
                 location.pathname === '/admin/add-user'
-                  ? 'bg-primary-50 border-l-4 border-primary-600 text-primary-700 font-semibold'
-                  : 'text-gray-700 hover:bg-gray-50'
+                  ? 'bg-[#ECE6FE] border-l-4 border-[#0F006A] text-[#0F006A] font-semibold'
+                  : 'text-gray-700 hover:bg-[#F5F3F9]'
               }`}
               onClick={() => setSidebarOpen(false)}
             >
@@ -310,10 +310,10 @@ export default function Applications() {
             </Link>
             <Link
               to="/admin/subscribers"
-              className={`block px-4 py-3 rounded-lg transition-colors ${
+              className={`block px-4 py-3 rounded-xl transition-colors ${
                 location.pathname === '/admin/subscribers'
-                  ? 'bg-primary-50 border-l-4 border-primary-600 text-primary-700 font-semibold'
-                  : 'text-gray-700 hover:bg-gray-50'
+                  ? 'bg-[#ECE6FE] border-l-4 border-[#0F006A] text-[#0F006A] font-semibold'
+                  : 'text-gray-700 hover:bg-[#F5F3F9]'
               }`}
               onClick={() => setSidebarOpen(false)}
             >
@@ -326,10 +326,10 @@ export default function Applications() {
             </Link>
             <Link
               to="/admin/applications"
-              className={`block px-4 py-3 rounded-lg transition-colors ${
+              className={`block px-4 py-3 rounded-xl transition-colors ${
                 location.pathname === '/admin/applications'
-                  ? 'bg-primary-50 border-l-4 border-primary-600 text-primary-700 font-semibold'
-                  : 'text-gray-700 hover:bg-gray-50'
+                  ? 'bg-[#ECE6FE] border-l-4 border-[#0F006A] text-[#0F006A] font-semibold'
+                  : 'text-gray-700 hover:bg-[#F5F3F9]'
               }`}
               onClick={() => setSidebarOpen(false)}
             >
@@ -342,10 +342,10 @@ export default function Applications() {
             </Link>
             <Link
               to="/admin/email-campaign"
-              className={`block px-4 py-3 rounded-lg transition-colors ${
+              className={`block px-4 py-3 rounded-xl transition-colors ${
                 location.pathname === '/admin/email-campaign'
-                  ? 'bg-primary-50 border-l-4 border-primary-600 text-primary-700 font-semibold'
-                  : 'text-gray-700 hover:bg-gray-50'
+                  ? 'bg-[#ECE6FE] border-l-4 border-[#0F006A] text-[#0F006A] font-semibold'
+                  : 'text-gray-700 hover:bg-[#F5F3F9]'
               }`}
               onClick={() => setSidebarOpen(false)}
             >
@@ -362,10 +362,10 @@ export default function Applications() {
               <p className="px-4 text-xs text-gray-500 uppercase tracking-wider mb-2">Marketing Module</p>
               <Link
                 to="/admin/marketing/website"
-                className={`block px-4 py-3 rounded-lg transition-colors ${
+                className={`block px-4 py-3 rounded-xl transition-colors ${
                   location.pathname === '/admin/marketing/website'
-                    ? 'bg-primary-50 border-l-4 border-primary-600 text-primary-700 font-semibold'
-                    : 'text-gray-700 hover:bg-gray-50'
+                    ? 'bg-[#ECE6FE] border-l-4 border-[#0F006A] text-[#0F006A] font-semibold'
+                    : 'text-gray-700 hover:bg-[#F5F3F9]'
                 }`}
                 onClick={() => setSidebarOpen(false)}
               >
@@ -378,10 +378,10 @@ export default function Applications() {
               </Link>
               <Link
                 to="/admin/marketing/linkedin"
-                className={`block px-4 py-3 rounded-lg transition-colors ${
+                className={`block px-4 py-3 rounded-xl transition-colors ${
                   location.pathname === '/admin/marketing/linkedin'
-                    ? 'bg-primary-50 border-l-4 border-primary-600 text-primary-700 font-semibold'
-                    : 'text-gray-700 hover:bg-gray-50'
+                    ? 'bg-[#ECE6FE] border-l-4 border-[#0F006A] text-[#0F006A] font-semibold'
+                    : 'text-gray-700 hover:bg-[#F5F3F9]'
                 }`}
                 onClick={() => setSidebarOpen(false)}
               >
@@ -402,7 +402,7 @@ export default function Applications() {
             </div>
             <button
               onClick={handleLogout}
-              className="w-full flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors text-left"
+              className="w-full flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-[#F5F3F9] rounded-xl transition-colors text-left"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -418,7 +418,7 @@ export default function Applications() {
         <div className="lg:hidden bg-white shadow-md p-4">
           <button
             onClick={() => setSidebarOpen(true)}
-            className="text-gray-700 hover:text-primary-600"
+            className="text-gray-700 hover:text-[#0F006A]"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -427,7 +427,7 @@ export default function Applications() {
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-6">
-            <h1 className="text-3xl font-bold text-gray-900">Applications</h1>
+            <h1 className="text-3xl font-bold text-[#0F006A]">Applications</h1>
             <p className="text-gray-600 mt-1">
               Grant applications from the Apply page. {applications.length} total · Click a row to view details.
             </p>
@@ -449,7 +449,7 @@ export default function Applications() {
           <div className="space-y-3">
             {loadingApplications ? (
               <div className="bg-white rounded-xl shadow-sm border border-gray-100 py-16 flex justify-center">
-                <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
+                <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-[#0F006A]"></div>
               </div>
             ) : applications.length === 0 ? (
               <div className="bg-white rounded-xl shadow-sm border border-gray-100 py-16 text-center text-gray-500">
@@ -461,7 +461,7 @@ export default function Applications() {
                   key={app.id}
                   type="button"
                   onClick={() => setSelectedApp(app)}
-                  className="w-full text-left bg-white rounded-xl shadow-sm border border-gray-100 hover:border-primary-200 hover:shadow-md transition-all p-4 sm:p-5 flex flex-wrap items-center gap-4 sm:gap-6"
+                  className="w-full text-left bg-white rounded-xl shadow-sm border border-gray-100 hover:border-[#ECE6FE] hover:shadow-md transition-all p-4 sm:p-5 flex flex-wrap items-center gap-4 sm:gap-6"
                 >
                   <div className="flex-1 min-w-0">
                     <div className="flex flex-wrap items-center gap-2 sm:gap-3">
@@ -506,7 +506,7 @@ export default function Applications() {
                 <div className="p-6 overflow-y-auto flex-1 space-y-4">
                   <div>
                     <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">Email</p>
-                    <a href={`mailto:${selectedApp.email}`} className="text-primary-600 hover:underline">
+                    <a href={`mailto:${selectedApp.email}`} className="text-[#0F006A] hover:underline">
                       {selectedApp.email}
                     </a>
                   </div>

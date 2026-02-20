@@ -231,14 +231,14 @@ export default function EmailCampaign() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+      <div className="min-h-screen bg-[#F8F7FC] flex items-center justify-center font-sans">
+        <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-[#0F006A]"></div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen bg-[#F8F7FC] flex font-sans">
       {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
         <div
@@ -270,16 +270,16 @@ export default function EmailCampaign() {
                 </svg>
               </button>
             </div>
-            <h2 className="text-xl font-bold text-gray-900">Admin Panel</h2>
+            <h2 className="text-xl font-bold text-[#0F006A]">Admin Panel</h2>
           </div>
 
           <nav className="space-y-2 mb-8 flex-1">
             <Link
               to="/admin"
-              className={`block px-4 py-3 rounded-lg transition-colors ${
+              className={`block px-4 py-3 rounded-xl transition-colors ${
                 location.pathname === '/admin'
-                  ? 'bg-primary-50 border-l-4 border-primary-600 text-primary-700 font-semibold'
-                  : 'text-gray-700 hover:bg-gray-50'
+                  ? 'bg-[#ECE6FE] border-l-4 border-[#0F006A] text-[#0F006A] font-semibold'
+                  : 'text-gray-700 hover:bg-[#F5F3F9]'
               }`}
               onClick={() => setSidebarOpen(false)}
             >
@@ -292,10 +292,10 @@ export default function EmailCampaign() {
             </Link>
             <Link
               to="/admin/add-user"
-              className={`block px-4 py-3 rounded-lg transition-colors ${
+              className={`block px-4 py-3 rounded-xl transition-colors ${
                 location.pathname === '/admin/add-user'
-                  ? 'bg-primary-50 border-l-4 border-primary-600 text-primary-700 font-semibold'
-                  : 'text-gray-700 hover:bg-gray-50'
+                  ? 'bg-[#ECE6FE] border-l-4 border-[#0F006A] text-[#0F006A] font-semibold'
+                  : 'text-gray-700 hover:bg-[#F5F3F9]'
               }`}
               onClick={() => setSidebarOpen(false)}
             >
@@ -308,10 +308,10 @@ export default function EmailCampaign() {
             </Link>
             <Link
               to="/admin/subscribers"
-              className={`block px-4 py-3 rounded-lg transition-colors ${
+              className={`block px-4 py-3 rounded-xl transition-colors ${
                 location.pathname === '/admin/subscribers'
-                  ? 'bg-primary-50 border-l-4 border-primary-600 text-primary-700 font-semibold'
-                  : 'text-gray-700 hover:bg-gray-50'
+                  ? 'bg-[#ECE6FE] border-l-4 border-[#0F006A] text-[#0F006A] font-semibold'
+                  : 'text-gray-700 hover:bg-[#F5F3F9]'
               }`}
               onClick={() => setSidebarOpen(false)}
             >
@@ -324,10 +324,10 @@ export default function EmailCampaign() {
             </Link>
             <Link
               to="/admin/applications"
-              className={`block px-4 py-3 rounded-lg transition-colors ${
+              className={`block px-4 py-3 rounded-xl transition-colors ${
                 location.pathname === '/admin/applications'
-                  ? 'bg-primary-50 border-l-4 border-primary-600 text-primary-700 font-semibold'
-                  : 'text-gray-700 hover:bg-gray-50'
+                  ? 'bg-[#ECE6FE] border-l-4 border-[#0F006A] text-[#0F006A] font-semibold'
+                  : 'text-gray-700 hover:bg-[#F5F3F9]'
               }`}
               onClick={() => setSidebarOpen(false)}
             >
@@ -340,10 +340,10 @@ export default function EmailCampaign() {
             </Link>
             <Link
               to="/admin/email-campaign"
-              className={`block px-4 py-3 rounded-lg transition-colors ${
+              className={`block px-4 py-3 rounded-xl transition-colors ${
                 location.pathname === '/admin/email-campaign'
-                  ? 'bg-primary-50 border-l-4 border-primary-600 text-primary-700 font-semibold'
-                  : 'text-gray-700 hover:bg-gray-50'
+                  ? 'bg-[#ECE6FE] border-l-4 border-[#0F006A] text-[#0F006A] font-semibold'
+                  : 'text-gray-700 hover:bg-[#F5F3F9]'
               }`}
               onClick={() => setSidebarOpen(false)}
             >
@@ -361,10 +361,10 @@ export default function EmailCampaign() {
               
               <Link
                 to="/admin/marketing/website"
-                className={`block px-4 py-3 rounded-lg transition-colors ${
+                className={`block px-4 py-3 rounded-xl transition-colors ${
                   location.pathname === '/admin/marketing/website'
-                    ? 'bg-primary-50 border-l-4 border-primary-600 text-primary-700 font-semibold'
-                    : 'text-gray-700 hover:bg-gray-50'
+                    ? 'bg-[#ECE6FE] border-l-4 border-[#0F006A] text-[#0F006A] font-semibold'
+                    : 'text-gray-700 hover:bg-[#F5F3F9]'
                 }`}
                 onClick={() => setSidebarOpen(false)}
               >
@@ -378,10 +378,10 @@ export default function EmailCampaign() {
               
               <Link
                 to="/admin/marketing/linkedin"
-                className={`block px-4 py-3 rounded-lg transition-colors ${
+                className={`block px-4 py-3 rounded-xl transition-colors ${
                   location.pathname === '/admin/marketing/linkedin'
-                    ? 'bg-primary-50 border-l-4 border-primary-600 text-primary-700 font-semibold'
-                    : 'text-gray-700 hover:bg-gray-50'
+                    ? 'bg-[#ECE6FE] border-l-4 border-[#0F006A] text-[#0F006A] font-semibold'
+                    : 'text-gray-700 hover:bg-[#F5F3F9]'
                 }`}
                 onClick={() => setSidebarOpen(false)}
               >
@@ -402,7 +402,7 @@ export default function EmailCampaign() {
             </div>
             <button
               onClick={handleLogout}
-              className="w-full flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors text-left"
+              className="w-full flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-[#F5F3F9] rounded-xl transition-colors text-left"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -419,7 +419,7 @@ export default function EmailCampaign() {
         <div className="lg:hidden bg-white shadow-md p-4">
           <button
             onClick={() => setSidebarOpen(true)}
-            className="text-gray-700 hover:text-primary-600"
+            className="text-gray-700 hover:text-[#0F006A]"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -429,7 +429,7 @@ export default function EmailCampaign() {
         
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Email Campaign</h1>
+            <h1 className="text-3xl font-bold text-[#0F006A] mb-2">Email Campaign</h1>
             <p className="text-gray-600">Send emails to multiple recipients individually</p>
           </div>
 
@@ -444,7 +444,7 @@ export default function EmailCampaign() {
                 id="subject"
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0F006A] focus:border-[#0F006A]"
                 placeholder="Enter email subject"
                 required
               />
@@ -460,7 +460,7 @@ export default function EmailCampaign() {
                 value={recipientSource}
                 onChange={handleRecipientSourceChange}
                 disabled={loadingRecipients}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white mb-4 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0F006A] focus:border-[#0F006A] bg-white mb-4 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <option value="manual">Manual Entry</option>
                 <option value="all">All Users</option>
@@ -484,7 +484,7 @@ export default function EmailCampaign() {
                   }
                 }}
                 disabled={loadingRecipients}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0F006A] focus:border-[#0F006A] disabled:opacity-50 disabled:cursor-not-allowed"
                 placeholder="Enter email addresses separated by commas or new lines&#10;example@email.com, another@email.com"
                 rows={4}
                 required
@@ -539,7 +539,7 @@ export default function EmailCampaign() {
                       id="content"
                       value={content}
                       onChange={(e) => setContent(e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 font-mono text-sm"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0F006A] focus:border-[#0F006A] font-mono text-sm"
                       placeholder="Enter HTML code for your email&#10;&lt;html&gt;&#10;  &lt;body&gt;&#10;    &lt;h1&gt;Hello&lt;/h1&gt;&#10;    &lt;p&gt;Your email content here&lt;/p&gt;&#10;  &lt;/body&gt;&#10;&lt;/html&gt;"
                       rows={15}
                       required
@@ -556,7 +556,7 @@ export default function EmailCampaign() {
                         Preview
                       </label>
                       <div className="border border-gray-300 rounded-lg overflow-hidden bg-white">
-                        <div className="bg-gray-50 px-4 py-2 border-b border-gray-200 flex items-center justify-between">
+                        <div className="bg-[#F5F3F9] px-4 py-2 border-b border-gray-200 flex items-center justify-between">
                           <span className="text-sm font-medium text-gray-700">Email Preview</span>
                           <span className="text-xs text-gray-500">This is how your email will appear</span>
                         </div>
@@ -597,7 +597,7 @@ ${htmlContent}
                   id="content"
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0F006A] focus:border-[#0F006A]"
                   placeholder="Enter your email content as plain text"
                   rows={15}
                   required
@@ -623,7 +623,7 @@ ${htmlContent}
               <button
                 type="submit"
                 disabled={sending}
-                className="flex-1 bg-primary-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex-1 bg-[#0F006A] text-white px-6 py-3 rounded-xl font-medium hover:opacity-95 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {sending ? (
                   <span className="flex items-center justify-center">
@@ -647,7 +647,7 @@ ${htmlContent}
                   setContentType('text')
                   setMessage(null)
                 }}
-                className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors"
+                className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-[#F5F3F9] transition-colors"
               >
                 Clear
               </button>

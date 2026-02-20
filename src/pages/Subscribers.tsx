@@ -237,14 +237,14 @@ export default function Subscribers() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+      <div className="min-h-screen bg-[#F8F7FC] flex items-center justify-center font-sans">
+        <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-[#0F006A]"></div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen bg-[#F8F7FC] flex font-sans">
       {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
         <div
@@ -276,19 +276,19 @@ export default function Subscribers() {
                 </svg>
               </button>
             </div>
-            <h2 className="text-xl font-bold text-gray-900">Admin Panel</h2>
+            <h2 className="text-xl font-bold text-[#0F006A]">Admin Panel</h2>
           </div>
 
           <nav className="space-y-2 mb-8 flex-1">
             <Link
               to="/admin"
-              className="block px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+              className="block px-4 py-3 text-gray-700 hover:bg-[#F5F3F9] rounded-xl transition-colors"
             >
               Dashboard
             </Link>
             <Link
               to="/admin/add-user"
-              className="block px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+              className="block px-4 py-3 text-gray-700 hover:bg-[#F5F3F9] rounded-xl transition-colors"
             >
               <div className="flex items-center gap-3">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -297,15 +297,15 @@ export default function Subscribers() {
                 <span className="text-sm font-medium">Add User</span>
               </div>
             </Link>
-            <div className="px-4 py-3 bg-primary-50 border-l-4 border-primary-600 rounded">
-              <p className="text-sm font-semibold text-primary-700">Subscribers</p>
+            <div className="px-4 py-3 bg-[#ECE6FE] border-l-4 border-[#0F006A] rounded-xl">
+              <p className="text-sm font-semibold text-[#0F006A]">Subscribers</p>
             </div>
             <Link
               to="/admin/applications"
-              className={`block px-4 py-3 rounded-lg transition-colors ${
+              className={`block px-4 py-3 rounded-xl transition-colors ${
                 location.pathname === '/admin/applications'
-                  ? 'bg-primary-50 border-l-4 border-primary-600 text-primary-700 font-semibold'
-                  : 'text-gray-700 hover:bg-gray-50'
+                  ? 'bg-[#ECE6FE] border-l-4 border-[#0F006A] text-[#0F006A] font-semibold'
+                  : 'text-gray-700 hover:bg-[#F5F3F9]'
               }`}
               onClick={() => setSidebarOpen(false)}
             >
@@ -318,10 +318,10 @@ export default function Subscribers() {
             </Link>
             <Link
               to="/admin/email-campaign"
-              className={`block px-4 py-3 rounded-lg transition-colors ${
+              className={`block px-4 py-3 rounded-xl transition-colors ${
                 location.pathname === '/admin/email-campaign'
-                  ? 'bg-primary-50 border-l-4 border-primary-600 text-primary-700 font-semibold'
-                  : 'text-gray-700 hover:bg-gray-50'
+                  ? 'bg-[#ECE6FE] border-l-4 border-[#0F006A] text-[#0F006A] font-semibold'
+                  : 'text-gray-700 hover:bg-[#F5F3F9]'
               }`}
               onClick={() => setSidebarOpen(false)}
             >
@@ -338,10 +338,10 @@ export default function Subscribers() {
               <p className="px-4 text-xs text-gray-500 uppercase tracking-wider mb-2">Marketing Module</p>
               <Link
                 to="/admin/marketing/website"
-                className={`block px-4 py-3 rounded-lg transition-colors ${
+                className={`block px-4 py-3 rounded-xl transition-colors ${
                   location.pathname === '/admin/marketing/website'
-                    ? 'bg-primary-50 border-l-4 border-primary-600 text-primary-700 font-semibold'
-                    : 'text-gray-700 hover:bg-gray-50'
+                    ? 'bg-[#ECE6FE] border-l-4 border-[#0F006A] text-[#0F006A] font-semibold'
+                    : 'text-gray-700 hover:bg-[#F5F3F9]'
                 }`}
                 onClick={() => setSidebarOpen(false)}
               >
@@ -354,10 +354,10 @@ export default function Subscribers() {
               </Link>
               <Link
                 to="/admin/marketing/linkedin"
-                className={`block px-4 py-3 rounded-lg transition-colors ${
+                className={`block px-4 py-3 rounded-xl transition-colors ${
                   location.pathname === '/admin/marketing/linkedin'
-                    ? 'bg-primary-50 border-l-4 border-primary-600 text-primary-700 font-semibold'
-                    : 'text-gray-700 hover:bg-gray-50'
+                    ? 'bg-[#ECE6FE] border-l-4 border-[#0F006A] text-[#0F006A] font-semibold'
+                    : 'text-gray-700 hover:bg-[#F5F3F9]'
                 }`}
                 onClick={() => setSidebarOpen(false)}
               >
@@ -378,7 +378,7 @@ export default function Subscribers() {
             </div>
             <button
               onClick={handleLogout}
-              className="w-full flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors text-left"
+              className="w-full flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-[#F5F3F9] rounded-xl transition-colors text-left"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -395,7 +395,7 @@ export default function Subscribers() {
         <div className="lg:hidden bg-white shadow-md p-4">
           <button
             onClick={() => setSidebarOpen(true)}
-            className="text-gray-700 hover:text-primary-600"
+            className="text-gray-700 hover:text-[#0F006A]"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -405,7 +405,7 @@ export default function Subscribers() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Header */}
-          <div className="bg-gradient-to-r from-primary-600 to-primary-700 rounded-xl shadow-lg p-8 mb-8 text-white">
+          <div className="bg-gradient-to-r from-[#0F006A] to-[#4E288E] rounded-xl shadow-lg p-8 mb-8 text-white">
             <div className="flex items-center gap-4 mb-4">
               <div className="bg-white/20 p-3 rounded-lg">
                 <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -414,10 +414,10 @@ export default function Subscribers() {
               </div>
               <div>
                 <h1 className="text-4xl font-bold">Newsletter Subscribers</h1>
-                <p className="text-primary-100 mt-2">Manage and view all newsletter subscribers</p>
+                <p className="text-white/90 mt-2">Manage and view all newsletter subscribers</p>
               </div>
             </div>
-            <div className="mt-4 flex items-center gap-6 text-primary-100">
+            <div className="mt-4 flex items-center gap-6 text-white/90">
               <div className="flex items-center gap-2">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -443,8 +443,8 @@ export default function Subscribers() {
                 }}
                 className={`flex-1 px-6 py-3 rounded-lg font-semibold transition-all ${
                   activeTab === 'active'
-                    ? 'bg-primary-600 text-white shadow-md'
-                    : 'text-gray-700 hover:bg-gray-50'
+                    ? 'bg-[#0F006A] text-white shadow-md'
+                    : 'text-gray-700 hover:bg-[#F5F3F9]'
                 }`}
               >
                 <div className="flex items-center justify-center gap-2">
@@ -461,8 +461,8 @@ export default function Subscribers() {
                 }}
                 className={`flex-1 px-6 py-3 rounded-lg font-semibold transition-all ${
                   activeTab === 'unsubscribed'
-                    ? 'bg-primary-600 text-white shadow-md'
-                    : 'text-gray-700 hover:bg-gray-50'
+                    ? 'bg-[#0F006A] text-white shadow-md'
+                    : 'text-gray-700 hover:bg-[#F5F3F9]'
                 }`}
               >
                 <div className="flex items-center justify-center gap-2">
@@ -492,7 +492,7 @@ export default function Subscribers() {
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     placeholder="Search by email, first name, or last name..."
-                    className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                    className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0F006A] focus:border-[#0F006A]"
                   />
                 </div>
               </div>
@@ -511,11 +511,11 @@ export default function Subscribers() {
           <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-100">
             {loadingSubscribers ? (
               <div className="text-center py-12">
-                <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
+                <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-[#0F006A]"></div>
                 <p className="text-gray-500 text-sm mt-4">Loading subscribers...</p>
               </div>
             ) : filteredSubscribers.length === 0 ? (
-              <div className="text-center py-12 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
+              <div className="text-center py-12 bg-gray-50/80 rounded-2xl border-2 border-dashed border-gray-300">
                 <svg className="w-12 h-12 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
@@ -525,7 +525,7 @@ export default function Subscribers() {
                 {searchTerm && (
                   <button
                     onClick={() => setSearchTerm('')}
-                    className="mt-2 text-primary-600 hover:text-primary-700 text-sm font-medium"
+                    className="mt-2 text-[#0F006A] hover:text-[#4E288E] text-sm font-medium"
                   >
                     Clear search
                   </button>
@@ -534,7 +534,7 @@ export default function Subscribers() {
             ) : (
               <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gradient-to-r from-gray-50 to-gray-100">
+                  <thead className="bg-gradient-to-r bg-[#F5F3F9]">
                     <tr>
                       <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                         Name
@@ -557,11 +557,11 @@ export default function Subscribers() {
                         .join(' ') || 'N/A'
                       
                       return (
-                        <tr key={subscriber.id} className="hover:bg-gray-50 transition-colors">
+                        <tr key={subscriber.id} className="hover:bg-[#F5F3F9] transition-colors">
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="flex items-center gap-3">
-                              <div className="bg-primary-100 p-2 rounded-full">
-                                <svg className="w-4 h-4 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <div className="bg-[#ECE6FE] p-2 rounded-full">
+                                <svg className="w-4 h-4 text-[#0F006A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                 </svg>
                               </div>
@@ -571,7 +571,7 @@ export default function Subscribers() {
                           <td className="px-6 py-4 whitespace-nowrap">
                             <a
                               href={`mailto:${subscriber.email}`}
-                              className="text-sm text-primary-600 hover:text-primary-700 hover:underline"
+                              className="text-sm text-[#0F006A] hover:text-[#4E288E] hover:underline"
                             >
                               {subscriber.email}
                             </a>
@@ -596,7 +596,7 @@ export default function Subscribers() {
                                 <>
                                   <button
                                     onClick={() => handleUnsubscribeClick(subscriber.id, subscriber.email)}
-                                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-orange-600 bg-orange-50 hover:bg-orange-100 rounded-lg transition-colors"
+                                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-orange-600 bg-orange-50 hover:bg-orange-100 rounded-xl transition-colors"
                                     title="Unsubscribe from newsletter"
                                   >
                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -606,7 +606,7 @@ export default function Subscribers() {
                                   </button>
                                   <button
                                     onClick={() => handleDeleteClick(subscriber.id, subscriber.email)}
-                                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-colors"
+                                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-red-600 bg-red-50 hover:bg-red-100 rounded-xl transition-colors"
                                     title="Delete subscriber completely"
                                   >
                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -619,7 +619,7 @@ export default function Subscribers() {
                                 <>
                                   <button
                                     onClick={() => handleResubscribeClick(subscriber.id, subscriber.email)}
-                                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-green-600 bg-green-50 hover:bg-green-100 rounded-lg transition-colors"
+                                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-green-600 bg-green-50 hover:bg-green-100 rounded-xl transition-colors"
                                     title="Resubscribe to newsletter"
                                   >
                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -629,7 +629,7 @@ export default function Subscribers() {
                                   </button>
                                   <button
                                     onClick={() => handleDeleteClick(subscriber.id, subscriber.email)}
-                                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-colors"
+                                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-red-600 bg-red-50 hover:bg-red-100 rounded-xl transition-colors"
                                     title="Delete subscriber completely"
                                   >
                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -712,7 +712,7 @@ export default function Subscribers() {
               <button
                 onClick={handleCancelAction}
                 disabled={deleting}
-                className="flex-1 px-4 py-2 border-2 border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex-1 px-4 py-2 border-2 border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-[#F5F3F9] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Cancel
               </button>

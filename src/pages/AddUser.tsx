@@ -233,14 +233,14 @@ export default function AddUser() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+      <div className="min-h-screen bg-[#F8F7FC] flex items-center justify-center font-sans">
+        <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-[#0F006A]"></div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen bg-[#F8F7FC] flex font-sans">
       {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
         <div
@@ -272,22 +272,22 @@ export default function AddUser() {
                 </svg>
               </button>
             </div>
-            <h2 className="text-xl font-bold text-gray-900">Admin Panel</h2>
+            <h2 className="text-xl font-bold text-[#0F006A]">Admin Panel</h2>
           </div>
 
           <nav className="space-y-2 mb-8 flex-1">
             <Link
               to="/admin"
-              className="block px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+              className="block px-4 py-3 text-gray-700 hover:bg-[#F5F3F9] rounded-xl transition-colors"
             >
               Dashboard
             </Link>
             <Link
               to="/admin/add-user"
-              className={`block px-4 py-3 rounded-lg transition-colors ${
+              className={`block px-4 py-3 rounded-xl transition-colors ${
                 location.pathname === '/admin/add-user'
-                  ? 'bg-primary-50 border-l-4 border-primary-600 text-primary-700 font-semibold'
-                  : 'text-gray-700 hover:bg-gray-50'
+                  ? 'bg-[#ECE6FE] border-l-4 border-[#0F006A] text-[#0F006A] font-semibold'
+                  : 'text-gray-700 hover:bg-[#F5F3F9]'
               }`}
               onClick={() => setSidebarOpen(false)}
             >
@@ -300,10 +300,10 @@ export default function AddUser() {
             </Link>
             <Link
               to="/admin/subscribers"
-              className={`block px-4 py-3 rounded-lg transition-colors ${
+              className={`block px-4 py-3 rounded-xl transition-colors ${
                 location.pathname === '/admin/subscribers'
-                  ? 'bg-primary-50 border-l-4 border-primary-600 text-primary-700 font-semibold'
-                  : 'text-gray-700 hover:bg-gray-50'
+                  ? 'bg-[#ECE6FE] border-l-4 border-[#0F006A] text-[#0F006A] font-semibold'
+                  : 'text-gray-700 hover:bg-[#F5F3F9]'
               }`}
               onClick={() => setSidebarOpen(false)}
             >
@@ -316,10 +316,10 @@ export default function AddUser() {
             </Link>
             <Link
               to="/admin/applications"
-              className={`block px-4 py-3 rounded-lg transition-colors ${
+              className={`block px-4 py-3 rounded-xl transition-colors ${
                 location.pathname === '/admin/applications'
-                  ? 'bg-primary-50 border-l-4 border-primary-600 text-primary-700 font-semibold'
-                  : 'text-gray-700 hover:bg-gray-50'
+                  ? 'bg-[#ECE6FE] border-l-4 border-[#0F006A] text-[#0F006A] font-semibold'
+                  : 'text-gray-700 hover:bg-[#F5F3F9]'
               }`}
               onClick={() => setSidebarOpen(false)}
             >
@@ -332,10 +332,10 @@ export default function AddUser() {
             </Link>
             <Link
               to="/admin/email-campaign"
-              className={`block px-4 py-3 rounded-lg transition-colors ${
+              className={`block px-4 py-3 rounded-xl transition-colors ${
                 location.pathname === '/admin/email-campaign'
-                  ? 'bg-primary-50 border-l-4 border-primary-600 text-primary-700 font-semibold'
-                  : 'text-gray-700 hover:bg-gray-50'
+                  ? 'bg-[#ECE6FE] border-l-4 border-[#0F006A] text-[#0F006A] font-semibold'
+                  : 'text-gray-700 hover:bg-[#F5F3F9]'
               }`}
               onClick={() => setSidebarOpen(false)}
             >
@@ -352,10 +352,10 @@ export default function AddUser() {
               <p className="px-4 text-xs text-gray-500 uppercase tracking-wider mb-2">Marketing Module</p>
               <Link
                 to="/admin/marketing/website"
-                className={`block px-4 py-3 rounded-lg transition-colors ${
+                className={`block px-4 py-3 rounded-xl transition-colors ${
                   location.pathname === '/admin/marketing/website'
-                    ? 'bg-primary-50 border-l-4 border-primary-600 text-primary-700 font-semibold'
-                    : 'text-gray-700 hover:bg-gray-50'
+                    ? 'bg-[#ECE6FE] border-l-4 border-[#0F006A] text-[#0F006A] font-semibold'
+                    : 'text-gray-700 hover:bg-[#F5F3F9]'
                 }`}
                 onClick={() => setSidebarOpen(false)}
               >
@@ -368,10 +368,10 @@ export default function AddUser() {
               </Link>
               <Link
                 to="/admin/marketing/linkedin"
-                className={`block px-4 py-3 rounded-lg transition-colors ${
+                className={`block px-4 py-3 rounded-xl transition-colors ${
                   location.pathname === '/admin/marketing/linkedin'
-                    ? 'bg-primary-50 border-l-4 border-primary-600 text-primary-700 font-semibold'
-                    : 'text-gray-700 hover:bg-gray-50'
+                    ? 'bg-[#ECE6FE] border-l-4 border-[#0F006A] text-[#0F006A] font-semibold'
+                    : 'text-gray-700 hover:bg-[#F5F3F9]'
                 }`}
                 onClick={() => setSidebarOpen(false)}
               >
@@ -392,7 +392,7 @@ export default function AddUser() {
             </div>
             <button
               onClick={handleLogout}
-              className="w-full flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors text-left"
+              className="w-full flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-[#F5F3F9] rounded-xl transition-colors text-left"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -409,7 +409,7 @@ export default function AddUser() {
         <div className="lg:hidden bg-white shadow-md p-4">
           <button
             onClick={() => setSidebarOpen(true)}
-            className="text-gray-700 hover:text-primary-600"
+            className="text-gray-700 hover:text-[#0F006A]"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -419,7 +419,7 @@ export default function AddUser() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Header */}
-          <div className="bg-gradient-to-r from-primary-600 to-primary-700 rounded-xl shadow-lg p-8 mb-8 text-white">
+          <div className="bg-gradient-to-r from-[#0F006A] to-[#4E288E] rounded-xl shadow-lg p-8 mb-8 text-white">
             <div className="flex items-center gap-4 mb-4">
               <div className="bg-white/20 p-3 rounded-lg">
                 <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -428,10 +428,10 @@ export default function AddUser() {
               </div>
               <div>
                 <h1 className="text-4xl font-bold">Add New User</h1>
-                <p className="text-primary-100 mt-2">Create a new admin user account for the site</p>
+                <p className="text-white/90 mt-2">Create a new admin user account for the site</p>
               </div>
             </div>
-            <div className="mt-4 flex items-center gap-2 text-primary-100">
+            <div className="mt-4 flex items-center gap-2 text-white/90">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
               </svg>
@@ -442,8 +442,8 @@ export default function AddUser() {
           {/* Add User Form */}
           <div className="bg-white rounded-xl shadow-lg p-8 mb-8 border border-gray-100">
             <div className="flex items-center gap-3 mb-6">
-              <div className="bg-primary-100 p-2 rounded-lg">
-                <svg className="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="bg-[#ECE6FE] p-2 rounded-lg">
+                <svg className="w-6 h-6 text-[#0F006A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                 </svg>
               </div>
@@ -451,9 +451,9 @@ export default function AddUser() {
             </div>
             
             <form onSubmit={handleSubmit} className="space-y-6" autoComplete="off">
-              <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
+              <div className="bg-[#F5F3F9] p-6 rounded-2xl border border-gray-100">
                 <label htmlFor="email" className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-3">
-                  <svg className="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 text-[#0F006A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
                   Email Address <span className="text-red-500">*</span>
@@ -464,16 +464,16 @@ export default function AddUser() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all bg-white"
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0F006A] focus:border-[#0F006A] transition-all bg-white"
                   placeholder="Enter email address"
                   autoComplete="off"
                 />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                <div className="bg-[#F5F3F9] p-6 rounded-2xl border border-gray-100">
                   <label htmlFor="password" className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-3">
-                    <svg className="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 text-[#0F006A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                     </svg>
                     Password <span className="text-red-500">*</span>
@@ -484,7 +484,7 @@ export default function AddUser() {
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all bg-white"
+                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0F006A] focus:border-[#0F006A] transition-all bg-white"
                     placeholder="Enter password"
                     minLength={6}
                     autoComplete="new-password"
@@ -497,9 +497,9 @@ export default function AddUser() {
                   </p>
                 </div>
 
-                <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                <div className="bg-[#F5F3F9] p-6 rounded-2xl border border-gray-100">
                   <label htmlFor="confirmPassword" className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-3">
-                    <svg className="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 text-[#0F006A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                     </svg>
                     Confirm Password <span className="text-red-500">*</span>
@@ -510,7 +510,7 @@ export default function AddUser() {
                     required
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all bg-white"
+                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0F006A] focus:border-[#0F006A] transition-all bg-white"
                     placeholder="Re-enter password"
                     minLength={6}
                     autoComplete="new-password"
@@ -530,7 +530,7 @@ export default function AddUser() {
                 <button
                   type="submit"
                   disabled={formLoading}
-                  className="w-full bg-gradient-to-r from-primary-600 to-primary-700 text-white px-6 py-4 rounded-lg font-semibold hover:from-primary-700 hover:to-primary-800 transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transform hover:scale-[1.02]"
+                  className="w-full bg-gradient-to-r from-[#0F006A] to-[#4E288E] text-white px-6 py-4 rounded-lg font-semibold transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transform hover:scale-[1.02]"
                 >
                   {formLoading ? (
                     <>
@@ -578,8 +578,8 @@ export default function AddUser() {
           <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-100">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
-                <div className="bg-primary-100 p-2 rounded-lg">
-                  <svg className="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="bg-[#ECE6FE] p-2 rounded-lg">
+                  <svg className="w-6 h-6 text-[#0F006A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                   </svg>
                 </div>
@@ -591,11 +591,11 @@ export default function AddUser() {
             </div>
             {loadingUsers ? (
               <div className="text-center py-12">
-                <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
+                <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-[#0F006A]"></div>
                 <p className="text-gray-500 text-sm mt-4">Loading users...</p>
               </div>
             ) : users.length === 0 ? (
-              <div className="text-center py-12 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
+              <div className="text-center py-12 bg-[#F5F3F9] rounded-2xl border-2 border-dashed border-gray-300">
                 <svg className="w-12 h-12 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
@@ -605,7 +605,7 @@ export default function AddUser() {
             ) : (
               <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gradient-to-r from-gray-50 to-gray-100">
+                  <thead className="bg-gradient-to-r bg-[#F5F3F9]">
                     <tr>
                       <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                         Email
@@ -623,11 +623,11 @@ export default function AddUser() {
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
                     {users.map((listUser) => (
-                      <tr key={listUser.id} className="hover:bg-gray-50 transition-colors">
+                      <tr key={listUser.id} className="hover:bg-[#F5F3F9] transition-colors">
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center gap-3">
-                            <div className="bg-primary-100 p-2 rounded-full">
-                              <svg className="w-4 h-4 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div className="bg-[#ECE6FE] p-2 rounded-full">
+                              <svg className="w-4 h-4 text-[#0F006A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                               </svg>
                             </div>
@@ -637,7 +637,7 @@ export default function AddUser() {
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
                             listUser.role === 'admin' 
-                              ? 'bg-primary-100 text-primary-800' 
+                              ? 'bg-[#ECE6FE] text-[#0F006A]' 
                               : 'bg-gray-100 text-gray-800'
                           }`}>
                             {listUser.role === 'admin' ? '👑 Admin' : 'User'}
@@ -661,7 +661,7 @@ export default function AddUser() {
                           ) : (
                             <button
                               onClick={() => handleDeleteClick(listUser.id, listUser.email)}
-                              className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-colors"
+                              className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 rounded-xl transition-colors"
                             >
                               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -703,7 +703,7 @@ export default function AddUser() {
               <button
                 onClick={handleDeleteCancel}
                 disabled={deleting}
-                className="flex-1 px-4 py-2 border-2 border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex-1 px-4 py-2 border-2 border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-[#F5F3F9] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Cancel
               </button>

@@ -177,14 +177,14 @@ export default function WebsiteAnalytics() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+      <div className="min-h-screen bg-[#F8F7FC] flex items-center justify-center font-sans">
+        <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-[#0F006A]"></div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen bg-[#F8F7FC] flex font-sans">
       {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
         <div
@@ -216,16 +216,16 @@ export default function WebsiteAnalytics() {
                 </svg>
               </button>
             </div>
-            <h2 className="text-xl font-bold text-gray-900">Admin Panel</h2>
+            <h2 className="text-xl font-bold text-[#0F006A]">Admin Panel</h2>
           </div>
 
           <nav className="space-y-2 mb-8 flex-1">
             <Link
               to="/admin"
-              className={`block px-4 py-3 rounded-lg transition-colors ${
+              className={`block px-4 py-3 rounded-xl transition-colors ${
                 location.pathname === '/admin'
-                  ? 'bg-primary-50 border-l-4 border-primary-600 text-primary-700 font-semibold'
-                  : 'text-gray-700 hover:bg-gray-50'
+                  ? 'bg-[#ECE6FE] border-l-4 border-[#0F006A] text-[#0F006A] font-semibold'
+                  : 'text-gray-700 hover:bg-[#F5F3F9]'
               }`}
               onClick={() => setSidebarOpen(false)}
             >
@@ -238,10 +238,10 @@ export default function WebsiteAnalytics() {
             </Link>
             <Link
               to="/admin/add-user"
-              className={`block px-4 py-3 rounded-lg transition-colors ${
+              className={`block px-4 py-3 rounded-xl transition-colors ${
                 location.pathname === '/admin/add-user'
-                  ? 'bg-primary-50 border-l-4 border-primary-600 text-primary-700 font-semibold'
-                  : 'text-gray-700 hover:bg-gray-50'
+                  ? 'bg-[#ECE6FE] border-l-4 border-[#0F006A] text-[#0F006A] font-semibold'
+                  : 'text-gray-700 hover:bg-[#F5F3F9]'
               }`}
               onClick={() => setSidebarOpen(false)}
             >
@@ -254,10 +254,10 @@ export default function WebsiteAnalytics() {
             </Link>
             <Link
               to="/admin/subscribers"
-              className={`block px-4 py-3 rounded-lg transition-colors ${
+              className={`block px-4 py-3 rounded-xl transition-colors ${
                 location.pathname === '/admin/subscribers'
-                  ? 'bg-primary-50 border-l-4 border-primary-600 text-primary-700 font-semibold'
-                  : 'text-gray-700 hover:bg-gray-50'
+                  ? 'bg-[#ECE6FE] border-l-4 border-[#0F006A] text-[#0F006A] font-semibold'
+                  : 'text-gray-700 hover:bg-[#F5F3F9]'
               }`}
               onClick={() => setSidebarOpen(false)}
             >
@@ -270,10 +270,10 @@ export default function WebsiteAnalytics() {
             </Link>
             <Link
               to="/admin/applications"
-              className={`block px-4 py-3 rounded-lg transition-colors ${
+              className={`block px-4 py-3 rounded-xl transition-colors ${
                 location.pathname === '/admin/applications'
-                  ? 'bg-primary-50 border-l-4 border-primary-600 text-primary-700 font-semibold'
-                  : 'text-gray-700 hover:bg-gray-50'
+                  ? 'bg-[#ECE6FE] border-l-4 border-[#0F006A] text-[#0F006A] font-semibold'
+                  : 'text-gray-700 hover:bg-[#F5F3F9]'
               }`}
               onClick={() => setSidebarOpen(false)}
             >
@@ -286,10 +286,10 @@ export default function WebsiteAnalytics() {
             </Link>
             <Link
               to="/admin/email-campaign"
-              className={`block px-4 py-3 rounded-lg transition-colors ${
+              className={`block px-4 py-3 rounded-xl transition-colors ${
                 location.pathname === '/admin/email-campaign'
-                  ? 'bg-primary-50 border-l-4 border-primary-600 text-primary-700 font-semibold'
-                  : 'text-gray-700 hover:bg-gray-50'
+                  ? 'bg-[#ECE6FE] border-l-4 border-[#0F006A] text-[#0F006A] font-semibold'
+                  : 'text-gray-700 hover:bg-[#F5F3F9]'
               }`}
               onClick={() => setSidebarOpen(false)}
             >
@@ -306,10 +306,10 @@ export default function WebsiteAnalytics() {
               <p className="px-4 text-xs text-gray-500 uppercase tracking-wider mb-2">Marketing Module</p>
               <Link
                 to="/admin/marketing/website"
-                className={`block px-4 py-3 rounded-lg transition-colors ${
+                className={`block px-4 py-3 rounded-xl transition-colors ${
                   location.pathname === '/admin/marketing/website'
-                    ? 'bg-primary-50 border-l-4 border-primary-600 text-primary-700 font-semibold'
-                    : 'text-gray-700 hover:bg-gray-50'
+                    ? 'bg-[#ECE6FE] border-l-4 border-[#0F006A] text-[#0F006A] font-semibold'
+                    : 'text-gray-700 hover:bg-[#F5F3F9]'
                 }`}
                 onClick={() => setSidebarOpen(false)}
               >
@@ -322,10 +322,10 @@ export default function WebsiteAnalytics() {
               </Link>
               <Link
                 to="/admin/marketing/linkedin"
-                className={`block px-4 py-3 rounded-lg transition-colors ${
+                className={`block px-4 py-3 rounded-xl transition-colors ${
                   location.pathname === '/admin/marketing/linkedin'
-                    ? 'bg-primary-50 border-l-4 border-primary-600 text-primary-700 font-semibold'
-                    : 'text-gray-700 hover:bg-gray-50'
+                    ? 'bg-[#ECE6FE] border-l-4 border-[#0F006A] text-[#0F006A] font-semibold'
+                    : 'text-gray-700 hover:bg-[#F5F3F9]'
                 }`}
                 onClick={() => setSidebarOpen(false)}
               >
@@ -346,7 +346,7 @@ export default function WebsiteAnalytics() {
             </div>
             <button
               onClick={handleLogout}
-              className="w-full flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors text-left"
+              className="w-full flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-[#F5F3F9] rounded-xl transition-colors text-left"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -363,7 +363,7 @@ export default function WebsiteAnalytics() {
         <div className="lg:hidden bg-white shadow-md p-4">
           <button
             onClick={() => setSidebarOpen(true)}
-            className="text-gray-700 hover:text-primary-600"
+            className="text-gray-700 hover:text-[#0F006A]"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -373,7 +373,7 @@ export default function WebsiteAnalytics() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Header */}
-          <div className="bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-xl shadow-lg p-8 mb-8">
+          <div className="bg-gradient-to-r from-[#0F006A] to-[#4E288E] text-white rounded-xl shadow-lg p-8 mb-8">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <div className="bg-white bg-opacity-20 p-3 rounded-full">
@@ -383,13 +383,13 @@ export default function WebsiteAnalytics() {
                 </div>
                 <div>
                   <h1 className="text-3xl font-bold">Website Analytics</h1>
-                  <p className="text-primary-100 mt-1">Google Analytics data for your website</p>
+                  <p className="text-white/90 mt-1">Google Analytics data for your website</p>
                 </div>
               </div>
               <button
                 onClick={fetchAnalyticsData}
                 disabled={loadingAnalytics}
-                className="bg-white text-primary-700 px-4 py-2 rounded-lg font-semibold hover:bg-primary-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                className="bg-white text-[#0F006A] px-4 py-2 rounded-xl font-semibold hover:bg-[#ECE6FE] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
               >
                 <svg className={`w-5 h-5 ${loadingAnalytics ? 'animate-spin' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
@@ -417,7 +417,7 @@ export default function WebsiteAnalytics() {
           {/* Analytics Content */}
           {loadingAnalytics ? (
             <div className="bg-white rounded-xl shadow-lg p-12 text-center">
-              <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mb-4"></div>
+              <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-[#0F006A] mb-4"></div>
               <p className="text-gray-600">Loading analytics data...</p>
             </div>
           ) : analyticsData && analyticsData.users !== undefined ? (
@@ -489,14 +489,14 @@ export default function WebsiteAnalytics() {
                           type="date"
                           value={customStartDate}
                           onChange={(e) => setCustomStartDate(e.target.value)}
-                          className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                          className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#0F006A] focus:border-[#0F006A]"
                         />
                         <span className="text-gray-500">to</span>
                         <input
                           type="date"
                           value={customEndDate}
                           onChange={(e) => setCustomEndDate(e.target.value)}
-                          className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                          className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#0F006A] focus:border-[#0F006A]"
                         />
                         <button
                           onClick={() => {
@@ -504,7 +504,7 @@ export default function WebsiteAnalytics() {
                               fetchAnalyticsData()
                             }
                           }}
-                          className="px-4 py-2 bg-primary-600 text-white rounded-lg text-sm hover:bg-primary-700 transition-colors"
+                          className="px-4 py-2 bg-[#0F006A] text-white rounded-xl text-sm hover:opacity-95 transition-colors"
                         >
                           Apply
                         </button>
@@ -520,7 +520,7 @@ export default function WebsiteAnalytics() {
                           setCustomEndDate('')
                         }
                       }}
-                      className="px-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white"
+                      className="px-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#0F006A] focus:border-[#0F006A] bg-white"
                     >
                       <option value="7days">Last 7 days</option>
                       <option value="30days">Last 30 days</option>
@@ -611,7 +611,7 @@ export default function WebsiteAnalytics() {
                     </div>
                     <div className="overflow-x-auto">
                       <table className="min-w-full divide-y divide-gray-200">
-                        <thead className="bg-gray-50">
+                        <thead className="bg-[#F5F3F9]">
                           <tr>
                             <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                               Page
@@ -629,10 +629,10 @@ export default function WebsiteAnalytics() {
                         </thead>
                         <tbody className="bg-white divide-y divide-gray-200">
                           {paginatedData.map((page, index) => (
-                            <tr key={startIndex + index} className="hover:bg-gray-50 transition-colors">
+                            <tr key={startIndex + index} className="hover:bg-[#F5F3F9] transition-colors">
                               <td className="px-6 py-4 whitespace-nowrap">
                                 <div className="flex items-center gap-3">
-                                  <div className="bg-primary-100 text-primary-700 w-8 h-8 rounded-full flex items-center justify-center font-semibold text-sm">
+                                  <div className="bg-[#ECE6FE] text-[#0F006A] w-8 h-8 rounded-full flex items-center justify-center font-semibold text-sm">
                                     {startIndex + index + 1}
                                   </div>
                                   <span className="text-sm font-medium text-gray-900">{page.page}</span>
@@ -663,7 +663,7 @@ export default function WebsiteAnalytics() {
                             className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                               currentPage === 1
                                 ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                                : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
+                                : 'bg-white text-gray-700 border border-gray-300 hover:bg-[#F5F3F9]'
                             }`}
                           >
                             Previous
@@ -692,8 +692,8 @@ export default function WebsiteAnalytics() {
                                       onClick={() => setCurrentPage(page)}
                                       className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                                         currentPage === page
-                                          ? 'bg-primary-600 text-white'
-                                          : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
+                                          ? 'bg-[#0F006A] text-white'
+                                          : 'bg-white text-gray-700 border border-gray-300 hover:bg-[#F5F3F9]'
                                       }`}
                                     >
                                       {page}
@@ -708,7 +708,7 @@ export default function WebsiteAnalytics() {
                             className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                               currentPage === totalPages
                                 ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                                : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
+                                : 'bg-white text-gray-700 border border-gray-300 hover:bg-[#F5F3F9]'
                             }`}
                           >
                             Next
