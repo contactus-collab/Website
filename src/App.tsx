@@ -22,6 +22,8 @@ import WebsiteAnalytics from './pages/WebsiteAnalytics'
 import LinkedInAnalytics from './pages/LinkedInAnalytics'
 import EmailCampaign from './pages/EmailCampaign'
 import Applications from './pages/Applications'
+import EventImport from './pages/EventImport'
+import AdminEventCalendar from './pages/AdminEventCalendar'
 
 function AppContent() {
   const location = useLocation()
@@ -98,6 +100,22 @@ function AppContent() {
             element={
               <ProtectedRoute>
                 <LinkedInAnalytics />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/event-import"
+            element={
+              <ProtectedRoute>
+                <EventImport />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/events"
+            element={
+              <ProtectedRoute>
+                <AdminEventCalendar />
               </ProtectedRoute>
             }
           />

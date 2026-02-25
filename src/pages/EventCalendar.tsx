@@ -1,32 +1,20 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import Newsletter from '../components/Newsletter'
+import TextWithLinks from '../components/TextWithLinks'
+import { supabase } from '../lib/supabase'
+import type { CalendarEvent, EventType } from '../types/supabase'
 
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
 type EventItem = { title: string; time: string; color: string }
+const EVENT_COLORS: Record<EventType, string> = { educational: '#7C3AED', game: '#14B8A6', general: '#F59E0B' }
 
-// Sample events by date string YYYY-MM-DD (for demo – replace with real data source later)
-const SAMPLE_EVENTS: Record<string, EventItem[]> = {
-  '2025-01-01': [
-    { title: 'Design Workshop', time: '10:00 AM', color: '#F59E0B' },
-    { title: 'Design Workshop', time: '10:00 AM', color: '#7C3AED' },
-  ],
-  '2025-01-05': [{ title: 'Design Workshop', time: '10:00 AM', color: '#7C3AED' }],
-  '2025-01-09': [{ title: 'Design Workshop', time: '10:00 AM', color: '#7C3AED' }],
-  '2025-01-10': [{ title: 'Design Workshop', time: '10:00 AM', color: '#7C3AED' }],
-  '2025-01-14': [{ title: 'Design Workshop', time: '10:00 AM', color: '#7C3AED' }],
-  '2025-01-18': [
-    { title: 'Design Workshop', time: '10:00 AM', color: '#7C3AED' },
-    { title: 'Design Workshop', time: '10:00 AM', color: '#14B8A6' },
-  ],
-  '2025-01-19': [{ title: 'Design Workshop', time: '10:00 AM', color: '#F59E0B' }],
-  '2025-01-22': [{ title: 'Design Workshop', time: '10:00 AM', color: '#7C3AED' }],
-  '2025-01-23': [
-    { title: 'Design Workshop', time: '10:00 AM', color: '#14B8A6' },
-    { title: 'Design Workshop', time: '10:00 AM', color: '#F59E0B' },
-  ],
-  '2025-01-31': [{ title: 'Design Workshop', time: '10:00 AM', color: '#14B8A6' }],
+function formatDisplayDate(iso: string): string {
+  const d = new Date(iso + 'T12:00:00')
+  const day = d.getDate()
+  const month = MONTHS[d.getMonth()].slice(0, 3)
+  return `${day} ${month}`
 }
 
 function getCalendarGrid(year: number, month: number): { date: Date; isCurrentMonth: boolean }[][] {
@@ -57,23 +45,53 @@ function formatDateKey(date: Date): string {
 }
 
 export default function EventCalendar() {
-  const [viewDate, setViewDate] = useState(() => new Date()) // Today's month by default
+  const [viewDate, setViewDate] = useState(() => new Date())
   const [eventFilter, setEventFilter] = useState<'all' | 'educational' | 'game' | 'general'>('all')
+  const [events, setEvents] = useState<CalendarEvent[]>([])
   const year = viewDate.getFullYear()
   const month = viewDate.getMonth()
 
-  type EventType = 'educational' | 'game' | 'general'
-  const UPCOMING_EVENTS: { title: string; date: string; time: string; description: string; type: EventType }[] = [
-    { title: 'Educational event', date: '22 May', time: '10:00 AM', description: 'Initial consultation with new client about their requirements', type: 'educational' },
-    { title: 'Game Events', date: '22 May', time: '10:00 AM', description: 'Initial consultation with new client about their requirements', type: 'game' },
-    { title: 'General Event', date: '22 May', time: '10:00 AM', description: 'Initial consultation with new client about their requirements', type: 'general' },
-    { title: 'Game Event', date: '22 May', time: '10:00 AM', description: 'Initial consultation with new client about their requirements', type: 'game' },
-    { title: 'Educational event', date: '22 May', time: '10:00 AM', description: 'Initial consultation with new client about their requirements', type: 'educational' },
-    { title: 'General Event', date: '22 May', time: '10:00 AM', description: 'Initial consultation with new client about their requirements', type: 'general' },
-  ]
-  const EVENT_COLORS: Record<EventType, string> = { educational: '#7C3AED', game: '#14B8A6', general: '#F59E0B' }
-  const filteredEvents = eventFilter === 'all' ? UPCOMING_EVENTS : UPCOMING_EVENTS.filter((e) => e.type === eventFilter)
+  useEffect(() => {
+    const load = async () => {
+      const { data } = await supabase.from('events').select('*').order('event_date', { ascending: true })
+      setEvents((data as CalendarEvent[]) || [])
+    }
+    load()
+  }, [])
 
+  const eventsByDate = useMemo(() => {
+    const map: Record<string, EventItem[]> = {}
+    events.forEach((ev) => {
+      const key = ev.event_date
+      if (!map[key]) map[key] = []
+      map[key].push({
+        title: ev.title,
+        time: ev.start_time || 'All day',
+        color: ev.color || EVENT_COLORS[(ev.event_type as EventType) || 'general'],
+      })
+    })
+    return map
+  }, [events])
+
+  const todayKey = useMemo(() => {
+    const d = new Date()
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+  }, [])
+
+  const upcomingEvents = useMemo(() => {
+    return events
+      .filter((e) => e.event_date >= todayKey)
+      .slice(0, 12)
+      .map((e) => ({
+        title: e.title,
+        date: formatDisplayDate(e.event_date),
+        time: e.start_time || 'All day',
+        description: e.description || '',
+        type: (e.event_type as EventType) || 'general',
+      }))
+  }, [events, todayKey])
+
+  const filteredEvents = eventFilter === 'all' ? upcomingEvents : upcomingEvents.filter((e) => e.type === eventFilter)
   const grid = useMemo(() => getCalendarGrid(year, month), [year, month])
 
   const goPrev = () => setViewDate((d) => new Date(d.getFullYear(), d.getMonth() - 1, 1))
@@ -231,7 +249,7 @@ export default function EventCalendar() {
                 week.map(({ date, isCurrentMonth }, di) => {
                   const key = `${wi}-${di}`
                   const dateKey = formatDateKey(date)
-                  const events = SAMPLE_EVENTS[dateKey] ?? []
+                  const events = eventsByDate[dateKey] ?? []
                   return (
                     <div
                       key={key}
@@ -364,12 +382,14 @@ onClick={() => setEventFilter('educational')}
                       {event.time}
                     </span>
                   </div>
-                  <p
-                    className="text-gray-500 text-sm leading-snug"
-                    style={{ fontFamily: '"Plus Jakarta Sans", sans-serif' }}
-                  >
-                    {event.description}
-                  </p>
+                  {event.description && (
+                    <p
+                      className="text-gray-500 text-sm leading-snug"
+                      style={{ fontFamily: '"Plus Jakarta Sans", sans-serif' }}
+                    >
+                      <TextWithLinks text={event.description} />
+                    </p>
+                  )}
                 </div>
               </div>
             ))}
