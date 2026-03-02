@@ -54,7 +54,7 @@ export default function Footer() {
                 lineHeight: '155%',
               }}
             >
-              From adorable clothing and accessories to safe and fun toys, our curated collection ensures your baby's first years are filled with comfort, joy, and style.
+              The Ball Four Foundation raises awareness for Neurodevelopmental Disorders (ND) through education and advocacy as well as by sponsoring performance-based activities for kids with disabilities.
             </p>
           </div>
           <div className="flex items-center gap-4">
