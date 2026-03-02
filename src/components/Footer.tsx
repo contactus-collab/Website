@@ -59,7 +59,7 @@ export default function Footer() {
           </div>
           <div className="flex items-center gap-4">
             <a
-              href="https://www.facebook.com/ballfourfoundation"
+              href="https://www.facebook.com/profile.php?id=61587274794359"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center w-10 h-10 rounded-full border transition-colors hover:opacity-80"
