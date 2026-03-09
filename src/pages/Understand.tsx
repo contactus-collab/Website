@@ -137,7 +137,7 @@ export default function Understand() {
             Understand
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Explore our collection of articles and resources about Neurodevelopmental Disorders, 
+            Explore our collection of articles and resources about Neurodevelopmental Disorder, 
             support strategies, and creating inclusive communities.
           </p>
         </div>

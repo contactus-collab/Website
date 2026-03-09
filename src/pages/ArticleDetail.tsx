@@ -15,16 +15,16 @@ interface Article {
 const articleDatabase: { [key: number]: Article } = {
   1: {
     id: 1,
-    title: 'Understanding Neurodevelopmental Disorders: A Guide for Families',
+    title: 'Understanding Neurodevelopmental Disorder: A Guide for Families',
     date: new Date().toISOString().split('T')[0],
-    excerpt: 'Neurodevelopmental Disorders (ND) affect how children learn, communicate, and interact with the world. This comprehensive guide helps families understand autism, ADHD, dyslexia, and other conditions, providing clarity and hope for the journey ahead.',
+    excerpt: 'Neurodevelopmental Disorder (ND) affect how children learn, communicate, and interact with the world. This comprehensive guide helps families understand autism, ADHD, dyslexia, and other conditions, providing clarity and hope for the journey ahead.',
     featured: true,
     content: `
       <p class="text-lg text-gray-700 mb-6 leading-relaxed">
-        Neurodevelopmental Disorders (ND) are a group of conditions that affect the development of the nervous system, impacting how children learn, communicate, behave, and interact with others. As a parent or caregiver, understanding these conditions is the first step toward providing the support and resources your child needs to thrive.
+        Neurodevelopmental Disorder (ND) are a group of conditions that affect the development of the nervous system, impacting how children learn, communicate, behave, and interact with others. As a parent or caregiver, understanding these conditions is the first step toward providing the support and resources your child needs to thrive.
       </p>
 
-      <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">What Are Neurodevelopmental Disorders?</h2>
+      <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">What Are Neurodevelopmental Disorder?</h2>
       <p class="text-lg text-gray-700 mb-6 leading-relaxed">
         Neurodevelopmental disorders are conditions that begin during the developmental period, typically before a child enters school. These conditions are characterized by developmental deficits that produce impairments in personal, social, academic, or occupational functioning. Common neurodevelopmental disorders include:
       </p>
@@ -471,7 +471,7 @@ export default function ArticleDetail() {
           <div className="mt-12 bg-gradient-to-br from-primary-600 to-primary-700 rounded-xl p-8 text-white text-center">
             <h2 className="text-3xl font-bold mb-4">Stay Connected</h2>
             <p className="text-xl text-primary-100 mb-6 max-w-2xl mx-auto">
-              Join our community to receive more articles, resources, and updates about supporting children with Neurodevelopmental Disorders.
+              Join our community to receive more articles, resources, and updates about supporting children with Neurodevelopmental Disorder.
             </p>
             <Link
               to="/newsletter"

@@ -3,33 +3,60 @@ import { Link } from 'react-router-dom'
 /** Join Us in Making a Difference – heading, paragraph, two CTAs, then large image with quote overlay */
 
 const QUOTE =
-  '"Every child deserves the opportunity to shine, regardless of their unique challenges. Together, we can create a world where neurodiversity is not just accepted, but celebrated."'
+  'Every child deserves the opportunity to shine, regardless of their unique challenges. Together, we can create a world where neurodiversity is not just accepted, but celebrated.'
 
-export default function JoinUsSection() {
+interface JoinUsSectionProps {
+  heading?: string
+  description?: string
+  primaryLabel?: string
+  primaryTo?: string
+  secondaryLabel?: string
+  secondaryTo?: string
+  secondaryIsAnchor?: boolean
+}
+
+export default function JoinUsSection({
+  heading = 'Join Us in Making a Difference',
+  description = 'Your support helps us provide resources, sponsor activities, and create opportunities for children with Neurodevelopmental Disorder to shine. Together, we can build a more inclusive world.',
+  primaryLabel = 'Explore resources',
+  primaryTo = '/resources',
+  secondaryLabel = 'Stay Connected',
+  secondaryTo = '/newsletter',
+  secondaryIsAnchor = false,
+}: JoinUsSectionProps) {
   return (
     <section className="py-16 px-4 bg-white">
       <div className="max-w-7xl mx-auto">
         {/* Header: heading + paragraph + buttons */}
         <div className="text-center mb-12">
           <h2 className="font-sans text-2xl sm:text-3xl lg:text-[44px] lg:leading-[65px] lg:tracking-[-0.44px] font-medium text-[#000] text-center mb-4">
-            Join Us in Making a Difference
+            {heading}
           </h2>
           <p className="font-sans text-[18px] font-normal leading-[155%] text-[var(--sds-color-text-default-default)] text-center max-w-2xl mx-auto mb-8">
-            Your support helps us provide resources, sponsor activities, and create opportunities for children with Neurodevelopmental Disorders to shine. Together, we can build a more inclusive world.
+            {description}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              to="/resources"
+              to={primaryTo}
               className="flex h-[50px] items-center justify-center bg-[#0F006A] text-[#FFF] px-8 rounded-full font-normal hover:opacity-90 transition-opacity text-base"
             >
-              Explore resources
+              {primaryLabel}
             </Link>
-            <Link
-              to="/newsletter"
-              className="flex h-[50px] items-center justify-center bg-white border-2 border-[#0F006A] text-[#0F006A] px-8 rounded-full font-normal hover:bg-[#0F006A]/5 transition-colors text-base"
-            >
-              Stay Connected
-            </Link>
+            {secondaryIsAnchor ? (
+              <a
+                href={secondaryTo}
+                className="flex h-[50px] items-center justify-center bg-white border-2 border-[#0F006A] text-[#0F006A] px-8 rounded-full font-normal hover:bg-[#0F006A]/5 transition-colors text-base"
+              >
+                {secondaryLabel}
+              </a>
+            ) : (
+              <Link
+                to={secondaryTo}
+                className="flex h-[50px] items-center justify-center bg-white border-2 border-[#0F006A] text-[#0F006A] px-8 rounded-full font-normal hover:bg-[#0F006A]/5 transition-colors text-base"
+              >
+                {secondaryLabel}
+              </Link>
+            )}
           </div>
         </div>
 

@@ -315,7 +315,7 @@ export default function WordPressArticleDetail() {
                   lineHeight: '155%',
                 }}
               >
-                Discover articles and insights about Neurodevelopmental Disorders (ND) that support your journey and help children thrive.
+                Discover articles and insights about Neurodevelopmental Disorder (ND) that support your journey and help children thrive.
               </p>
             </div>
             <Link

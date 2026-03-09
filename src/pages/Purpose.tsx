@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import JoinUsSection from '../components/JoinUsSection'
+import OurStory from '../components/OurStory'
 import Newsletter from '../components/Newsletter'
 
 interface WordPressPost {
@@ -46,15 +47,15 @@ export default function Purpose() {
   const cards = [
     {
       title: 'Spreading the Word',
-      description: 'Sharing articles, books, podcasts, and other educational resources about Neurodevelopmental Disorders (ND) that keep families informed about the latest research and treatment options.',
+      description: 'Sharing articles, books, podcasts, and other educational resources about Neurodevelopmental Disorder (ND) that keep families informed about the latest research and treatment options.',
     },
     {
       title: 'Advocating for Change',
-      description: 'Leading the charge for a more inclusive world by increasing access to Neurodevelopmental Disorders (ND) assessments, therapy options, and employment opportunities.',
+      description: 'Leading the charge for a more inclusive world by increasing access to Neurodevelopmental Disorder (ND) assessments, therapy options, and employment opportunities.',
     },
     {
       title: 'Creating Opportunities to Be Seen and Heard',
-      description: 'Sponsoring dance, art, sports, and other performance-based activities that give kids with Neurodevelopmental Disorders (ND) the opportunity to develop their talents and take center stage.',
+      description: 'Sponsoring dance, art, sports, and other performance-based activities that give kids with Neurodevelopmental Disorder (ND) the opportunity to develop their talents and take center stage.',
     },
   ]
 
@@ -103,7 +104,7 @@ export default function Purpose() {
                   lineHeight: '155%',
                 }}
               >
-                The first step is raising awareness around Neurodevelopmental Disorders (ND). We do that through education, advocacy, and event sponsorship that offers kids with neurodevelopmental disorders the chance to shine.
+                The first step is raising awareness around Neurodevelopmental Disorder (ND). We do that through education, advocacy, and event sponsorship that offers kids with neurodevelopmental disorders the chance to shine.
               </p>
               <Link
                 to="/resources"
@@ -121,7 +122,7 @@ export default function Purpose() {
                 className="w-full aspect-[4/3] object-cover rounded-[2rem_3rem_1.5rem_2.5rem]"
               />
               <img
-                src="/images/purpose.jpeg"
+                src="/images/Kid4.jpg"
                 alt=""
                 className="w-full aspect-[4/3] object-cover rounded-[3rem_1.5rem_2.5rem_2rem] mt-2 sm:mt-3"
               />
@@ -141,42 +142,7 @@ export default function Purpose() {
         </div>
       </section>
 
-      {/* Our Story – full-container image with yellow box overlay on top */}
-      <section className="py-12 px-4 sm:py-16">
-        <div className="max-w-7xl mx-auto overflow-hidden rounded-[24px] sm:rounded-[28px] shadow-lg relative aspect-[16/9] sm:aspect-[21/9] min-h-[240px] sm:min-h-[280px] bg-gray-100">
-          {/* Full-container image */}
-          <img
-            src="/images/Container.png"
-            alt=""
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-          {/* Our Story – overlay on top of image, vertically centered, left margin */}
-          <div
-            className="absolute left-4 sm:left-6 right-4 sm:right-auto top-1/2 -translate-y-1/2 w-auto sm:w-[608px] max-w-[calc(100%-2rem)] flex flex-col items-start gap-[10px] rounded-[25px] py-[34px] px-[26px]"
-            style={{ backgroundColor: '#FBCE3E' }}
-          >
-            <span
-              className="inline-flex w-fit h-[32px] items-center justify-center rounded-[50px] px-4 text-sm font-medium"
-              style={{ backgroundColor: '#EBE8FD', color: 'var(--Primary-Blue, #0F006A)' }}
-            >
-              Our Story
-            </span>
-            <p
-              className="max-w-full"
-              style={{
-                color: 'var(--sds-color-text-default-default)',
-                fontFamily: '"Plus Jakarta Sans", sans-serif',
-                fontSize: '18px',
-                fontStyle: 'normal',
-                fontWeight: 400,
-                lineHeight: '155%',
-              }}
-            >
-              With one in 36 kids on the spectrum, Neurodevelopmental Disorders (ND) are a growing issue affecting families across the US — with many not getting the support they need. The Ball Four Foundation was created to bridge the gaps in awareness and care about Neurodevelopmental Disorders (ND), so that families can find the books about them and the resources they need, young people can reach their full potential, and together we can create a more inclusive world for everyone.
-            </p>
-          </div>
-        </div>
-      </section>
+      <OurStory />
 
       {/* Our Mission + What We Do – match reference layout */}
       <section className="py-12 px-4 sm:py-16">
@@ -201,7 +167,7 @@ export default function Purpose() {
                 letterSpacing: '-0.44px',
               }}
             >
-              The Ball Four Foundation raises awareness for Neurodevelopmental Disorders (ND) through education and advocacy as well as by sponsoring performance-based activities for kids with disabilities.
+              The Ball Four Foundation raises awareness for Neurodevelopmental Disorder (ND) through education and advocacy as well as by sponsoring performance-based activities for kids with disabilities.
             </h2>
           </div>
 
@@ -236,7 +202,7 @@ export default function Purpose() {
                   lineHeight: '155%',
                 }}
               >
-                Our comprehensive approach to supporting children with Neurodevelopmental Disorders and their families.
+                Our comprehensive approach to supporting children with Neurodevelopmental Disorder and their families.
               </p>
             </div>
 

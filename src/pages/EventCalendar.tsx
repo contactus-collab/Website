@@ -140,7 +140,7 @@ export default function EventCalendar() {
                 lineHeight: '155%',
               }}
             >
-              Find workshops, conferences, and community programs happening nationwide. Stay informed about opportunities to learn, connect, and advocate for children with Neurodevelopmental Disorders.
+              Find workshops, conferences, and community programs happening nationwide. Stay informed about opportunities to learn, connect, and advocate for children with Neurodevelopmental Disorder.
             </p>
           </div>
         </div>

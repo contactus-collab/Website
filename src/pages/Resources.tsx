@@ -93,7 +93,7 @@ export default function Resources() {
       description: 'A broader historical and cultural understanding of autism and neurodiversity.',
     },
     {
-      title: 'The Essential Guide to Neurodevelopmental Disorders',
+      title: 'The Essential Guide to Neurodevelopmental Disorder',
       author: 'Desmond Gahan',
       buyLink: 'https://www.barnesandnoble.com/w/the-essential-guide-to-neurodevelopmental-disorders-desmond-gahan/1144152293',
       description: 'Introductory resource explaining ADHD, autism, and other neurodevelopmental conditions.',
@@ -180,7 +180,7 @@ export default function Resources() {
                 letterSpacing: '-0.62px',
               }}
             >
-              Thought Leaders
+              Resources
             </h1>
             <p
               style={{
@@ -192,7 +192,7 @@ export default function Resources() {
                 lineHeight: '155%',
               }}
             >
-              Discover the best books, online resources, podcasts, etc from experts, advocates, and families on Neurodevelopmental Disorders (ND). Ball Four Foundation exists as the trusted support on your journey.
+              Discover the best books, podcasts, and notes from experts, advocates, and families on Neurodevelopmental Disorder (ND).
             </p>
           </div>
         </div>
@@ -454,7 +454,7 @@ export default function Resources() {
                   lineHeight: '155%',
                 }}
               >
-                Discover articles and insights about Neurodevelopmental Disorders (ND) that support your journey and help children thrive.
+                Discover articles and insights about Neurodevelopmental Disorder (ND) that support your journey and help children thrive.
               </p>
             </div>
             <Link
@@ -529,7 +529,15 @@ export default function Resources() {
       </section>
 
       {/* Join Us in Making a Difference – same as Home */}
-      <JoinUsSection />
+      <JoinUsSection
+        heading="Stay Informed"
+        description="Together, we can build a more inclusive world."
+        primaryLabel="Join Our Newsletter"
+        primaryTo="/newsletter"
+        secondaryLabel="Stay Connected"
+        secondaryTo="#footer"
+        secondaryIsAnchor
+      />
 
       {/* Newsletter – same as Home (dark two-column section) */}
       <Newsletter />

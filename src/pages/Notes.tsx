@@ -110,7 +110,7 @@ export default function Notes() {
                 lineHeight: '155%',
               }}
             >
-              Discover thoughtful, easy-to-understand notes about Neurodevelopmental Disorders—written to help families, caregivers, and educators learn, connect, and feel supported every step of the way.
+              Discover thoughtful, easy-to-understand notes about Neurodevelopmental Disorder—written to help families, caregivers, and educators learn, connect, and feel supported every step of the way.
             </p>
           </div>
         </div>

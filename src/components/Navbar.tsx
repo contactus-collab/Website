@@ -21,12 +21,6 @@ export default function Navbar() {
           {/* Desktop Menu - right-aligned, compact */}
           <div className="hidden md:flex items-center ml-auto gap-5 lg:gap-6">
             <Link
-              to="/purpose"
-              className="text-black hover:text-brand-blue px-2 py-2 text-sm font-normal transition-colors"
-            >
-              Purpose
-            </Link>
-            <Link
               to="/resources"
               className="text-black hover:text-brand-blue px-2 py-2 text-sm font-normal transition-colors"
             >
@@ -96,7 +90,6 @@ export default function Navbar() {
       {isOpen && (
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t">
-            <Link to="/purpose" className="block px-3 py-2 text-black hover:text-brand-blue" onClick={() => setIsOpen(false)}>Purpose</Link>
             <Link to="/resources" className="block px-3 py-2 text-black hover:text-brand-blue" onClick={() => setIsOpen(false)}>Resources</Link>
             <Link to="/notes" className="block px-3 py-2 text-black hover:text-brand-blue" onClick={() => setIsOpen(false)}>Notes</Link>
             <Link to="/event-calendar" className="block px-3 py-2 text-black hover:text-brand-blue" onClick={() => setIsOpen(false)}>Event Calendar</Link>

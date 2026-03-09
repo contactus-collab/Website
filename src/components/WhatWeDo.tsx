@@ -1,6 +1,4 @@
-import { Link } from 'react-router-dom'
-
-/** Values section – "Our Mission" pill, centered heading, 3 cards, More on our Mission button */
+/** Values section – "Our Mission" pill, centered heading, 3 cards */
 
 function ShieldCheckIcon({ className }: { className?: string }) {
   return (
@@ -14,7 +12,7 @@ function ShieldCheckIcon({ className }: { className?: string }) {
 const VALUES = [
   {
     title: 'Spreading the Word',
-    description: 'Sharing articles, books, podcasts, and other educational resources about Neurodevelopmental Disorders (ND) that keep families informed about the latest research and treatment options.',
+    description: 'Sharing articles, books, podcasts, and other educational resources about Neurodevelopmental Disorder (ND) that keep families informed about the latest research and treatment options.',
     cardBg: '#0F006A',
     textColor: '#FFF',
     iconBg: '#93C5FD',
@@ -22,7 +20,7 @@ const VALUES = [
   },
   {
     title: 'Advocating for Change',
-    description: 'Leading the charge for a more inclusive world by increasing access to Neurodevelopmental Disorders (ND) assessments, therapy options, and employment opportunities',
+    description: 'Leading the charge for a more inclusive world by increasing access to Neurodevelopmental Disorder (ND) assessments, therapy options, and employment opportunities',
     cardBg: '#FBCE3E',
     textColor: '#0F006A',
     iconBg: '#FFFFFF',
@@ -30,7 +28,7 @@ const VALUES = [
   },
   {
     title: 'Creating Opportunities to Be Seen and Heard',
-    description: 'Sponsoring dance, art, sports, and other performance-based activities that give kids with Neurodevelopmental Disorders (ND) the opportunity to develop their talents and take center stage.',
+    description: 'Sponsoring dance, art, sports, and other performance-based activities that give kids with Neurodevelopmental Disorder (ND) the opportunity to develop their talents and take center stage.',
     cardBg: '#3EFBE4',
     textColor: '#0F006A',
     iconBg: '#FFFFFF',
@@ -82,14 +80,6 @@ export default function WhatWeDo() {
           ))}
         </div>
 
-        <div className="flex justify-center">
-          <Link
-            to="/purpose"
-            className="inline-block bg-[#0F006A] text-[#FFF] px-10 py-4 rounded-full font-normal hover:opacity-90 transition-opacity shadow-md hover:shadow-lg text-base"
-          >
-            More on our Mission
-          </Link>
-        </div>
       </div>
     </section>
   )

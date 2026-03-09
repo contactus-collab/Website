@@ -1,9 +1,9 @@
+import { useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import ProtectedRoute from './components/ProtectedRoute'
 import Home from './pages/Home'
-import Purpose from './pages/Purpose'
 import Resources from './pages/Resources'
 import Notes from './pages/Notes'
 import ArticleDetail from './pages/ArticleDetail'
@@ -25,17 +25,25 @@ import Applications from './pages/Applications'
 import EventImport from './pages/EventImport'
 import AdminEventCalendar from './pages/AdminEventCalendar'
 
+function ScrollToTop() {
+  const { pathname, hash } = useLocation()
+  useEffect(() => {
+    if (!hash) window.scrollTo(0, 0)
+  }, [pathname, hash])
+  return null
+}
+
 function AppContent() {
   const location = useLocation()
   const isAdminPage = location.pathname.startsWith('/admin')
 
   return (
     <div className="flex flex-col min-h-screen">
+      <ScrollToTop />
       {!isAdminPage && <Navbar />}
       <main className="flex-grow">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/purpose" element={<Purpose />} />
           <Route path="/resources" element={<Resources />} />
           <Route path="/notes" element={<Notes />} />
           <Route path="/notes/:id" element={<ArticleDetail />} />

@@ -60,7 +60,7 @@ export default function NewsletterPage() {
               lineHeight: '155%',
             }}
           >
-            Our newsletter brings you the latest from Ball Four Foundation: new resources on neurodevelopmental disorders, upcoming events, stories from families and advocates, and ways to get involved. No spam — just thoughtful updates a few times a year.
+            Our newsletter brings you the latest from Ball Four Foundation: new resources on neurodevelopmental disorders, upcoming events, stories from families and advocates, and ways to get involved. No spam — just thoughtful updates every other month.
           </p>
         </div>
       </section>

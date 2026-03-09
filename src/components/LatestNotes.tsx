@@ -58,13 +58,13 @@ export default function LatestNotes() {
         {/* Header: Latest posts (left) + All blog posts (right) */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 mb-10">
           <h2 className="font-sans text-2xl sm:text-3xl lg:text-[44px] lg:leading-[65px] lg:tracking-[-0.44px] font-medium text-[#000]">
-            Latest posts
+            Latest notes
           </h2>
           <Link
-            to="/understand"
+            to="/notes"
             className="flex h-[50px] items-center justify-center shrink-0 bg-[#0F006A] text-[#FFF] px-10 rounded-full font-normal hover:opacity-90 transition-opacity text-base"
           >
-            All blog posts
+            All notes
           </Link>
         </div>
 

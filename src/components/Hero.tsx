@@ -4,7 +4,7 @@ const HERO_IMAGES = [
   '/images/Hero_Image.jpeg',
   '/images/Home_Page_1.png',
   '/images/Purpose_Image.jpeg',
-  '/images/purpose.jpeg',
+  '/images/Kid4.jpg',
 ]
 
 export default function Hero() {
@@ -19,7 +19,7 @@ export default function Hero() {
               <span className="text-brand-purple-dark">Opportunity</span> to Shine
             </h1>
             <p className="font-sans text-[18px] font-normal leading-[155%] text-[var(--sds-color-text-default-default)] mb-10 max-w-xl">
-              The Ball Four Foundation raises awareness for Neurodevelopmental Disorders (ND) through education and advocacy as well as by sponsoring performance-based activities for kids with disabilities.
+              The Ball Four Foundation raises awareness for Neurodevelopmental Disorder (ND) through education and advocacy as well as by sponsoring performance-based activities for kids with disabilities.
             </p>
             <Link
               to="/resources"

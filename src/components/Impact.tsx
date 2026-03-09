@@ -4,13 +4,13 @@ const IMPACT_IMAGES = [
   '/images/Hero_Image.jpeg',
   '/images/Home_Page_1.png',
   '/images/Purpose_Image.jpeg',
-  '/images/purpose.jpeg',
+  '/images/Kid4.jpg',
 ]
 
 const PROGRAMS = [
   {
-    title: 'Educational Programs',
-    description: 'We provide comprehensive educational resources including books, articles, podcasts, and guides to help families stay informed about the latest research and treatment options for Neurodevelopmental Disorders.',
+    title: 'Educational Resources',
+    description: 'We provide comprehensive educational resources including books, articles, podcasts, and guides to help families stay informed about the latest research and treatment options for Neurodevelopmental Disorder.',
   },
   {
     title: 'Performance Activities',
@@ -59,7 +59,7 @@ export default function Impact() {
               How We Make a Difference
             </h2>
             <p className="font-sans text-[18px] font-normal leading-[155%] text-[var(--sds-color-text-default-default)] mb-8">
-              Through our programs and initiatives, we're creating opportunities for children with Neurodevelopmental Disorders to reach their full potential.
+              Through our programs and initiatives, we're creating opportunities for children with Neurodevelopmental Disorder to reach their full potential.
             </p>
             <div className="space-y-6">
               {PROGRAMS.map((program, i) => (

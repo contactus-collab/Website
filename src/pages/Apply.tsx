@@ -91,7 +91,7 @@ export default function Apply() {
                   className="w-full aspect-[4/3] object-cover rounded-[2rem_3rem_1.5rem_2.5rem]"
                 />
                 <img
-                  src="/images/purpose.jpeg"
+                  src="/images/Kid4.jpg"
                   alt=""
                   className="w-full aspect-[4/3] object-cover rounded-[3rem_1.5rem_2.5rem_2rem] mt-2 sm:mt-3"
                 />
@@ -108,6 +108,78 @@ export default function Apply() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Who Qualifies section */}
+      <section className="py-14 px-4 bg-white">
+        <div className="max-w-5xl mx-auto">
+          <h2
+            className="text-center mb-3 text-2xl sm:text-3xl font-medium"
+            style={{
+              color: '#0F006A',
+              fontFamily: '"Plus Jakarta Sans", sans-serif',
+              letterSpacing: '-0.5px',
+            }}
+          >
+            Who Can Apply?
+          </h2>
+          <p
+            className="text-center max-w-2xl mx-auto mb-10"
+            style={{
+              color: 'var(--sds-color-text-default-default)',
+              fontFamily: '"Plus Jakarta Sans", sans-serif',
+              fontSize: '18px',
+              lineHeight: '155%',
+            }}
+          >
+            Our grants help children with Neurodevelopmental Disorder (ND) access activities where they can grow, express themselves, and take center stage.
+          </p>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            {[
+              { icon: '💃', title: 'Dance', desc: 'Ballet, hip-hop, contemporary, and more' },
+              { icon: '🎨', title: 'Art', desc: 'Painting, sculpture, pottery, and creative workshops' },
+              { icon: '⚽', title: 'Sports', desc: 'Team sports, swimming, martial arts, and athletics' },
+              { icon: '🎭', title: 'Performance', desc: 'Theater, music lessons, and other stage activities' },
+            ].map((item) => (
+              <div
+                key={item.title}
+                className="flex flex-col items-center text-center rounded-2xl p-5 sm:p-6 transition-shadow hover:shadow-lg"
+                style={{ backgroundColor: '#F5F3F9' }}
+              >
+                <span className="text-4xl mb-3">{item.icon}</span>
+                <h3
+                  className="font-semibold mb-1 text-lg"
+                  style={{ color: '#0F006A', fontFamily: '"Plus Jakarta Sans", sans-serif' }}
+                >
+                  {item.title}
+                </h3>
+                <p
+                  className="text-sm"
+                  style={{
+                    color: '#555',
+                    fontFamily: '"Plus Jakarta Sans", sans-serif',
+                    lineHeight: '150%',
+                  }}
+                >
+                  {item.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <p
+            className="text-center mt-8 max-w-2xl mx-auto"
+            style={{
+              color: '#555',
+              fontFamily: '"Plus Jakarta Sans", sans-serif',
+              fontSize: '15px',
+              lineHeight: '155%',
+            }}
+          >
+            If your child has an ND diagnosis and wants to participate in a performance-based activity, they may be eligible. Fill out the form below to get started.
+          </p>
         </div>
       </section>
 

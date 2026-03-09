@@ -121,7 +121,7 @@ export default function Newsletter() {
                 lineHeight: '155%',
               }}
             >
-              Join the Ball Four Foundation community to stay informed about resources, events, and stories that support children with Neurodevelopmental Disorders and their families.
+              Join the Ball Four Foundation community to stay informed about resources, events, and stories that support children with Neurodevelopmental Disorder and their families.
             </p>
           </div>
 
