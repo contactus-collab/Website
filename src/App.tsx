@@ -20,6 +20,7 @@ import AddUser from './pages/AddUser'
 import Subscribers from './pages/Subscribers'
 import WebsiteAnalytics from './pages/WebsiteAnalytics'
 import LinkedInAnalytics from './pages/LinkedInAnalytics'
+import InstagramAnalytics from './pages/InstagramAnalytics'
 import EmailCampaign from './pages/EmailCampaign'
 import Applications from './pages/Applications'
 import EventImport from './pages/EventImport'
@@ -108,6 +109,14 @@ function AppContent() {
             element={
               <ProtectedRoute>
                 <LinkedInAnalytics />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/marketing/instagram"
+            element={
+              <ProtectedRoute>
+                <InstagramAnalytics />
               </ProtectedRoute>
             }
           />

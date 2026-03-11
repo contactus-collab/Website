@@ -7,6 +7,30 @@ import type { CalendarEvent, EventType } from '../types/supabase'
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
+/** US state codes for matching in location strings */
+const US_STATE_CODES = new Set([
+  'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY', 'DC',
+])
+
+/** Extract state code from location string (e.g. "Los Angeles, CA" -> "CA"). Returns null if none found. */
+function parseStateFromLocation(location: string | null | undefined): string | null {
+  if (!location || !location.trim()) return null
+  const s = location.trim()
+  // Match ", ST" or " ST" or "ST" at end, or standalone 2-letter code
+  const commaMatch = s.match(/,\s*([A-Za-z]{2})(?:\s|$|,)/)
+  if (commaMatch) {
+    const code = commaMatch[1].toUpperCase()
+    if (US_STATE_CODES.has(code)) return code
+  }
+  const endMatch = s.match(/\b([A-Za-z]{2})\s*$/)
+  if (endMatch) {
+    const code = endMatch[1].toUpperCase()
+    if (US_STATE_CODES.has(code)) return code
+  }
+  if (/^[A-Za-z]{2}$/.test(s) && US_STATE_CODES.has(s.toUpperCase())) return s.toUpperCase()
+  return null
+}
+
 type EventItem = { title: string; time: string; color: string }
 const EVENT_COLORS: Record<EventType, string> = { educational: '#7C3AED', game: '#14B8A6', general: '#F59E0B' }
 
@@ -47,6 +71,7 @@ function formatDateKey(date: Date): string {
 export default function EventCalendar() {
   const [viewDate, setViewDate] = useState(() => new Date())
   const [eventFilter, setEventFilter] = useState<'all' | 'educational' | 'game' | 'general'>('all')
+  const [stateFilter, setStateFilter] = useState<string>('all')
   const [events, setEvents] = useState<CalendarEvent[]>([])
   const year = viewDate.getFullYear()
   const month = viewDate.getMonth()
@@ -59,9 +84,28 @@ export default function EventCalendar() {
     load()
   }, [])
 
+  /** States that appear in event locations (for filter dropdown), sorted */
+  const statesInData = useMemo(() => {
+    const set = new Set<string>()
+    events.forEach((ev) => {
+      const state = parseStateFromLocation(ev.location)
+      if (state) set.add(state)
+    })
+    return Array.from(set).sort()
+  }, [events])
+
+  /** Events to show: by state filter. If no state in location, always include (show normally). */
+  const eventsForDisplay = useMemo(() => {
+    if (stateFilter === 'all') return events
+    return events.filter((ev) => {
+      const state = parseStateFromLocation(ev.location)
+      return state === null || state === stateFilter
+    })
+  }, [events, stateFilter])
+
   const eventsByDate = useMemo(() => {
     const map: Record<string, EventItem[]> = {}
-    events.forEach((ev) => {
+    eventsForDisplay.forEach((ev) => {
       const key = ev.event_date
       if (!map[key]) map[key] = []
       map[key].push({
@@ -71,7 +115,7 @@ export default function EventCalendar() {
       })
     })
     return map
-  }, [events])
+  }, [eventsForDisplay])
 
   const todayKey = useMemo(() => {
     const d = new Date()
@@ -79,7 +123,7 @@ export default function EventCalendar() {
   }, [])
 
   const upcomingEvents = useMemo(() => {
-    return events
+    return eventsForDisplay
       .filter((e) => e.event_date >= todayKey)
       .slice(0, 12)
       .map((e) => ({
@@ -89,7 +133,7 @@ export default function EventCalendar() {
         description: e.description || '',
         type: (e.event_type as EventType) || 'general',
       }))
-  }, [events, todayKey])
+  }, [eventsForDisplay, todayKey])
 
   const filteredEvents = eventFilter === 'all' ? upcomingEvents : upcomingEvents.filter((e) => e.type === eventFilter)
   const grid = useMemo(() => getCalendarGrid(year, month), [year, month])
@@ -188,21 +232,22 @@ export default function EventCalendar() {
       {/* Calendar */}
       <section className="py-12 px-4 sm:py-16 bg-white">
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-            <h2
-              className="text-left"
-              style={{
-                color: '#000',
-                fontFamily: '"Plus Jakarta Sans", sans-serif',
-                fontSize: '28px',
-                fontStyle: 'normal',
-                fontWeight: 600,
-                lineHeight: 'normal',
-              }}
-            >
-              Event Calendar
-            </h2>
-            <div className="flex items-center gap-2">
+          <div className="flex flex-col gap-4 mb-6">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <h2
+                className="text-left"
+                style={{
+                  color: '#000',
+                  fontFamily: '"Plus Jakarta Sans", sans-serif',
+                  fontSize: '28px',
+                  fontStyle: 'normal',
+                  fontWeight: 600,
+                  lineHeight: 'normal',
+                }}
+              >
+                Event Calendar
+              </h2>
+              <div className="flex items-center gap-2">
               <button
                 type="button"
                 onClick={goPrev}
@@ -229,6 +274,30 @@ export default function EventCalendar() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 18l6-6-6-6" />
                 </svg>
               </button>
+            </div>
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <label
+                htmlFor="state-filter"
+                className="text-sm font-medium text-gray-700"
+                style={{ fontFamily: '"Plus Jakarta Sans", sans-serif' }}
+              >
+                Filter by state:
+              </label>
+              <select
+                id="state-filter"
+                value={stateFilter}
+                onChange={(e) => setStateFilter(e.target.value)}
+                className="h-10 min-w-[140px] rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-800 focus:border-[#0F006A] focus:outline-none focus:ring-1 focus:ring-[#0F006A]"
+                style={{ fontFamily: '"Plus Jakarta Sans", sans-serif' }}
+              >
+                <option value="all">All States</option>
+                {statesInData.map((code) => (
+                  <option key={code} value={code}>
+                    {code}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
 
